@@ -1,0 +1,180 @@
+<ion-header>
+  <main-header></main-header>
+  <div class="addBtn"> 
+      <button ion-button color="grey" class="btn1" outline (click)="goBack()"><ion-icon name="undo" ></ion-icon></button>
+        <h1>Resource : {{jobTitle}}</h1>
+        
+</div>
+</ion-header>
+
+<ion-content >
+       
+<div class="dash_body">
+  <div class="card-container">
+    <ion-card class="center">
+      <ion-card-content>
+        <div class="card-body" *ngIf="accmanager != undefined">
+            
+            <div class="body-top" *ngIf="accmanager.imageUrl != null">
+                <img src={{accmanager.imageUrl}}  class="image"/>
+            </div>
+            <div class="body-top" *ngIf="accmanager.imageUrl == null" >
+                <img src="hotlabs/assets/images/user-4.png" class="image">
+            </div> 
+            <div class="body-bottom">
+                
+              <h1 class="_black">{{accmanager.firstName}}</h1>
+               <span>Account Manager</span> 
+            </div>
+            <div class="delete1" >
+                <ion-icon name="ios-trash" (click)="deleteAccManager()" ></ion-icon>
+            </div>
+            <div class="recycle">
+                <ion-icon name="md-refresh-circle" (click)="goAccManager()"></ion-icon>
+                
+            </div>
+            
+        </div>
+      </ion-card-content>
+    </ion-card>
+   
+  </div>
+
+  <div class="card-container">
+    <ion-card class="left">
+        <ion-card-content>
+            <div class="card-body"  *ngIf="screener == undefined ||screener == null">
+                <div class="body-top">
+                  <ion-icon class="_blue" ios="ios-add" md="md-add" (click)="goTechScreener()"></ion-icon>
+                </div>
+                <div class="body-bottom">
+                  <h1 class="_black">Technical Screener</h1>
+                  <button class="btn btn-xs" ng-click="openTSBiddingModal()">Send Request</button>
+                  <button class="btn btn-xs" ng-click="showViewBidsTS()">View Bids</button>
+                </div>
+            </div>
+            <div class="card-body" *ngIf="screener != undefined">
+                <div class="body-top" *ngIf="screener.imageUrl != null">
+                    <img src={{screener.imageUrl}}  class="image2"/>
+                </div>
+                <div class="body-top" *ngIf="screener.imageUrl == null" >
+                    <img src="hotlabs/assets/images/user-4.png" class="image2">
+                </div> 
+                <div class="body-bottom">
+                    <h1 class="_black">{{screener.firstName}}</h1>
+                     <span>Technical Screener</span>
+                </div>
+                <div class="delete" >
+                    <ion-icon name="ios-trash" (click)="deleteTechScreener()"></ion-icon>
+                </div>
+            </div> 
+          </ion-card-content>
+      
+    </ion-card>
+    <ion-card  class="right">
+        <ion-card-content>
+            <div class="card-body" *ngIf="sales == undefined || sales == null ">
+                <div class="body-top" >
+                  <ion-icon class="_blue" ios="ios-add" md="md-add" (click)="goVpSales()"></ion-icon>
+                </div>
+                <div class="body-bottom">
+                  <h1 class="_black">VP of Sales</h1>
+                  <!-- <span>Total Requirements</span> -->
+                </div>
+            </div>
+             <div class="card-body" *ngIf="sales != undefined">
+                <div class="body-top" *ngIf="sales.imageUrl != null">
+                    <img src={{sales.imageUrl}}  class="image2"/>
+                </div>
+                <div class="body-top" *ngIf="sales.imageUrl == null" >
+                    <img src="hotlabs/assets/images/user-4.png" class="image2">
+                </div> 
+                <div class="body-bottom">
+                    <h1 class="_black">{{sales.firstName}}</h1>
+                     <span>VP of Sales</span>
+                </div>
+                <div class="delete">
+                    <ion-icon name="ios-trash" (click)="deleteVpSales()"></ion-icon>
+                </div>
+            </div> 
+          </ion-card-content>
+      </ion-card>
+  </div>
+  <div class="card-container">
+      <ion-card class="left">
+        <ion-card-content>
+          <div class="card-body" *ngIf="manager == undefined || manager == null ">
+              <div class="body-top">
+                <ion-icon class="_blue" ios="ios-add" md="md-add" (click)="goMgrRec()"></ion-icon>
+              </div>
+              <div class="body-bottom">
+                <h1 class="_black">Mgr of recruiting</h1>
+                <!-- <span>Total Requirements</span> -->
+              </div>
+          </div>
+          <div class="card-body" *ngIf="manager != undefined ">
+              <div class="body-top" *ngIf="manager.imageUrl != null">
+                  <img src={{manager.imageUrl}}  class="image2"/>
+              </div>
+              <div class="body-top" *ngIf="manager.imageUrl == null" >
+                  <img src="hotlabs/assets/images/user-4.png" class="image2">
+              </div> 
+              <div class="body-bottom">
+                  <h1 class="_black">{{manager.firstName}}</h1>
+                   <span>Mgr of recruiting</span>
+              </div>
+              
+                 
+
+              
+              <div class="delete">
+                  <ion-icon name="ios-trash" (click)="deleteMgrRec()"></ion-icon>
+              </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+      <ion-card class="right">
+        <ion-card-content>
+          <div class="card-body">
+              <div class="body-top">
+                <ion-icon class="_blue" ios="ios-add" md="md-add" (click)="goRecruiter()"></ion-icon>
+              </div>
+              <div class="body-bottom">
+                <h1 class="_black">Recruiter</h1>
+                <!-- <span>Total Candidates</span> -->
+              </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+      
+    </div>
+   
+    
+      <div *ngFor="let rec of recruiters">
+    
+          <div class="container3"style="">
+              <ion-card>
+                  <ion-card-content>
+                      <div class="card-body"  >
+                          <div class="body-top" *ngIf="rec.imageUrl != null">
+                              <img src={{rec.imageUrl}}  class="image3"/>
+                          </div>
+                          <div class="body-top" *ngIf="rec.imageUrl == null" >
+                              <img src="hotlabs/assets/images/user-4.png" class="image3" >
+                          </div>      
+                          <div class="body-bottom" >
+                              <h1 class="_black">{{rec.firstName}}</h1>
+                               <span>Recruiter</span>
+                          </div>
+                      </div>
+                      <div class="delete" style="color:#e32626;font-size: 20px;padding: 5px;float:right">
+                          <ion-icon name="ios-trash" (click)="deleteRecruiter(rec)"></ion-icon>
+                      </div>
+                    </ion-card-content>
+              </ion-card>
+             <!-- <h1 class="_black">{{rec.firstName}}</h1>            -->
+          </div>        
+      </div>
+</div>
+
+</ion-content>

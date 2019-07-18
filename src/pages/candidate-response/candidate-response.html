@@ -1,0 +1,141 @@
+<!--
+  Generated template for the CandidateResponsePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <main-header></main-header>
+    <div class="addBtn"> 
+        <h1>Candidate Evaluation</h1>
+     </div>   
+  </ion-header>
+
+
+<ion-content >
+    <div class="card-container">
+    <ion-card>
+     
+      <ion-card-content class="card-body" style="height:130px"> 
+            <div class="body-bottom">
+                <img  src="assets/imgs/user.png"  class="image"/>
+                <div>
+                  <h2 class="_black">
+                    {{firstName}} {{lastName}}
+                  </h2>
+                 <h2 class="_green">{{finalVerdict}}</h2> 
+                </div>
+               
+           </div> 
+      </ion-card-content>
+    </ion-card>
+    </div>
+    
+    <div class="card-container2" >
+        <ion-card >
+          <ion-card-content class="slide-body" (click)="gotoQuestionResponse()"> 
+                <div class="body-bottom">
+                   <h2 class="_white">Interview Questions</h2>  
+                   <!-- <ion-icon  name="ios-arrow-forward"></ion-icon> -->
+                </div>  
+          </ion-card-content>
+         
+        </ion-card>
+      </div>     
+      <div class="card-container2">
+        <ion-card >
+          <ion-card-content class="slide-body2" (click)="gotoCanditateDetails()"> 
+                <div class="body-bottom">
+                   <h2 class="_black">Candidate Details</h2>  
+                   <!-- <ion-icon  name="ios-arrow-forward"></ion-icon> -->
+                </div>  
+          </ion-card-content>
+          
+        </ion-card>
+
+        
+      </div>     
+      <div class="card-container2" *ngIf="finalVerdict != 'Pending'">
+        <ion-card >
+          <ion-card-content class="slide-body2" (click)="gotoRatings()"> 
+                <div class="body-bottom">
+                   <h2 class="_black">Self Ratings</h2>  
+                   <!-- <ion-icon  name="ios-arrow-forward"></ion-icon> -->
+                </div>  
+          </ion-card-content>
+         
+        </ion-card>  
+      </div>     
+      <div class="card-container2"  *ngIf="finalVerdict != 'Pending'">
+        <ion-card >
+          <ion-card-content class="slide-body2" (click)="gotoQuestions()"> 
+                <div class="body-bottom">
+                   <h2 class="_black">General Questions</h2>  
+                   <!-- <ion-icon  name="ios-arrow-forward"></ion-icon> -->
+                </div>  
+          </ion-card-content>
+         
+        </ion-card>
+
+        
+      </div>     
+       <div class="card-container2"   *ngIf="finalVerdict != 'Pending'" style="border-radius: 0px">
+        <ion-card class="card-panel2">
+          <ion-card-content class="slide-body3"  > 
+              <ion-textarea placeholder="Write a comment"  [(ngModel)]="comment" style="border:1px solid #c8c7cc;margin-top: 2px;height: 92px;">
+                   
+              </ion-textarea>
+              <div class="row">
+                  <div class="col">
+  
+                  </div>
+                </div>
+              <div>
+                  <ion-item style="border: 1px solid #c8c7cc; height: 1px;">
+                      <ion-label color="dark">Feedback</ion-label>
+                    <ion-select [(ngModel)]="finalVerdictChange" >
+                        <ion-option value="" disabled>Select</ion-option>
+                       
+                         <ion-option value="Approve">Approve</ion-option>
+                        <ion-option value="Hold">Hold</ion-option>
+                        <ion-option value="Rejected">Rejected</ion-option>      
+                    </ion-select>
+                  </ion-item>  
+                    
+              </div>
+              <div class="row">
+                <div class="col">
+
+                </div>
+              </div>
+              <ion-list style="border: 1px solid #c8c7cc">
+        
+
+                  <ion-scroll style="width:100%; height:300px" scrollY="true">
+                    
+                     <ion-item *ngFor ="let note of notes">
+                        <b>{{note.userRole}}</b><span>[{{note.userName}}]</span><br>
+                        <span>{{note.notes}} {{note.status}}</span><br>
+                        <span>{{note.updated_DATE | date:'medium'}}</span>
+                     </ion-item>
+                     
+                 </ion-scroll>
+              </ion-list> 
+          </ion-card-content>
+          </ion-card>
+         
+         
+      </div> 
+     
+    
+</ion-content>
+
+    
+
+<ion-footer class="commonFooter">
+    <button ion-button full color='danger' (click)='goBack()'>Cancel</button>
+    
+    <button ion-button full color='dark' (click)="submit()">Submit
+      
+    </button>
+</ion-footer>
