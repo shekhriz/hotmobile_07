@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-navbar hideBackButton>
+    <div class="header">
+      <div class="left"></div>
+      <div class="center">
+        <img src="https://d2ue829my6ap69.cloudfront.net/images/Logo_white.png" alt="">
+      </div>
+      <div class="rigth">
+        <ion-icon ios="ios-close" md="md-close" (click)="closeModal()"></ion-icon>
+      </div>
+    </div>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+    
+   
+   <div class="modal_body" >
+      <div class="form-container">
+        <div class="scroll-content">
+          <div class="heading">
+            <h1 >Submission Type: </h1>
+          </div>
+          <hr>
+           <div class="body" *ngFor="let details of selecteddetails">
+              <div class="inner-body" >
+                  <ion-icon name="contact">  <span ><b>{{details.firstName}} {{details.lastName}}</b></span></ion-icon> 
+              </div>
+              <div class="inner-body" >
+                  <ion-icon name="mail">  <span >{{details.emailId}}</span></ion-icon> 
+              </div>
+              <div class="inner-body" >
+                  <ion-icon name="call">  <span >{{details.cellPhoneNumber}}</span></ion-icon> 
+              </div>
+             
+            <div class="row">
+                <ion-label class="inputlist">Submission Type <span class="astric">*</span>: </ion-label>
+                <ion-select [(ngModel)]="details.tempInterviewType"  >
+                  <ion-option value="" disabled=true>Select</ion-option>
+                 <ion-option  *ngFor="let role of interviewType" >{{role.type}}</ion-option>
+                </ion-select> 
+            </div>
+             <div class="row" >
+                <ion-item>
+                    <ion-label class="inputlist">Screen by <span class="astric">*</span>: </ion-label>
+                    <ion-select [(ngModel)]="details.selectedScr">
+                        <ion-option value="" disabled=true>Select</ion-option>
+                        <ion-option *ngFor="let name of scrData" >{{name.firstName}}</ion-option>
+                    </ion-select>
+                  </ion-item>
+            </div> 
+          </div> 
+          
+         
+        </div>
+      </div>
+    </div>
+    
+</ion-content>
+<ion-footer class="commonFooter">
+  <button ion-button full color='danger' (click)='cancelData()'>Close</button>
+  
+</ion-footer>
