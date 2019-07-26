@@ -12,7 +12,7 @@ page-requirements {
             }
             h1{
                 font-size: 18px;
-                font-weight: bold;
+                //font-weight: bold;
                 flex: 3;
                 margin: 10px;
             }
@@ -22,11 +22,32 @@ page-requirements {
                 color: #fff;
                 border-color:#fff;
                 background-color: #343434;
+                margin-right: 10px;
+                max-width: 50px;
                 
             }
         }
     }
-    
+
+
+    .actionMenu{
+        padding-top: 30px;
+    }
+
+    .button-ios {
+        font-size: 1.3rem !important;
+    }
+
+    button.item-ios:not([detail-none]) .item-inner {
+        background-image: none !important;
+    }
+    .list-ios .item-block .item-inner {
+         border-bottom: none !important; 
+    }
+    .list-md .item-block .item-inner {
+        border-bottom: none !important;
+    }
+
     ion-content{
         
         ion-list{
@@ -45,12 +66,12 @@ page-requirements {
                                 
                             }
                             h1{
-                                font-size: 17px;
+                                font-size: 16px;
                                 font-weight: bold;
                                 overflow: hidden;
                                 text-overflow: ellipsis;
                                 white-space: nowrap;
-                                width: 200px;
+                                width: 250px;
                             }
                             label{
                                 font-size: 14px;

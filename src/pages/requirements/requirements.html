@@ -9,7 +9,7 @@
     <div class="addBtn"> 
             <button ion-button class="btn1" outline (click)="goBack()"><ion-icon name="undo" ></ion-icon></button>
             <h1>Requirements</h1>
-            <button ion-button color="dark" outline (click)="createRequirement()">Create Requirement</button>
+            <button ion-button color="primary" outline (click)="createRequirement()">+</button>
     </div>
 
     <ion-row center >
@@ -33,26 +33,27 @@
               <div class="body-left col">
                   
                   <button ion-item (click)="gotoEditRequirement(client)">
-                      <h1 ><span class="dark_red">[{{ client.positionId }}]</span> &nbsp;  {{client.jobTitle | uppercase }}</h1>
-                
+                      <h1 ><span class="">[{{ client.positionId }}]</span> &nbsp;  {{client.jobTitle | uppercase }}</h1>
+                        
                       <div class="inner-body" >
-                          <label class="inner-left"><b>Client</b> :  <span >{{client.clientName}}</span></label> 
+                          <label class="inner-left">Client :  <span >{{client.clientName}}</span></label> 
                       </div>
                       <div class="inner-body " >
-                          <label class="inner-left"><b>Skills</b> :  <span style="text-overflow:ellipsis ;text-align-last: auto" >{{client.primarySkill}}</span></label> 
+                          <label class="inner-left" style="width:250px;">Skills :  <span style="text-overflow:ellipsis ;text-align-last: auto" >{{client.primarySkill}}</span></label> 
                       </div>
                       <div class="inner-body" >
-                          <label class="inner-left"><b>Status</b> :  <span >{{client.lastMileStone}}</span></label> 
+                          <label class="inner-left">Status :  <span >{{client.lastMileStone}}</span></label> 
                       </div>
                       <div class="inner-body" >
-                            <label class="inner-left"><b>Created Date</b> :  <span >{{client.created_DATE | date :'medium'}}</span></label> 
+                            <label class="inner-left">Created Date :  <span >{{client.created_DATE | date :'medium'}}</span></label> 
                         </div>
                   </button>   
               
              
         </div>
         
-        <div class="body-right col">   
+        
+        <div class="actionMenu">   
             <button ion-item (click)="presentPopover($event,client)" >  
                     <ion-icon ios="ios-menu" md="md-menu" class="popbtn"></ion-icon>
             </button>  
