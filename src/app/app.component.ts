@@ -22,6 +22,8 @@ export class MyApp {
     public restProvider: RestProvider,
     ) {
     platform.ready().then(() => {
+      statusBar.styleDefault();
+      splashScreen.hide();
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.user = this.utilProvider.getSessionUser();
@@ -57,8 +59,6 @@ export class MyApp {
       this.utilProvider.removeAllLocalStorage();
       this.rootPage = LoginPage;
     }
-      statusBar.styleDefault();
-      splashScreen.hide();
     });
   }
 }
