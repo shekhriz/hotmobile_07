@@ -10,6 +10,7 @@ page-technical-question {
                     flex: 1; 
                     background: #bdbdbd;
                      color: black;
+                     max-width: 50px;
                 }
                 // h1{
                 //     font-size: 18px;
@@ -24,6 +25,7 @@ page-technical-question {
                     border-color:#fff;
                     background-color: #343434;
                     margin-left: 0px;
+                    width: 150px;
                 }
                 .btn3{
                  //  flex: 5;
@@ -31,7 +33,8 @@ page-technical-question {
                     color: #fff;
                     border-color:#fff;
                     background-color: #9a9393;
-                    margin-right: 0px
+                    margin-right: 0px;
+                    width: 150px;
                 }
             }
         }
@@ -39,6 +42,19 @@ page-technical-question {
             .row{
                 font-size: 17px;
             }
+        }
+        .button-ios {
+            font-size: 1.3rem !important;
+        }
+        .input-wrapper {
+       
+            font-size: 15px !important;
+        }
+        ion-label {        
+            white-space: inherit !important;
+        }
+        button.item-ios:not([detail-none]) .item-inner {
+            background-image: none !important;
         }
     
     
