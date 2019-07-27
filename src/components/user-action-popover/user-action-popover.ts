@@ -162,7 +162,7 @@ export class UserActionPopoverComponent {
       }
     }
 
-    this.restProvider.downloadResumeById(jsonData,this.token)
+    this.restProvider.downloadCandidateResume(this.token,this.user.id,this.loginUser)
     .then(res => {
       this.util.showToast("Resume downloaded  sucessfuly","SUCCESS");
         //Email Send to user

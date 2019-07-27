@@ -1,25 +1,14 @@
 <!-- Generated template for the CloseReqPopoverComponent component -->
 <ion-header>
-  <ion-navbar hideBackButton>
-    <div class="header">
-      <div class="left"></div>
-      <div class="center">
-        <img src="https://d2ue829my6ap69.cloudfront.net/images/Logo_white.png" alt="">
-      </div>
-      <div class="rigth">
-        <ion-icon ios="ios-close" md="md-close" (click)="closeModal()"></ion-icon>
-      </div>
-    </div>
-  </ion-navbar>
+  <main-header></main-header>
 </ion-header>
 
 <ion-content style="margin-top: 60px;">
+  <h2>
+    Are you sure you want to Close this Requirement: {{jobTitle}}?
+  </h2>
  <ion-list>
-   <ion-item>
-      <h3>
-          Are you sure you want to Close this Requirement: {{jobTitle}}?
-      </h3>
-   </ion-item>
+   
   <ion-item  class="_row tesBottom">
     <ion-label floating>Reason <span class="astric">*</span> : </ion-label>
     <ion-select class="right" [(ngModel)]="reason"  >

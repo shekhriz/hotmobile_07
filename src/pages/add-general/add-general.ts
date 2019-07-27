@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController,ViewController} from 'ionic-angular';
 import { UtilsProvider } from '../../providers/utils/utils';
 import { RestProvider } from '../../providers/rest/rest';
-import { GeneralQuestionPage }  from '../../pages/general-question/general-question';
+import { DisplayQuestionsPage }  from '../../pages/display-questions/display-questions';
 
 /**
  * Generated class for the AddGeneralPage page.
@@ -30,6 +30,8 @@ export class AddGeneralPage {
   type:string;
   myModel: any;
   edited:any;
+  generalModule: boolean ;
+  technicalModule:boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public loadingCtrl: LoadingController,
@@ -38,6 +40,9 @@ export class AddGeneralPage {
     public util: UtilsProvider,) {
       this.token = this.util.getToken();
       this.loginUser = this.util.getSessionUser();
+      this.technicalModule=navParams.get('technicalModule');  
+     // console.log('technicalModule',this.technicalModule);
+
       this.myModel ='';
   }
 
@@ -79,7 +84,7 @@ export class AddGeneralPage {
       }
 
     }
-    console.log("json",jsonData);
+   // console.log("json",jsonData);
     loading.present();   
       this.restProvider.addTechnicalQuestion( this.token,jsonData)
         .then(data => {
@@ -87,16 +92,18 @@ export class AddGeneralPage {
           loading.dismiss();
         //  this.navCtrl.push(GeneralQuestionPage);
           this.util.showToast("Successfully Submitted.","SUCCESS");
-           console.log("data",data); 
+          // console.log("data",data); 
         },error => {
             loading.dismiss();
             this.util.showToast("Something went wrong.","ERROR");
-            console.log(error);
+          //  console.log(error);
         });
   }
 
   goBack(){
-    this.navCtrl.push(GeneralQuestionPage);
+    this.navCtrl.push(DisplayQuestionsPage,this.technicalModule);
+  // console.log("jjjjjjjjjjjj",this.technicalModule)
+
   }
 
 }

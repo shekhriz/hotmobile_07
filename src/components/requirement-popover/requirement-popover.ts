@@ -6,7 +6,7 @@ import { RestProvider } from '../../providers/rest/rest';
 import { GeneralQuestionsPage }  from '../../pages/general-questions/general-questions';
 import { AddResourcePage }  from '../../pages/add-resource/add-resource';
 import { CloseReqPopoverComponent }  from '../../components/close-req-popover/close-req-popover';
-
+import { EditrequirementsPage }  from '../../pages/editrequirements/editrequirements';
 
 @Component({
   selector: 'requirement-popover',
@@ -25,7 +25,7 @@ export class RequirementPopoverComponent {
   details:any;
   interviewType:string;
   interviewArray:Array<Object> = [];
-  
+  clientName:string;
   constructor(  public navCtrl: NavController, 
                 public navParams: NavParams,
                 public util: UtilsProvider,
@@ -41,10 +41,12 @@ export class RequirementPopoverComponent {
                 this.jobTitle = navParams.get('jobTitle');
                 this.addNoMoreCandidates = navParams.get('addNoMoreCandidates');
                 this.lastMileStone = navParams.get('lastMileStone');
+                this.clientName =navParams.get('clientName');
                 this.token = this.util.getToken();
                 this.loginUser = this.util.getSessionUser();
                 this.allowedAction();
                 console.log("hhhhhh", this.lastMileStone);
+                console.log("requirementId", this.requirementId);
                 console.log("addNoMoreCandidates", this.addNoMoreCandidates);
                 this.editCandidate();
   }
@@ -121,8 +123,9 @@ viewLogs(){
 }
 
 ccReq(){
+  this.viewCtrl.dismiss();
   let confirm = this.alertCtrl.create({
-    title: 'Delete question',
+    title: 'CC Requirement',
     message: 'Are you sure you want to create copy of this requitrement?',
     buttons: [
       {
@@ -285,5 +288,10 @@ allowCandidates(){
     ]
   });
   confirm.present();
+}
+gotoEditRequirement(){
+  this.viewCtrl.dismiss();
+  this.navCtrl.push(EditrequirementsPage,{clientId:this.requirementId,clientName:this.clientName})
+ console.log("hello");
 }
 }

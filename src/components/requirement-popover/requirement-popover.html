@@ -6,11 +6,14 @@
     <button ion-item (click)="candidateReq()">
       Candidates
     </button>
+    <button ion-item (click)="gotoEditRequirement()">
+      Edit/Details
+   </button>
     <button ion-item (click)="questionAdd()">
         Questions
      </button>
      <button ion-item (click)="addResources()">
-        Add/view Resources
+        Add Resources
       </button>
       <button  *ngIf="lastMileStone == 'CandidateAdded'" ion-item (click)="addNoCandidates()">
           Add no more Candidates

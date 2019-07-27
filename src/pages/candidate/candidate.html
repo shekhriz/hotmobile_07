@@ -7,9 +7,9 @@
 <ion-header>
   <main-header></main-header>
   <div class="addBtn" *ngIf="candidates != '' "> 
-        <button ion-button color="grey" class="btn1" outline (click)="goBack()"><ion-icon name="undo" ></ion-icon></button>
-         <button ion-button color="dark" class="btn2" outline (click)="AddCandidateDb()">Add from database</button>
-        <button ion-button color="dark" class="btn2" outline (click)="gotoAddCandidate()">Add new candidate</button>
+        <button  color="grey" class="btn1" outline (click)="goBack()"><ion-icon name="undo" ></ion-icon></button>
+         <button  color="dark" class="btn2" outline (click)="AddCandidateDb()">Add from database</button>
+        <button  color="dark" class="btn2" outline (click)="gotoAddCandidate()">Add new candidate</button>
   </div>
   <div class="addBtn" *ngIf="candidates == '' || candidates == 'undefined'"> 
     <button ion-button color="grey"  style="background: #bdbdbd;color: black;" outline (click)="goBack()"><ion-icon name="undo" ></ion-icon></button>
@@ -37,12 +37,12 @@
               
               <div class="body-left" >
                   
-                  <span >{{i + 1}}</span>   
-                  <div ion-item >
                      
+                  <div ion-item >
+                   
                         <div class="inner-body" >
-                                
-                                  <h1 >{{candidate.firstName }} {{candidate.lastName}}</h1>
+                          <span style="font-size: 18px;margin-top: -1px;" ><b>{{i + 1}}</b></span>    
+                          <label class="inner-left"> &nbsp; &nbsp;:   <span style="font-size: 17px"><b>{{candidate.firstName }} {{candidate.lastName}}</b></span></label> 
                          </div>
                          <div class="inner-body" >
                                 <label class="inner-left"><b>Added By</b> &nbsp;:  <span >{{candidate.addedBy}}</span></label> 

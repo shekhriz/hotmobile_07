@@ -28,6 +28,7 @@ export class AddCandidateDbPage {
   selecteddetails=[];
   jobTitle:string;
   interviewType:string;
+  buttonDisabled:boolean=true;
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     public util: UtilsProvider,
@@ -71,29 +72,37 @@ export class AddCandidateDbPage {
   }
  
   radioClicked(details){
+      
+     if(this.selecteddetails.length == 0){
+      this.selecteddetails.push(details);
+     }
 
-    let updateItem = this.selecteddetails.find(this.findIndexToUpdate, details.candidateId);
+     else{
+      let temp = this.selecteddetails.find(o => o.candidateId === details.candidateId);
+      console.log("selected item " , temp);
+      if(temp === undefined){
+        this.selecteddetails.push(details);
+      }
 
-    let index = this.selecteddetails.indexOf(updateItem);
+      else{
+        this.selecteddetails = this.selecteddetails.filter(function( obj ) {
+          return obj.candidateId !== details.candidateId;
+        });
+       }
+     }
 
-   // console.log(index);
-
-    if(index > -1){
-      this.selecteddetails.splice(index, 1);
-      console.log(this.selecteddetails);
+  
+   
+   // let updateItem = this.selecteddetails.find(this.findIndexToUpdate, details.candidateId);
+    if(this.selecteddetails.length>0){
+      this.buttonDisabled = false;
     }
     else{
-      this.selecteddetails.push(details);
-      console.log(this.selecteddetails);
+      this.buttonDisabled = true;
     }
-
-   
-
   }
 
-  findIndexToUpdate(details) { 
-        return details.candidateId === this;
-  }
+  
 
 
   goBack(){

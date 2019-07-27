@@ -6,6 +6,8 @@ import { RequirementPopoverComponent } from '../../components/requirement-popove
 import { AddrequirementPage }  from '../../pages/addrequirement/addrequirement';
 import { EditrequirementsPage }  from '../../pages/editrequirements/editrequirements';
 import { HomePage } from '../home/home';
+import { CandidatePage }  from '../../pages/candidate/candidate';
+//import { Calendar } from '@ionic-native/calendar/ngx';
 
 /**
  * Generated class for the RequirementsPage page.
@@ -29,10 +31,12 @@ loginUser:any = {};
     public restProvider:RestProvider,
     public util: UtilsProvider,
     public loadingCtrl:LoadingController,
-    public popoverCtrl: PopoverController ) {
+    public popoverCtrl: PopoverController ,
+    ) {
       let token = this.util.getToken();
       this.loginUser = this.util.getSessionUser();
       this.getRequirement( token,this.loginUser);
+      
   }
 
   ionViewDidLoad() {
@@ -53,37 +57,35 @@ loginUser:any = {};
       loading.dismiss();
     });
   }
-
-  // presentPopover(myEvent,requirement){
-  //   let popover = this.popoverCtrl.create(RequirementPopoverComponent,{reqId:requirement.positionId,
-  //     workflowId:requirement.workflowId,actMgrId:requirement.actMgrId});
-  //   popover.present({
-  //    ev: myEvent  
-     
-  //   });
-  //   console.log( "workflowId",requirement.workflowId);
   
-
-  // }
+  
   presentPopover(myEvent,requirement){
     let popover = this.popoverCtrl.create(RequirementPopoverComponent,requirement);
     popover.present({
      ev: myEvent  
      
     });
-    console.log( "workflowId",requirement);
+    console.log( "popover",popover);
   
 
   }
-  gotoEditRequirement(client){
-    this.navCtrl.push(EditrequirementsPage,{clientId:client.positionId,clientName:client.clientName})
-    console.log("positionId",client);
-  }
+  // gotoEditRequirement(client){
+  //   this.navCtrl.push(EditrequirementsPage,{clientId:client.positionId,clientName:client.clientName})
+  //   console.log("positionId",client);
+  // }
   createRequirement(){
     this.navCtrl.push(AddrequirementPage)
    // console.log("id",clientId);
   }
   goBack(){
     this.navCtrl.push(HomePage)
+  }
+
+  candidateReq(requirement){
+  
+    this.navCtrl.push(CandidatePage,{reqId:requirement.positionId, workflowId:requirement.workflowId,actMgrId:  requirement.actMgrId,jobTitle:requirement.jobTitle, interviewType:requirement.interviewArray });
+
+  console.log("interviewTypekk",requirement.interviewType)
+  
   }
 }

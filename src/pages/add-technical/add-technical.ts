@@ -36,6 +36,9 @@ export class AddTechnicalPage {
   myModel: any;
   finalAnswer:string;
   selectedType:any;
+  generalModule: boolean ;
+  technicalModule:boolean ;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public loadingCtrl: LoadingController,
     public restProvider: RestProvider,
@@ -43,6 +46,9 @@ export class AddTechnicalPage {
     public util: UtilsProvider,) {
       this.token = this.util.getToken();
       this.loginUser = this.util.getSessionUser();
+      this.generalModule=navParams.get('generalModule');  
+     // console.log('generalModule',this.generalModule);
+
       this.myModel=[];
       this.domainNames();
   }
@@ -61,7 +67,7 @@ export class AddTechnicalPage {
     this.restProvider.domain(this.token)
     .then((res:any)=>{
       this.domain = res;
-     console.log("clientid",this.domain);
+    // console.log("clientid",this.domain);
     },errrr=>{
     });
   }
@@ -88,7 +94,7 @@ export class AddTechnicalPage {
       this.myModel.push(this.option6);
     }
 
-    console.log("myModel",this.myModel);
+    //console.log("myModel",this.myModel);
   }
   submit(){
     let loading = this.loadingCtrl.create({
@@ -120,22 +126,24 @@ export class AddTechnicalPage {
       }
 
     }
-    console.log("json",jsonData);
+    //console.log("json",jsonData);
     loading.present();   
       this.restProvider.addTechnicalQuestion( this.token,jsonData)
         .then(data => {
          
           loading.dismiss();
           this.util.showToast("Successfully Submitted.","SUCCESS");
-           console.log("data",data); 
+        //   console.log("data",data); 
         },error => {
             loading.dismiss();
             this.util.showToast("Something went wrong.","ERROR");
-            console.log(error);
+        //  console.log(error);
         });
   }
 
   goBack(){
-    this.navCtrl.push(DisplayQuestionsPage);
+    this.viewCtrl.dismiss(DisplayQuestionsPage);
+  //  console.log("generalModuleccccccccccccc",this.generalModule)
+  
   }
 }

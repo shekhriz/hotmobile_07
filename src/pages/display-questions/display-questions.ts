@@ -2,9 +2,11 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController,ViewController,ModalController} from 'ionic-angular';
 import { UtilsProvider } from '../../providers/utils/utils';
 import { RestProvider } from '../../providers/rest/rest';
-import { GeneralQuestionPage }  from '../../pages/general-question/general-question';
+//import { GeneralQuestionPage }  from '../../pages/general-question/general-question';
 import { AddTechnicalPage }  from '../../pages/add-technical/add-technical';
 import { EditTechnicalModelPage }  from '../../pages/edit-technical-model/edit-technical-model';
+import { AddGeneralPage }  from '../../pages/add-general/add-general';
+import { HomePage } from '../home/home';
 
 
 /**
@@ -23,7 +25,9 @@ export class DisplayQuestionsPage {
   reqId:string;
   token:string;
   technicals:string;
-
+  generals:string;
+  technicalModule:boolean;
+  generalModule: boolean ;
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public loadingCtrl: LoadingController,
     public restProvider: RestProvider,
@@ -31,15 +35,18 @@ export class DisplayQuestionsPage {
     public util: UtilsProvider,
     public modalCtrl:ModalController) {
     this.token = this.util.getToken();
-  
+      
    
     this.techquestion();
+    this.genquestion();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TechnicalQuestionPage');
   }
  techquestion(){
+  this.generalModule = false;
+  this.technicalModule = true;
   
     let loading = this.loadingCtrl.create({
       content: 'Please wait...'
@@ -59,14 +66,52 @@ export class DisplayQuestionsPage {
     });
     
   }
+  genquestion(){
+    this.technicalModule = false;
+    this.generalModule = true;
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+    
+    loading.present();
+    this.restProvider.genQuestion(this.token)
+    .then((data:any) => {
+        this.generals = data;
+        loading.dismiss();
+     //console.log("hhhhhasdsdhh",this.generals);
+      
+    },error => {
+        this.util.showToast("Something went wrong.","ERROR");
+       // loading.dismiss();
+       // console.log(error);
+    });
+    
+  }
   gotoGeneral(){
-    this.navCtrl.push(GeneralQuestionPage);
+    this.technicalModule = false;
+    this.generalModule = true;
+  }
+  gotoTechnical(){
+    this.generalModule = false;
+    this.technicalModule = true;
+   
+
+console.log('this.technicalModule',this.technicalModule)
   }
   goBack(){
-    this.navCtrl.pop();
+    this.navCtrl.push(HomePage)
+
  }
  addTechnical(){
-  this.navCtrl.push(AddTechnicalPage);
+  this.navCtrl.push(AddTechnicalPage, {'generalModule':this.generalModule=false});
+// console.log("this.generalModule",this.generalModule);
+
+ 
+ }
+ addGeneral(){
+  this.navCtrl.push(AddGeneralPage, {'technicalModule':this.technicalModule=false});
+// console.log("this.technicalModule",this.technicalModule);
+
  }
  editQusetion(id){
   let chooseModal = this.modalCtrl.create(EditTechnicalModelPage,{userid:id});
