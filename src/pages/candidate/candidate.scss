@@ -11,10 +11,11 @@ page-candidate {
                     flex: 1; 
                     background: #bdbdbd;
                      color: black;
+                     max-width: 50px;
                 }
                 h1{
                     font-size: 18px;
-                    font-weight: bold;
+                    //font-weight: bold;
                     flex: 3;
                     margin: 10px;
                 }
@@ -25,7 +26,8 @@ page-candidate {
                     color: #fff;
                     border-color:#fff;
                     background-color: #343434;
-                    margin-left: 5px;
+                    margin-left: 10px;
+                    max-width: 70px;
                 }
             }
         }

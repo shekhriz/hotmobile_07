@@ -9,6 +9,7 @@ page-general-questions {
                 flex: 1; 
                 background: #bdbdbd;
                  color: black;
+                 max-width: 50px;
             }
             // h1{
             //     font-size: 18px;
@@ -23,6 +24,7 @@ page-general-questions {
                 border-color:#fff;
                 background-color: #343434;
                 margin-right: 0px;
+                width: 150px;
             }
             .btn3{
                 //flex: 5;
@@ -31,18 +33,32 @@ page-general-questions {
                 border-color:#fff;
                 background-color: #9a9393;
                 margin-left: 0px;
+                width: 150px;
             }
         }
+    }
+    .button-ios {
+        font-size: 1.3rem !important;
     }
     ion-card{
         .row{
             font-size: 17px;
         }
     }
+    .input-wrapper {
+       
+        font-size: 15px !important;
+    }
+    ion-label {        
+        white-space: inherit !important;
+    }
+    button.item-ios:not([detail-none]) .item-inner {
+        background-image: none !important;
     .btn4{
         border-color: #222;
         color: white;
         background-color: #343434;
         float: right
     }
+}
 }

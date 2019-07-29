@@ -351,9 +351,6 @@ export class RestProvider {
       headerss.set('Authorization', token)
       headerss.append('Accept', 'application/json;odata=verbose')
       headerss.append('Content-Type','application/json');
-      headerss.append('Access-Control-Allow-Origin', '*')
-      headerss.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS')
-      headerss.append('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Z-Key')
      
      this.https.put(this.apiUrl+'hot/user/update', JSON.stringify(data),{headers: headerss
     }).toPromise()
@@ -371,10 +368,6 @@ export class RestProvider {
         headers: new HttpHeaders().set('Authorization', token)
                 .append('Accept', 'application/json;odata=verbose')
                 .append('Content-Type','application/json')
-                .append('Access-Control-Allow-Origin', '*')
-                .append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS')
-                .append('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Z-Key')
-              
        }).subscribe(data => {
         resolve(data);
       }, err => {
@@ -434,20 +427,7 @@ export class RestProvider {
       });
     });
   }
-  downloadCandidateResume(token,id,user){
-    return new Promise(resolve => {
-      this.http.get(this.apiUrl+'hot/candidate/resume/'+id+'/'+user.id+'/'+user.firstName+'/'+user.lastName+'/'
-      +user.userName+'/'+user.role,{
-        headers: new HttpHeaders().set('Authorization', token)
-                .append('Accept', 'application/json;odata=verbose')
-                .append('Content-Type','application/json')
-       }).subscribe(data => {
-        resolve(data);
-      }, err => {
-        console.log(err);
-      });
-    });
-   } 
+
 
   getRequirements(token,user) {
     return new Promise(resolve => {
@@ -814,7 +794,20 @@ export class RestProvider {
       });
   }); 
 }
-
+downloadCandidateResume(token,id,user){
+  return new Promise(resolve => {
+    this.http.get(this.apiUrl+'hot/candidate/resume/'+id+'/'+user.id+'/'+user.firstName+'/'+user.lastName+'/'
+    +user.userName+'/'+user.role,{
+      headers: new HttpHeaders().set('Authorization', token)
+              .append('Accept', 'application/json;odata=verbose')
+              .append('Content-Type','application/json')
+     }).subscribe(data => {
+      resolve(data);
+    }, err => {
+      console.log(err);
+    });
+  });
+ } 
  saveCandidateResume(token,id){
   return new Promise(resolve => {
     this.http.get(this.apiUrl+'hot/save/candidate/resume/'+id,{
@@ -1885,101 +1878,6 @@ interviewResponse(token,linkId,id,candidateId){
 screenerFeedBack(token,data){
   return new Promise((resolve, reject) => {
     this.http.post(this.apiUrl+'hot/req/screener/feedBack',JSON.stringify(data), {
-      headers: new HttpHeaders().set('Authorization', token)
-              .append('Accept', 'application/json;odata=verbose')
-              .append('Content-Type','application/json')
-     }).subscribe(res => {
-        resolve(res);
-      }, (err) => {
-        reject(err);
-      });
-  });
-}
-settings(token){
-  return new Promise(resolve => {
-    this.http.get(this.apiUrl+'hot/settings',{
-      headers: new HttpHeaders().set('Authorization', token)
-              .append('Accept', 'application/json;odata=verbose')
-              .append('Content-Type','application/json')
-     }).subscribe(data => {
-      resolve(data);
-    }, err => {
-      console.log(err);
-    });
-  });  
-}
-settingsUpdate(token,data){
-  return new Promise((resolve, reject) => {
-    this.http.put(this.apiUrl+'hot/settings/update/', JSON.stringify(data),{
-      headers: new HttpHeaders().set('Authorization', token)
-              .append('Accept', 'application/json;odata=verbose')
-              .append('Content-Type','application/json')
-     }).subscribe(res => {
-     //  console.log('i m here success',res);
-        resolve(res);
-      }, (err) => {
-        console.log('i m here error',err);
-        reject(err);
-      });
-  });  
-}
-recruiterScore(token){
-  return new Promise(resolve => {
-    this.http.get(this.apiUrl+'hot/score/recruiterScore',{
-      headers: new HttpHeaders().set('Authorization', token)
-              .append('Accept', 'application/json;odata=verbose')
-              .append('Content-Type','application/json')
-     }).subscribe(data => {
-      resolve(data);
-    }, err => {
-      console.log(err);
-    });
-  });  
-}
-recruiterScoring(token,data){
-  return new Promise((resolve, reject) => {
-    this.http.post(this.apiUrl+'hot/score/recruiterScoring',JSON.stringify(data), {
-      headers: new HttpHeaders().set('Authorization', token)
-              .append('Accept', 'application/json;odata=verbose')
-              .append('Content-Type','application/json')
-     }).subscribe(res => {
-        resolve(res);
-      }, (err) => {
-        reject(err);
-      });
-  });
-}
-updateRecruiter(token,data){
-  return new Promise((resolve, reject) => {
-    this.http.put(this.apiUrl+'hot/score/update/recruiterScoringSchema', JSON.stringify(data),{
-      headers: new HttpHeaders().set('Authorization', token)
-              .append('Accept', 'application/json;odata=verbose')
-              .append('Content-Type','application/json')
-     }).subscribe(res => {
-     //  console.log('i m here success',res);
-        resolve(res);
-      }, (err) => {
-        console.log('i m here error',err);
-        reject(err);
-      });
-  });  
-}
-subVendorDetails(token){
-  return new Promise(resolve => {
-    this.http.get(this.apiUrl+'hot/score/get/subVendorDetails',{
-      headers: new HttpHeaders().set('Authorization', token)
-              .append('Accept', 'application/json;odata=verbose')
-              .append('Content-Type','application/json')
-     }).subscribe(data => {
-      resolve(data);
-    }, err => {
-      console.log(err);
-    });
-  });  
-}
-subvendorScoringSchema(token,data){
-  return new Promise((resolve, reject) => {
-    this.http.post(this.apiUrl+'hot/score/subvendorScoringSchema',JSON.stringify(data), {
       headers: new HttpHeaders().set('Authorization', token)
               .append('Accept', 'application/json;odata=verbose')
               .append('Content-Type','application/json')

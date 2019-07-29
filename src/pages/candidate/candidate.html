@@ -7,9 +7,10 @@
 <ion-header>
   <main-header></main-header>
   <div class="addBtn" *ngIf="candidates != '' "> 
-        <button  color="grey" class="btn1" outline (click)="goBack()"><ion-icon name="undo" ></ion-icon></button>
-         <button  color="dark" class="btn2" outline (click)="AddCandidateDb()">Add from database</button>
-        <button  color="dark" class="btn2" outline (click)="gotoAddCandidate()">Add new candidate</button>
+       <button ion-button class="btn1" outline (click)="goBack()"><ion-icon name="undo" ></ion-icon></button>
+       <h1>Candidates</h1>        
+         <button ion-button color="dark" class="btn2" outline (click)="AddCandidateDb()">+ Db</button>
+        <button ion-button color="dark" class="btn2" outline (click)="gotoAddCandidate()">+ New</button>
   </div>
   <div class="addBtn" *ngIf="candidates == '' || candidates == 'undefined'"> 
     <button ion-button color="grey"  style="background: #bdbdbd;color: black;" outline (click)="goBack()"><ion-icon name="undo" ></ion-icon></button>

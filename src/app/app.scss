@@ -144,6 +144,16 @@ ion-header{
   
 }
 
+
+.button-ios {
+  font-size: 1.3rem !important;
+}
+
+button.item-ios:not([detail-none]) .item-inner {
+  background-image: none !important;
+}
+
+
 .datepicker-wrapper {
   height: 60%;
   background-color: white;

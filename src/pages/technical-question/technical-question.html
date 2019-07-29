@@ -8,14 +8,72 @@
     <main-header></main-header>
     <div class="addBtn"> 
           <button ion-button class="btn1" outline (click)="goBack()"><ion-icon name="undo" ></ion-icon></button>
-          <button ion-button  class="btn3" outline (click)="gotoGeneral()" >General Questions</button>
-          <button ion-button  class="btn2" outline >Technical Questions</button>
+          <button ion-button  class="btn2" outline >General</button>
+          <button ion-button  class="btn3" outline (click)="gotoTechnicals()">Technical</button>
           
     </div>
 </ion-header>
 
 
 <ion-content padding>
+        <ion-list>       
+                <div >
+                        <div class="row" style="float: right;"  *ngIf="lastMileStone == 'TechScreenerAdded'">
+                                <button ion-button  class="btn4" (click)="addQuestionDb()" >Add From db</button>
+                                <button ion-button  class="btn4"  (click)="createNew()">Create New</button>
+                        </div>
+                        
+                        <div class="row" *ngIf="technicals == '' || technicals == 'undefined'">
+                            <div class="col">
+                                    <h1>No records found</h1>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                <div class="body" *ngFor="let question of technicals;let i=index">
+                 
+                      <div class="">
+                          
+                          <button ion-item>
+                              <h2 style="font-weight: 500"><span class="">[{{i + 1}}]</span> &nbsp;  {{question.questionName}}</h2>
+                               
+                              <div class="row">
+                                    <div class="col">
+                                      <b>Type</b> : <span>{{question.type}}</span>
+                                    </div>
+                                    <div class="col">
+                                        <b>Author</b> : <span>{{question.createdUserName}}</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                      <b>Domain</b> : <span>{{question.domain}}</span>
+                                    </div>
+                                    <div class="col">
+                                        <b>Level</b> : <span>{{question.level}}</span>
+                                    </div>
+                                </div>                            
+                              
+                          </button>   
+                      
+                     
+                </div> 
+                
+                
+                <!-- <div class="actionMenu">   
+                    <button ion-item (click)="presentPopover($event,client)" >  
+                            <ion-icon ios="ios-menu" md="md-menu" class="popbtn"></ion-icon>
+                    </button>  
+                </div> -->
+                 
+                   
+                </div>          
+                  
+        </ion-list>
+
+
+      <!-- <ion-card *ngFor ="let question of technicals;let i=index">
     <div >
             <div class="row" style="float: right;"  *ngIf="lastMileStone == 'TechnicalQuestionsAdded'">
                     <button ion-button  class="btn4" (click)="addQuestionDb()" >Add From db</button>
@@ -55,7 +113,13 @@
                     </div>
                 </div>
           </ion-card-content>
-      </ion-card>
+      </ion-card> -->
+      <!-- <div class="row" *ngIf="technicals == '' || technicals == 'undefined'">
+          <div class="col">
+              <h3>No records found</h3>
+          </div>
+      </div>
+      </ion-card> -->
      
 </ion-content>
 
