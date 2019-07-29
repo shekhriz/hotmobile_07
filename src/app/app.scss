@@ -143,3 +143,18 @@ ion-header{
   //font-size: 17px;
   
 }
+
+
+.button-ios {
+  font-size: 1.3rem !important;
+}
+
+button.item-ios:not([detail-none]) .item-inner {
+  background-image: none !important;
+}
+.list-ios .item-block .item-inner {
+   border-bottom: none !important; 
+}
+.list-md .item-block .item-inner {
+  border-bottom: none !important;
+}
