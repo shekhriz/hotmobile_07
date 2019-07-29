@@ -23,7 +23,7 @@ page-technical-question {
                     float: right;
                     color: #fff;
                     border-color:#fff;
-                    background-color: #343434;
+                    background-color: #9a9393;                    
                     margin-left: 0px;
                     width: 150px;
                 }
@@ -32,7 +32,7 @@ page-technical-question {
                     float: right;
                     color: #fff;
                     border-color:#fff;
-                    background-color: #9a9393;
+                    background-color: #343434;
                     margin-right: 0px;
                     width: 150px;
                 }
@@ -42,6 +42,9 @@ page-technical-question {
             .row{
                 font-size: 17px;
             }
+        }
+        .innerAtb{
+            font-size: 12px !important;
         }
         .button-ios {
             font-size: 1.3rem !important;

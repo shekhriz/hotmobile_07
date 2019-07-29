@@ -42,38 +42,39 @@
                   <div ion-item >
                    
                         <div class="inner-body" >
-                          <span style="font-size: 18px;margin-top: -1px;" ><b>{{i + 1}}</b></span>    
-                          <label class="inner-left"> &nbsp; &nbsp;:   <span style="font-size: 17px"><b>{{candidate.firstName }} {{candidate.lastName}}</b></span></label> 
+                          <span style="font-size: 18px;margin-top: -1px;" ><b>{{i + 1}}:</b></span>    
+                          <label class="inner-left"> &nbsp;   <span style="font-size: 17px"><b>{{candidate.firstName }} {{candidate.lastName}}</b></span></label> 
                          </div>
-                         <div class="inner-body" >
-                                <label class="inner-left"><b>Added By</b> &nbsp;:  <span >{{candidate.addedBy}}</span></label> 
-                         </div>
-                         <div class="inner-body" >
-                                <label class="inner-left"><b>Status</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  <span >{{candidate.status}} </span>
+                         <div class="innerContent">
+                            <div class="inner-body" >
+                                <label class="inner-left">Added By &nbsp;:  <span >{{candidate.addedBy}}</span></label> 
+                            </div>
+                            <div class="inner-body" >
+                                <label class="inner-left">Status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  <span >{{candidate.status}} </span>
                                   
                                 </label> 
                         </div> 
-                        <div class="inner-body" >
-                            <label class="inner-left"><b>Result</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  <span >{{candidate.finalVerdict}}</span> 
+                        <!-- <div class="inner-body" >
+                            <label class="inner-left">Result &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  <span >{{candidate.finalVerdict}}</span> 
                               <span *ngIf="candidate.linkExpired == false" class="_green" (click)="candidateLinkActive(candidate)" > [Link Active]</span>
                               <span *ngIf="candidate.linkExpired == true" class="_red"> [Link Expired]</span>
                             </label>
-                         </div>
+                         </div> -->
                          
-                        <div class="inner-body" >
-                                <label class="inner-left"><b>Contact</b> &nbsp;&nbsp;&nbsp;&nbsp;:  <span >{{candidate.cellPhoneNumber}}</span></label> 
-                        </div>
+                        
                          
                          <div class="inner-body" >
-                            <label class="inner-left"><b>Email id</b> &nbsp;&nbsp;&nbsp;&nbsp;:  <span >{{candidate.emailId}}</span></label> 
+                            <label class="inner-left">Email id &nbsp;&nbsp;&nbsp;&nbsp;:  <span >{{candidate.emailId}}</span></label> 
                          </div>
+                         </div>
+                         
                     </div> 
                    
               </div>
              
               
 
-              <div class="body-right">   
+              <div class="actionMenu">   
                   <button ion-item (click)="presentPopover($event,candidate)" >  
                           <ion-icon ios="ios-menu" md="md-menu" class="popbtn"></ion-icon>
                   </button>  

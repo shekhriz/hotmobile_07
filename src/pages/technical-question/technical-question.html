@@ -8,8 +8,8 @@
     <main-header></main-header>
     <div class="addBtn"> 
           <button ion-button class="btn1" outline (click)="goBack()"><ion-icon name="undo" ></ion-icon></button>
-          <button ion-button  class="btn2" outline >General</button>
-          <button ion-button  class="btn3" outline (click)="gotoTechnicals()">Technical</button>
+          <button ion-button  class="btn2" outline (click)="gotoGeneral()">General</button>
+          <button ion-button  class="btn3" outline>Technical</button>
           
     </div>
 </ion-header>
@@ -36,9 +36,9 @@
                       <div class="">
                           
                           <button ion-item>
-                              <h2 style="font-weight: 500"><span class="">[{{i + 1}}]</span> &nbsp;  {{question.questionName}}</h2>
+                              <h3 style="font-weight: 500"><span class="">[{{i + 1}}]</span> &nbsp;  {{question.questionName}}</h3>
                                
-                              <div class="row">
+                              <div class="row innerAtb">
                                     <div class="col">
                                       <b>Type</b> : <span>{{question.type}}</span>
                                     </div>
@@ -46,7 +46,7 @@
                                         <b>Author</b> : <span>{{question.createdUserName}}</span>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row innerAtb">
                                     <div class="col">
                                       <b>Domain</b> : <span>{{question.domain}}</span>
                                     </div>
