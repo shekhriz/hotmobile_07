@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, LoadingController,ViewController} 
 import { UtilsProvider } from '../../providers/utils/utils';
 import { RestProvider } from '../../providers/rest/rest';
 import { DisplayQuestionsPage }  from '../../pages/display-questions/display-questions';
+import { RequirementsPage } from '../../pages/requirements/requirements';
 
 /**
  * Generated class for the AddTechnicalPage page.
@@ -145,5 +146,10 @@ export class AddTechnicalPage {
     this.viewCtrl.dismiss(DisplayQuestionsPage);
   //  console.log("generalModuleccccccccccccc",this.generalModule)
   
+  }
+  close(){
+   // this.viewCtrl.dismiss();
+    this.navCtrl.push(RequirementsPage)
+
   }
 }

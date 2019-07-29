@@ -50,6 +50,7 @@ export class FeedbackFormPage {
     public util: UtilsProvider,
     public loadingCtrl: LoadingController,
     public restProvider: RestProvider,
+    public viewCtrl: ViewController,
     public navParams: NavParams) {
     this.token = this.util.getToken();
     this.cId =navParams.get('cId');
@@ -201,5 +202,7 @@ export class FeedbackFormPage {
           
          
   }
- 
+  goBack(){
+    this.viewCtrl.dismiss();
+  }
 }

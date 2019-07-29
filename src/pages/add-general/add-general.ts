@@ -4,6 +4,8 @@ import { UtilsProvider } from '../../providers/utils/utils';
 import { RestProvider } from '../../providers/rest/rest';
 import { DisplayQuestionsPage }  from '../../pages/display-questions/display-questions';
 
+import { RequirementsPage } from '../../pages/requirements/requirements';
+
 /**
  * Generated class for the AddGeneralPage page.
  *
@@ -105,5 +107,9 @@ export class AddGeneralPage {
   // console.log("jjjjjjjjjjjj",this.technicalModule)
 
   }
+  close(){
+   // this.viewCtrl.dismiss();
+    this.navCtrl.push(RequirementsPage)
 
+  }
 }

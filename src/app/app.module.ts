@@ -98,9 +98,14 @@ import { AddNotesPage }  from '../pages/add-notes/add-notes';
 import { ViewAllRecruiterPage }  from '../pages/view-all-recruiter/view-all-recruiter';
 import { ViewAllScreenerPage }  from '../pages/view-all-screener/view-all-screener';
 import { FeedbackFormPage }  from '../pages/feedback-form/feedback-form';
+import { TechnicalDbPage }  from '../pages/technical-db/technical-db';
+import { GeneralDbPage }  from '../pages/general-db/general-db';
+import { DatePickerPage }  from '../pages/date-picker/date-picker';
 
 
+//import { Calendar } from '@ionic-native/calendar/ngx';
 
+import { DatePickerModule } from 'ion-datepicker';
 
 
 
@@ -190,8 +195,10 @@ import { FeedbackFormPage }  from '../pages/feedback-form/feedback-form';
     AddNotesPage,
     ViewAllRecruiterPage,
     ViewAllScreenerPage,
-    FeedbackFormPage
-
+    FeedbackFormPage,
+    TechnicalDbPage,
+    GeneralDbPage,
+    DatePickerPage
   ],
 
   imports: [ 
@@ -200,7 +207,7 @@ import { FeedbackFormPage }  from '../pages/feedback-form/feedback-form';
     HttpClientModule,
     SelectSearchableModule,
     StarRatingModule,
-    
+    DatePickerModule,
   
 
     IonicModule.forRoot(MyApp ,{}, {
@@ -339,7 +346,10 @@ import { FeedbackFormPage }  from '../pages/feedback-form/feedback-form';
     AddNotesPage,
     ViewAllRecruiterPage,
     ViewAllScreenerPage,
-    FeedbackFormPage
+    FeedbackFormPage,
+    TechnicalDbPage,
+    GeneralDbPage,
+    DatePickerPage
 
   ],
   providers: [
@@ -350,7 +360,8 @@ import { FeedbackFormPage }  from '../pages/feedback-form/feedback-form';
     UtilsProvider,
     File,
     FileTransfer,
-    DocumentViewer
+    DocumentViewer,
+    //Calendar
     
   ]
 })

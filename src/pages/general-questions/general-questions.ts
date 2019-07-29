@@ -3,7 +3,9 @@ import { IonicPage, NavController, NavParams, LoadingController,ViewController} 
 import { UtilsProvider } from '../../providers/utils/utils';
 import { RestProvider } from '../../providers/rest/rest';
 import { TechnicalQuestionPage }  from '../../pages/technical-question/technical-question';
-
+import { RequirementsPage } from '../../pages/requirements/requirements';
+import { GeneralDbPage }  from '../../pages/general-db/general-db';
+import { AddGeneralPage }  from '../../pages/add-general/add-general';
 /**
  * Generated class for the GeneralQuestionsPage page.
  *
@@ -18,6 +20,7 @@ import { TechnicalQuestionPage }  from '../../pages/technical-question/technical
 })
 export class GeneralQuestionsPage {
   reqId:string;
+  lastMileStone:string;
   token:string;
   generals:Array<Object> = [];
 
@@ -28,6 +31,9 @@ export class GeneralQuestionsPage {
     public util: UtilsProvider,) {
     this.token = this.util.getToken();
     this.reqId = navParams.get('reqId');
+    this.lastMileStone = navParams.get('lastMileStone');
+   
+
     this.genquestionById();
     }
   ionViewDidLoad() {
@@ -35,7 +41,9 @@ export class GeneralQuestionsPage {
   }
 
   goBack(){
-    this.navCtrl.pop();
+    //this.navCtrl.pop();
+    this.navCtrl.push(RequirementsPage);
+
  }
   genquestionById(){
   
@@ -58,7 +66,15 @@ export class GeneralQuestionsPage {
     
   }
   gotoTechnicals(){
-    this.navCtrl.push(TechnicalQuestionPage,{reqId:this.reqId});
+    this.navCtrl.push(TechnicalQuestionPage,{reqId:this.reqId,lastMileStone:this.lastMileStone});
   console.log("adyasa",this.reqId);
+  console.log("lastMileStone",this.lastMileStone);
+  }
+  addQuestionDb(){
+    this.navCtrl.push(GeneralDbPage,{reqId:this.reqId});
+  }
+  createNew(){
+  this.navCtrl.push(AddGeneralPage);
+
   }
 }

@@ -721,6 +721,45 @@ export class RestProvider {
       });
     });
   }
+  technicalQuestionsDb(token,candidateId){
+    return new Promise(resolve => {
+      this.http.get(this.apiUrl+'hot/question/'+candidateId+'/'+'technical',{
+        headers: new HttpHeaders().set('Authorization', token)
+                .append('Accept', 'application/json;odata=verbose')
+                .append('Content-Type','application/json')
+       }).subscribe(data => {
+        resolve(data);
+      }, err => {
+        console.log(err);
+      });
+    });
+  }
+  generalQuestionsDb(token,candidateId){
+    return new Promise(resolve => {
+      this.http.get(this.apiUrl+'hot/question/'+candidateId+'/'+'general',{
+        headers: new HttpHeaders().set('Authorization', token)
+                .append('Accept', 'application/json;odata=verbose')
+                .append('Content-Type','application/json')
+       }).subscribe(data => {
+        resolve(data);
+      }, err => {
+        console.log(err);
+      });
+    });
+  }
+  addTecQuestionFromDB(token,data){
+    return new Promise((resolve, reject) => {
+      this.http.post(this.apiUrl+'hot/requirement/addQuestionFromDB', JSON.stringify(data),{
+        headers: new HttpHeaders().set('Authorization', token)
+                .append('Accept', 'application/json;odata=verbose')
+                .append('Content-Type','application/json')
+       }).subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
   generalQuestions(token,candidateId){
     return new Promise(resolve => {
       this.http.get(this.apiUrl+'hot/requirement/'+candidateId+'/'+'general',{
@@ -2131,4 +2170,5 @@ AvailabilityTime(token){
     });
   });  
 }
+
   }

@@ -131,6 +131,6 @@ export class CandidatePage {
   AddCandidateDb(){
     this.interviewArray =[this.interviewType];
     this.navCtrl.push(AddCandidateDbPage,{reqId:this.reqId,workflowId:this.workflowId,actMgrId:this.actMgrId,jobTitle:this.jobTitle,interviewType:this.interviewType});
-    console.log("adyasa,workflowId",this.workflowId,"interviewType",this.interviewType);
+    console.log("adyasa,workflowId",this.reqId,this.workflowId,"interviewType",this.interviewType);
   }
 }
