@@ -13,10 +13,7 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class RestProvider {
-  apiUrl = "https://qa.hookedontalent.com/"
- // apiUrl = "http://localhost:8100/"
- 
-//apiUrl = '/';
+  apiUrl = "https://qa.hookedontalent.com/";
   constructor(public http: HttpClient,public https: Http) {
     console.log('Hello RestProvider Provider');
 
@@ -49,7 +46,7 @@ export class RestProvider {
 
   getToken(data) {
     return new Promise((resolve, reject) => {
-      this.http.post(this.apiUrl+'security/auth', JSON.stringify(data),{
+      this.http.post(this.apiUrl+'/security/auth/', JSON.stringify(data),{
         headers: new HttpHeaders().set('Content-Type', 'application/json')
        }).subscribe(res => {
           resolve(res);
@@ -61,7 +58,7 @@ export class RestProvider {
 
   login(data,token) {
     return new Promise((resolve, reject) => {
-    this.http.post(this.apiUrl+'hot/login', JSON.stringify(data),{
+    this.http.post(this.apiUrl+'/hot/login/', JSON.stringify(data),{
       headers: new HttpHeaders().set('Authorization', token)
                .append('Accept', 'application/json;odata=verbose')
                .append('Content-Type','application/json')
@@ -83,7 +80,7 @@ export class RestProvider {
     console.log('token1111',token);
     return new Promise((resolve, reject) => {
    
-        this.http.post(this.apiUrl+'hot/newLogin', JSON.stringify(data),{
+        this.http.post(this.apiUrl+'/hot/newLogin/', JSON.stringify(data),{
           headers: new HttpHeaders().set('Authorization',token)
                    .append('Access-Control-Allow-Origin', '*')
                    .append('Access-Control-Allow-Credentials', 'true')
