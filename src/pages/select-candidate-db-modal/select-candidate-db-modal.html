@@ -1,80 +1,79 @@
 <ion-header>
-  <ion-navbar hideBackButton>
-    <div class="header">
-      <div class="left"></div>
-      <div class="center">
-        <img src="https://d2ue829my6ap69.cloudfront.net/images/Logo_white.png" alt="">
-      </div>
-      <div class="rigth">
-        <!-- <ion-icon ios="ios-close" md="md-close" (click)="closeModal()"></ion-icon> -->
-      </div>
-    </div>
-  </ion-navbar>
+    <main-header></main-header>
 </ion-header>
-<ion-content padding>
-    
-   
-   <div class="modal_body" >
-      <div class="form-container">
-        <div class="scroll-content">
-          <div class="heading">
-            <h1 >Submission Type: </h1>
-          </div>
-          <hr>
-           <div class="body" *ngFor="let details of selecteddetails">
-              <div class="inner-body" >
-                  <ion-icon name="contact">  <span ><b>{{details.firstName}} {{details.lastName}}</b></span></ion-icon> 
-              </div>
-              <div class="inner-body" >
-                  <ion-icon name="mail">  <span >{{details.emailId}}</span></ion-icon> 
-              </div>
-              <div class="inner-body" >
-                  <ion-icon name="call">  <span >{{details.cellPhoneNumber}}</span></ion-icon> 
-              </div>
-             
-            <div class="row">
-                <ion-label class="inputlist">Submission Type <span class="astric">*</span>: </ion-label>
-                
-                <select [(ngModel)]="details.mySubType"  (ngModelChange)="onSelectChange($event)" >
-                  <option value="" disabled="true" >Select </option>
-                  <option value="One Way" >One Way </option>
-                  <option value="Prospect" >Prospect</option> 
-                  <option value="Zoom" >Zoom</option> 
-                  
-                </select>
+  <ion-content padding>
+      
+     
+     <div class="modal_body" >
+        <div class="form-container">
+          <div class="scroll-content">
+            <div class="heading">
+              <h1 >Submission Type: </h1>
             </div>
-            
-             <div class="row" *ngIf="details.mySubType == 'Zoom' ">
-               
-                    <ion-label class="inputlist">Screen by <span class="astric">*</span>: </ion-label>
-                    <select [(ngModel)]="details.selectedScr"  >
-                        <option value="" disabled="true">Select</option>
-                        <option [value]="data.firstName" *ngFor="let data of scrData" >{{data.firstName}}</option>
-                    </select>
-                    
-                    <!-- <calendar [eventSource]="eventSource"
-                    [calendarMode]="calendar.mode"
-                    [currentDate]="calendar.currentDate"
-                    (onCurrentDateChanged)="onCurrentDateChanged($event)"
-                    (onRangeChanged)="reloadSource(startTime, endTime)"
-                    (onEventSelected)="onEventSelected($event)"
-                    (onTitleChanged)="onViewTitleChanged($event)"
-                    (onTimeSelected)="onTimeSelected($event)"
-                    step="30">
-                  </calendar> -->
-                  <div class="datepicker datepicker-dropdown dropdown-menu2 datepicker-orient-left datepicker-orient-bottom" style="display: block; top: 854.676px; left: 346.974px; z-index: 1060;"><div class="datepicker-days" style="display: block;"><table class=" table-condensed"><thead><tr><th class="prev" style="visibility: hidden;">«</th><th colspan="5" class="datepicker-switch">July 2019</th><th class="next" style="visibility: visible;">»</th></tr><tr><th class="dow">Su</th><th class="dow">Mo</th><th class="dow">Tu</th><th class="dow">We</th><th class="dow">Th</th><th class="dow">Fr</th><th class="dow">Sa</th></tr></thead><tbody><tr><td class="old disabled day">30</td><td class="disabled day">1</td><td class="disabled day">2</td><td class="disabled day">3</td><td class="disabled day">4</td><td class="disabled day">5</td><td class="disabled day">6</td></tr><tr><td class="disabled day">7</td><td class="disabled day">8</td><td class="disabled day">9</td><td class="disabled day">10</td><td class="disabled day">11</td><td class="disabled day">12</td><td class="disabled day">13</td></tr><tr><td class="disabled day">14</td><td class="disabled day">15</td><td class="disabled day">16</td><td class="disabled day">17</td><td class="disabled day">18</td><td class="disabled day">19</td><td class="disabled day">20</td></tr><tr><td class="disabled day">21</td><td class="disabled day">22</td><td class="disabled day">23</td><td class="disabled day">24</td><td class="disabled day">25</td><td class="disabled day">26</td><td class="active day">27</td></tr><tr><td class="day">28</td><td class="day">29</td><td class="day">30</td><td class="day">31</td><td class="new day">1</td><td class="new day">2</td><td class="new day">3</td></tr><tr><td class="new day">4</td><td class="new day">5</td><td class="new day">6</td><td class="new day">7</td><td class="new day">8</td><td class="new day">9</td><td class="new day">10</td></tr></tbody><tfoot><tr><th colspan="7" class="today" style="display: none;">Today</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div><div class="datepicker-months" style="display: none;"><table class="table-condensed"><thead><tr><th class="prev" style="visibility: hidden;">«</th><th colspan="5" class="datepicker-switch">2019</th><th class="next" style="visibility: visible;">»</th></tr></thead><tbody><tr><td colspan="7"><span class="month disabled">Jan</span><span class="month disabled">Feb</span><span class="month disabled">Mar</span><span class="month disabled">Apr</span><span class="month disabled">May</span><span class="month disabled">Jun</span><span class="month active">Jul</span><span class="month">Aug</span><span class="month">Sep</span><span class="month">Oct</span><span class="month">Nov</span><span class="month">Dec</span></td></tr></tbody><tfoot><tr><th colspan="7" class="today" style="display: none;">Today</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div><div class="datepicker-years" style="display: none;"><table class="table-condensed"><thead><tr><th class="prev" style="visibility: hidden;">«</th><th colspan="5" class="datepicker-switch">2010-2019</th><th class="next" style="visibility: visible;">»</th></tr></thead><tbody><tr><td colspan="7"><span class="year old disabled">2009</span><span class="year disabled">2010</span><span class="year disabled">2011</span><span class="year disabled">2012</span><span class="year disabled">2013</span><span class="year disabled">2014</span><span class="year disabled">2015</span><span class="year disabled">2016</span><span class="year disabled">2017</span><span class="year disabled">2018</span><span class="year active">2019</span><span class="year new">2020</span></td></tr></tbody><tfoot><tr><th colspan="7" class="today" style="display: none;">Today</th></tr><tr><th colspan="7" class="clear" style="display: none;">Clear</th></tr></tfoot></table></div></div>
-            </div> 
             <hr>
-          </div> 
-          
-         
+             <div class="body" *ngFor="let details of selecteddetails">
+                <div class="inner-body" >
+                    <ion-icon name="contact">  <span ><b>{{details.firstName}} {{details.lastName}}</b></span></ion-icon> 
+                </div>
+                <div class="inner-body" >
+                    <ion-icon name="mail">  <span >{{details.emailId}}</span></ion-icon> 
+                </div>
+                <div class="inner-body" >
+                    <ion-icon name="call">  <span >{{details.cellPhoneNumber}}</span></ion-icon> 
+                </div>
+               
+              <div class="row">
+                  <ion-label class="inputlist">Submission Type <span class="astric">*</span>: </ion-label>
+                  
+                  <select [(ngModel)]="details.mySubType"  (ngModelChange)="onSelectChange($event)" >
+                    <option value="" disabled="true" >Select </option>
+                    <option value="One Way" >One Way </option>
+                    <option value="Prospect" >Prospect</option> 
+                    <option value="Zoom" >Zoom</option> 
+                    
+                  </select>
+              </div>
+              
+               <div  *ngIf="details.mySubType == 'Zoom' ">
+                  
+                  <div class="row">
+                    <div class="col">
+                        <ion-label class="inputlist">Screen by <span class="astric">*</span>: </ion-label>
+                    </div>
+                    <div class="col">
+                        <select [(ngModel)]="details.selectedScr"  >
+                            <option value="" disabled="true">Select</option>
+                            <option [value]="data.firstName" *ngFor="let data of scrData" >{{data.firstName}}</option>
+                        </select>
+                    </div>   
+                  </div>
+
+                  <!-- <div class="row">
+                    <div class="col">
+                        <ion-label class="inputlist">Interview Date <span class="astric">*</span>: </ion-label>
+                    </div>
+                    <div class="col">
+                        <span style="font-size: 20px" ion-datepicker [(value)]="initDate" locale="en-US" clear class="ScheduleDate">
+                            <span>{{initDate | date}}<ion-icon name="clipboard" item-left ></ion-icon> </span>
+                        </span>
+                    </div>
+                  </div> -->
+                    
+                   
+                     
+              </div> 
+              <hr>
+            </div> 
+            
+           
+          </div>
         </div>
       </div>
-    </div>
+      
+  </ion-content>
+ 
+  <ion-footer class="commonFooter">
+    <button ion-button full color='danger' (click)='cancelData()'>Close</button>
+    <button ion-button full color='dark' (click)='submitCandidate()'>Submit</button>
     
-</ion-content>
-<ion-footer class="commonFooter">
-  <button ion-button full color='danger' (click)='cancelData()'>Close</button>
-  <button ion-button full color='dark' (click)='submitCandidate()'>Submit</button>
-  
-</ion-footer>
+  </ion-footer>

@@ -701,6 +701,45 @@ export class RestProvider {
       });
     });
   }
+  technicalQuestionsDb(token,candidateId){
+    return new Promise(resolve => {
+      this.http.get(this.apiUrl+'hot/question/'+candidateId+'/'+'technical',{
+        headers: new HttpHeaders().set('Authorization', token)
+                .append('Accept', 'application/json;odata=verbose')
+                .append('Content-Type','application/json')
+       }).subscribe(data => {
+        resolve(data);
+      }, err => {
+        console.log(err);
+      });
+    });
+  }
+  generalQuestionsDb(token,candidateId){
+    return new Promise(resolve => {
+      this.http.get(this.apiUrl+'hot/question/'+candidateId+'/'+'general',{
+        headers: new HttpHeaders().set('Authorization', token)
+                .append('Accept', 'application/json;odata=verbose')
+                .append('Content-Type','application/json')
+       }).subscribe(data => {
+        resolve(data);
+      }, err => {
+        console.log(err);
+      });
+    });
+  }
+  addTecQuestionFromDB(token,data){
+    return new Promise((resolve, reject) => {
+      this.http.post(this.apiUrl+'hot/requirement/addQuestionFromDB', JSON.stringify(data),{
+        headers: new HttpHeaders().set('Authorization', token)
+                .append('Accept', 'application/json;odata=verbose')
+                .append('Content-Type','application/json')
+       }).subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
   generalQuestions(token,candidateId){
     return new Promise(resolve => {
       this.http.get(this.apiUrl+'hot/requirement/'+candidateId+'/'+'general',{
@@ -1851,6 +1890,183 @@ screenerFeedBack(token,data){
         reject(err);
       });
   });
+}
+
+revertSubVendorSchema(token,data){
+  return new Promise((resolve, reject) => {
+    this.http.put(this.apiUrl+'hot/score/revert/subVendorSchema', JSON.stringify(data),{
+      headers: new HttpHeaders().set('Authorization', token)
+              .append('Accept', 'application/json;odata=verbose')
+              .append('Content-Type','application/json')
+     }).subscribe(res => {
+     //  console.log('i m here success',res);
+        resolve(res);
+      }, (err) => {
+        console.log('i m here error',err);
+        reject(err);
+      });
+  });  
+}
+tsDetails(token){
+  return new Promise(resolve => {
+    this.http.get(this.apiUrl+'hot/score/get/tsDetails',{
+      headers: new HttpHeaders().set('Authorization', token)
+              .append('Accept', 'application/json;odata=verbose')
+              .append('Content-Type','application/json')
+     }).subscribe(data => {
+      resolve(data);
+    }, err => {
+      console.log(err);
+    });
+  });  
+}
+tsScoringSchema(token,data){
+  return new Promise((resolve, reject) => {
+    this.http.post(this.apiUrl+'hot/score/tsScoringSchema',JSON.stringify(data), {
+      headers: new HttpHeaders().set('Authorization', token)
+              .append('Accept', 'application/json;odata=verbose')
+              .append('Content-Type','application/json')
+     }).subscribe(res => {
+        resolve(res);
+      }, (err) => {
+        reject(err);
+      });
+  });
+}
+revertTsSchema(token,data){
+  return new Promise((resolve, reject) => {
+    this.http.put(this.apiUrl+'hot/score/revert/tsSchema', JSON.stringify(data),{
+      headers: new HttpHeaders().set('Authorization', token)
+              .append('Accept', 'application/json;odata=verbose')
+              .append('Content-Type','application/json')
+     }).subscribe(res => {
+     //  console.log('i m here success',res);
+        resolve(res);
+      }, (err) => {
+        console.log('i m here error',err);
+        reject(err);
+      });
+  });  
+}
+
+changePassword(token,data){
+  return new Promise((resolve, reject) => {
+    this.http.post(this.apiUrl+'hot/user/changePassword',JSON.stringify(data), {
+      headers: new HttpHeaders().set('Authorization', token)
+              .append('Accept', 'application/json;odata=verbose')
+              .append('Content-Type','application/json')
+     }).subscribe(res => {
+        resolve(res);
+      }, (err) => {
+        reject(err);
+      });
+  });
+}
+getLibraryVideos(token){
+  return new Promise(resolve => {
+    this.http.get(this.apiUrl+'hot/user/getLibraryVideos',{
+      headers: new HttpHeaders().set('Authorization', token)
+              .append('Accept', 'application/json;odata=verbose')
+              .append('Content-Type','application/json')
+     }).subscribe(data => {
+      resolve(data);
+    }, err => {
+      console.log(err);
+    });
+  });  
+}
+deleteVideo(token,id) {
+  let url = 'hot/user/deleteVideo/'+id;
+  return new Promise(resolve => {
+    this.http.delete(this.apiUrl+url,{
+      headers: new HttpHeaders().set('Authorization', token)
+              .append('Accept', 'application/json;odata=verbose')
+              .append('Content-Type','application/json')
+     }).subscribe(res => {
+      resolve(res);
+    }, err => {
+      console.log(err);
+    });
+  });
+}
+
+getRequirementCandidateStatics(token,id){
+  return new Promise(resolve => {
+    this.http.get(this.apiUrl+'hot/getRequirementCandidateStatics/'+id,{
+      headers: new HttpHeaders().set('Authorization', token)
+              .append('Accept', 'application/json;odata=verbose')
+              .append('Content-Type','application/json')
+     }).subscribe(data => {
+      resolve(data);
+    }, err => {
+      console.log(err);
+    });
+  });  
+}
+addcandidates(token,data){
+  return new Promise((resolve, reject) => {
+    this.http.post(this.apiUrl+'hot/requirement/addcandidates',JSON.stringify(data), {
+      headers: new HttpHeaders().set('Authorization', token)
+              .append('Accept', 'application/json;odata=verbose')
+              .append('Content-Type','application/json')
+     }).subscribe(res => {
+        resolve(res);
+      }, (err) => {
+        reject(err);
+      });
+  });
+}
+fromFrontend(token,data){
+  return new Promise((resolve, reject) => {
+    this.http.post(this.apiUrl+'hot/requirement/addcandidates/mail/fromFrontend',JSON.stringify(data), {
+      headers: new HttpHeaders().set('Authorization', token)
+              .append('Accept', 'application/json;odata=verbose')
+              .append('Content-Type','application/json')
+     }).subscribe(res => {
+        resolve(res);
+      }, (err) => {
+        reject(err);
+      });
+  });
+}
+zoomApi(token,data){
+  return new Promise((resolve, reject) => {
+    this.http.post(this.apiUrl+'hot/integrate/zoomApi',JSON.stringify(data), {
+      headers: new HttpHeaders().set('Authorization', token)
+              .append('Accept', 'application/json;odata=verbose')
+              .append('Content-Type','application/json')
+     }).subscribe(res => {
+        resolve(res);
+      }, (err) => {
+        reject(err);
+      });
+  });
+}
+skypeApi(token,data){
+  return new Promise((resolve, reject) => {
+    this.http.post(this.apiUrl+'hot/generateToken/skypeApi',JSON.stringify(data), {
+      headers: new HttpHeaders().set('Authorization', token)
+              .append('Accept', 'application/json;odata=verbose')
+              .append('Content-Type','application/json')
+     }).subscribe(res => {
+        resolve(res);
+      }, (err) => {
+        reject(err);
+      });
+  });
+}
+AvailabilityTime(token){
+  return new Promise(resolve => {
+    this.http.get(this.apiUrl+'hot/meetingRooms/Availability/30-07-2019/11:00:45',{
+      headers: new HttpHeaders().set('Authorization', token)
+              .append('Accept', 'application/json;odata=verbose')
+              .append('Content-Type','application/json')
+     }).subscribe(data => {
+      resolve(data);
+    }, err => {
+      console.log(err);
+    });
+  });  
 }
 
   }

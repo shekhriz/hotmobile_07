@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController,ViewController,ModalController} from 'ionic-angular';
 import { UtilsProvider } from '../../providers/utils/utils';
 import { RestProvider } from '../../providers/rest/rest';
-//import { GeneralQuestionPage }  from '../../pages/general-question/general-question';
+//import { GeneralQuestionsPage }  from '../../pages/general-questions/general-questions';
 import { AddTechnicalPage }  from '../../pages/add-technical/add-technical';
 import { EditTechnicalModelPage }  from '../../pages/edit-technical-model/edit-technical-model';
 import { AddGeneralPage }  from '../../pages/add-general/add-general';

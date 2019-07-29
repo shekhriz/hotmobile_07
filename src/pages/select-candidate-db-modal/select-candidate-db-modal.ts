@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams,ViewController,LoadingController } from 'ionic-angular';
 import { UtilsProvider } from '../../providers/utils/utils';
 import { RestProvider } from '../../providers/rest/rest';
+import { CandidatePage }  from '../../pages/candidate/candidate';
+import { DatePickerPage }  from '../../pages/date-picker/date-picker';
+import { DatePickerDirective } from 'ion-datepicker';
 /**
  * Generated class for the SelectCandidateDbModalPage page.
  *
@@ -39,6 +42,22 @@ export class SelectCandidateDbModalPage {
   willingToRelocate:string;
   tempArray:Array<Object> = [];
   tempArray2:Array<Object> = [];
+  workflowId:any;
+
+
+  @ViewChild(DatePickerDirective) public datepicker: DatePickerDirective;
+  public localDate: Date = new Date();
+  public initDate: Date = new Date();
+  public initDate2: Date = new Date(2015, 1, 1);
+  public minDate: Date = new Date(2018, 2, 31);
+  public maxDate: Date = new Date(2018, 11, 10);
+  public disabledDates: Date[] = [new Date(2017, 7, 14)];
+  public localeString = {
+    monday: true,
+    weekdays: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
+    months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
+  };
+  public min: Date = new Date();
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public restProvider: RestProvider,
@@ -47,8 +66,9 @@ export class SelectCandidateDbModalPage {
     public viewCtrl : ViewController) {
     this.selecteddetails = navParams.get('selecteddetails');
    
-
+    
     this.reqId = navParams.get('reqId');
+    this.workflowId = navParams.get('workflowId');
     this.loginUser = this.util.getSessionUser();
     // Object.keys(this.selecteddetails).forEach(key => {
     //   this.selecteddetails[key].mySubType != "";
@@ -68,7 +88,26 @@ export class SelectCandidateDbModalPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad SelectCandidateDbModalPage');
   }
-  
+
+  ////////////date///////
+  public ngOnInit() {
+
+  }
+  public Log(stuff): void {
+    this.datepicker.open();
+    this.datepicker.changed.subscribe(() => console.log('test'));
+    console.log(stuff);
+  }
+
+  public event(data: Date): void {
+    this.localDate = data;
+  }
+  setDate(date: Date) {
+    console.log(date);
+    this.initDate = date;
+  }
+
+//////////end///////////////
 
   onSelectChange(selectedValue) {
     
@@ -91,7 +130,7 @@ export class SelectCandidateDbModalPage {
   submitCandidate(){
    
     let loading = this.loadingCtrl.create({
-      content: 'Please wait...'
+      content: 'Please wait while candidate adding...'
     });
     if(this.submissionType == undefined || this.submissionType == ""){
       this.util.showToast("Please select Submission Type.","ERROR");
@@ -159,9 +198,10 @@ console.log("candidateIdnmmmm",this.tempArray);
     }
     jsonData.user.groupsSet=[];
     jsonData.user.technicalScreenerDetailsSkillsSet=[];
-    this.restProvider.addcandidates(this.token,jsonData)
+    this.restProvider.AvailabilityTime(this.token)
+    
     .then((data:any) => {  
-      this.restProvider.AvailabilityTime(this.token)
+      this.restProvider.addcandidates(this.token,jsonData) 
       .then((data:any) => {
           this.restProvider.candidates(this.token,this.reqId,this.loginUser)
         
@@ -189,14 +229,14 @@ console.log("candidateIdnmmmm",this.tempArray);
         jsonData2.user.userImage= null;
         this.restProvider.fromFrontend(this.token,jsonData2)
         .then((data:any) => {
-         // this.navCtrl.push(CandidatePage);
-          
+          this.navCtrl.push(CandidatePage,{reqId:this.reqId,workflowId:this.workflowId});
+
           if(this.selecteddetails[key].mySubType == "Zoom" ||this.selecteddetails[key].mySubType == "Skype"){
           let jsonData3={
           
               candidateEmail:this.selecteddetails[key].emailId,
               candidateId:this.selecteddetails[key].candidateId,
-              date:"28-03-2019", 
+              date:"30-07-2019", 
               jwtDetails:{
                 emailId:this.loginUser.emailId,
                 firstName:this.loginUser.firstName,
@@ -217,8 +257,19 @@ console.log("candidateIdnmmmm",this.tempArray);
            if(this.selecteddetails[key].mySubType == "Zoom"){
             this.restProvider.zoomApi(this.token,jsonData3)
             .then((data:any) => {
-             // this.navCtrl.push(CandidatePage);
-             
+              
+              this.restProvider.refresh(this.token)
+              .then((data:any) => {
+               
+               this.navCtrl.push(CandidatePage,{reqId:this.reqId,workflowId:this.workflowId});
+
+              },error => {
+                this.util.showToast("Something went wrong.","ERROR");
+               
+               // console.log(error);
+            });
+           
+          
             },error => {
                 this.util.showToast("Something went wrong.","ERROR");
                
@@ -226,16 +277,17 @@ console.log("candidateIdnmmmm",this.tempArray);
             });
            }
 
-           if(this.selecteddetails[key].mySubType =='Skype'){
-            this.restProvider.skypeApi(this.token,jsonData3)
-            .then((data:any) => {
-            // this.navCtrl.push(CandidatePage);
-            },error => {
-                this.util.showToast("Something went wrong.","ERROR");
+          //  if(this.selecteddetails[key].mySubType =='Skype'){
+          //   this.restProvider.skypeApi(this.token,jsonData3)
+          //   .then((data:any) => {
+          //     this.navCtrl.push(CandidatePage,this.reqId,this.workflowId,data);
+
+        
+          //   },error => {
+          //       this.util.showToast("Something went wrong.","ERROR");
            
-               // console.log(error);
-            });
-           }
+          //   });
+          //  }
           }else{
             
           }
@@ -264,5 +316,13 @@ console.log("candidateIdnmmmm",this.tempArray);
     this.viewCtrl.dismiss();
 
   }
+  selectdate(){
+    this.navCtrl.push(DatePickerPage);
+  }
+
+
+ 
+ /////////date///
+  
  
 }

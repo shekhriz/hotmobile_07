@@ -54,5 +54,11 @@ page-general-questions {
     }
     button.item-ios:not([detail-none]) .item-inner {
         background-image: none !important;
+    .btn4{
+        border-color: #222;
+        color: white;
+        background-color: #343434;
+        float: right
     }
+}
 }

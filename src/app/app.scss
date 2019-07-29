@@ -152,9 +152,25 @@ ion-header{
 button.item-ios:not([detail-none]) .item-inner {
   background-image: none !important;
 }
-.list-ios .item-block .item-inner {
-   border-bottom: none !important; 
+
+
+.datepicker-wrapper {
+  height: 60%;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 80%
 }
-.list-md .item-block .item-inner {
-  border-bottom: none !important;
+.datepicker-wrapper .datepicker-header {
+  color: white;
+  background-color: #009688;
+  display: none;
+  flex-flow: column;
+}
+.datepicker-footer {
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+  padding-bottom: 50%;
 }

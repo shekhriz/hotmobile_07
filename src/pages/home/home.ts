@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild  } from '@angular/core';
 import { NavController,MenuController,LoadingController ,ModalController } from 'ionic-angular';
 import { UtilsProvider } from '../../providers/utils/utils';
 import { RestProvider } from '../../providers/rest/rest';
@@ -9,11 +9,12 @@ import { RequirementsPage } from '../../pages/requirements/requirements';
 import { CandidateSidePage }  from '../../pages/candidate-side/candidate-side';
 import { ViewAllRecruiterPage }  from '../../pages/view-all-recruiter/view-all-recruiter';
 import { ViewAllScreenerPage }  from '../../pages/view-all-screener/view-all-screener';
-
+import { DatePickerDirective } from 'ion-datepicker';
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
+  providers: [DatePickerDirective],
 })
 export class HomePage {
   requirementStatics:any;  

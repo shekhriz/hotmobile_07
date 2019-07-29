@@ -61,7 +61,9 @@ console.log("interviewTypekk",this.interviewType)
 }
 questionAdd(){
   this.viewCtrl.dismiss();
-  this.appCtrl.getRootNav().push(GeneralQuestionsPage,{reqId:this.requirementId});
+  this.appCtrl.getRootNav().push(GeneralQuestionsPage,{reqId:this.requirementId,lastMileStone:this.lastMileStone});
+    console.log('this.lastMileStone',this.lastMileStone);
+
 }
 allowedAction(){
   let jsonContact = {
