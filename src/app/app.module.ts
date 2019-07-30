@@ -106,7 +106,7 @@ import { DatePickerPage }  from '../pages/date-picker/date-picker';
 //import { Calendar } from '@ionic-native/calendar/ngx';
 
 import { DatePickerModule } from 'ion-datepicker';
-
+import * as moment from 'moment';
 
 
 
@@ -208,7 +208,7 @@ import { DatePickerModule } from 'ion-datepicker';
     SelectSearchableModule,
     StarRatingModule,
     DatePickerModule,
-  
+    
 
     IonicModule.forRoot(MyApp ,{}, {
       links: [
@@ -361,7 +361,7 @@ import { DatePickerModule } from 'ion-datepicker';
     File,
     FileTransfer,
     DocumentViewer,
-    //Calendar
+    
     
   ]
 })

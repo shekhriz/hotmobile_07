@@ -2052,9 +2052,9 @@ skypeApi(token,data){
       });
   });
 }
-AvailabilityTime(token,date){
+AvailabilityTime(token,date,time){
   return new Promise(resolve => {
-    this.http.get(this.apiUrl+'hot/meetingRooms/Availability/'+date+'/1:00:45',{
+    this.http.get(this.apiUrl+'hot/meetingRooms/Availability/'+date+'/'+time,{
       headers: new HttpHeaders().set('Authorization', token)
               .append('Accept', 'application/json;odata=verbose')
               .append('Content-Type','application/json')

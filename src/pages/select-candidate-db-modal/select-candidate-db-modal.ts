@@ -5,7 +5,8 @@ import { RestProvider } from '../../providers/rest/rest';
 import { CandidatePage }  from '../../pages/candidate/candidate';
 import { DatePickerPage }  from '../../pages/date-picker/date-picker';
 import { DatePickerDirective } from 'ion-datepicker';
-
+import moment from 'moment';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 /**
  * Generated class for the SelectCandidateDbModalPage page.
  *
@@ -45,10 +46,13 @@ export class SelectCandidateDbModalPage {
   tempArray2:Array<Object> = [];
   workflowId:any;
   timezone:string;
-
+  initTime:string;
+  finalDate:string;
+  finalTime:string;
   @ViewChild(DatePickerDirective) public datepicker: DatePickerDirective;
   public localDate: Date = new Date();
   public initDate: Date = new Date();
+
   public localeString = {
     monday: true,
     weekdays: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
@@ -63,7 +67,11 @@ export class SelectCandidateDbModalPage {
     public viewCtrl : ViewController) {
     this.selecteddetails = navParams.get('selecteddetails');
    
-    
+    this.finalDate = moment(this.initDate).format("DD-MM-YYYY");
+  
+console.log('newdt',this.finalDate);
+
+
     this.reqId = navParams.get('reqId');
     this.workflowId = navParams.get('workflowId');
     this.loginUser = this.util.getSessionUser();
@@ -81,7 +89,7 @@ export class SelectCandidateDbModalPage {
    
 
   }
-
+return;
   ionViewDidLoad() {
     console.log('ionViewDidLoad SelectCandidateDbModalPage');
   }
@@ -89,6 +97,12 @@ export class SelectCandidateDbModalPage {
   ////////////date///////
   public ngOnInit() {
 
+  }
+  showTime(){
+    this.initTime;
+    this.finalTime=moment(this.initTime).format("HH:mm:ss");
+    console.log('init',this.initTime);
+    console.log('this.finalTime',this.initTime);
   }
   public Log(stuff): void {
     this.datepicker.open();
@@ -102,6 +116,8 @@ export class SelectCandidateDbModalPage {
   setDate(date: Date) {
     console.log(date);
     this.initDate = date;
+    
+
   }
 
 //////////end///////////////
@@ -197,21 +213,23 @@ console.log("candidateIdnmmmm",this.tempArray);
     }
     jsonData.user.groupsSet=[];
     jsonData.user.technicalScreenerDetailsSkillsSet=[];
-    
-    
-      this.restProvider.addcandidates(this.token,jsonData) 
-      .then((data:any) => {
-          this.restProvider.candidates(this.token,this.reqId,this.loginUser)
-        
-          .then((data:any) => {
+    if(this.finalDate != '' || this.finalDate != undefined || this.finalDate != null){
+        this.restProvider.AvailabilityTime(this.token,this.finalDate,this.finalTime)
+        .then((data:any) => {  
+        },error => {
+          this.util.showToast("Something went wrong.","ERROR");
+        });
+     }                  
+        this.restProvider.addcandidates(this.token,jsonData) 
+        .then((data:any) => {
+            this.restProvider.candidates(this.token,this.reqId,this.loginUser)
+            .then((data:any) => {
 
-            loading.dismiss();
-            
-          },error => {
-              this.util.showToast("Something went wrong.","ERROR");
-         
-         // console.log(error);
-      });
+              loading.dismiss();
+              
+            },error => {
+                this.util.showToast("Something went wrong.","ERROR");
+        });
       //
       Object.keys(this.selecteddetails).forEach(key => {  
         let jsonData2={
@@ -229,12 +247,12 @@ console.log("candidateIdnmmmm",this.tempArray);
         .then((data:any) => {
           this.navCtrl.push(CandidatePage,{reqId:this.reqId,workflowId:this.workflowId});
 
-          if(this.selecteddetails[key].mySubType == "Zoom" ||this.selecteddetails[key].mySubType == "Skype"){
+        if(this.selecteddetails[key].mySubType == "Zoom" ||this.selecteddetails[key].mySubType == "Skype"){
           let jsonData3={
           
               candidateEmail:this.selecteddetails[key].emailId,
               candidateId:this.selecteddetails[key].candidateId,
-              date:this.initDate, 
+              date:this.finalDate, 
               jwtDetails:{
                 emailId:this.loginUser.emailId,
                 firstName:this.loginUser.firstName,
@@ -249,69 +267,40 @@ console.log("candidateIdnmmmm",this.tempArray);
                 screenByUserEmail: this.scrData[key].emailId,
                 screenByUserId: this.scrData[key].id,
                 submissionType: this.selecteddetails[key].mySubType,
-                time:"16:05:00",
+                time:this.finalTime,
                 timezone:this.timezone
-          }
+               }
         
-           if(this.selecteddetails[key].mySubType == "Zoom"){
-            this.restProvider.AvailabilityTime(this.token,this.initDate)
-    
-            .then((data:any) => {  
-            this.restProvider.zoomApi(this.token,jsonData3)
-            .then((data:any) => {
-              
-              this.restProvider.refresh(this.token)
-              .then((data:any) => {
-               
-               this.navCtrl.push(CandidatePage,{reqId:this.reqId,workflowId:this.workflowId});
+                if(this.selecteddetails[key].mySubType == "Zoom"){
+                       
+                          this.restProvider.zoomApi(this.token,jsonData3)
+                          .then((data:any) => {
+                      
+                            this.restProvider.refresh(this.token)
+                            .then((data:any) => {
+                            
+                                this.navCtrl.push(CandidatePage,{reqId:this.reqId,workflowId:this.workflowId});
+                            
+                            } ,error => {
+                            this.util.showToast("Something went wrong.","ERROR");
+                            });
 
-              },error => {
-                this.util.showToast("Something went wrong.","ERROR");
-               
-               // console.log(error);
-            });
-           
+                          },error => {
+                            this.util.showToast("Something went wrong.","ERROR"); 
+                        });
+    
+                }
+            }
           
+          });
             },error => {
                 this.util.showToast("Something went wrong.","ERROR");
-               
-               // console.log(error);
             });
-           } ,error => {
+          },error => {
               this.util.showToast("Something went wrong.","ERROR");
-             
-             // console.log(error);
           });
-           }
-
-          //  if(this.selecteddetails[key].mySubType =='Skype'){
-          //   this.restProvider.skypeApi(this.token,jsonData3)
-          //   .then((data:any) => {
-          //     this.navCtrl.push(CandidatePage,this.reqId,this.workflowId,data);
-
-        
-          //   },error => {
-          //       this.util.showToast("Something went wrong.","ERROR");
-           
-          //   });
-          //  }
-          }else{
-            
-          }
-          
-          });
-        },error => {
-            this.util.showToast("Something went wrong.","ERROR");
-         
-           // console.log(error);
-        });
-      //
-      },error => {
-          this.util.showToast("Something went wrong.","ERROR");
-        
-      });
-   }
-    
+ 
+  }  //if 
   
   closeModal(){
     this.navCtrl.pop();

@@ -50,14 +50,26 @@
 
                   <div class="row">
                     <div class="col">
-                        <ion-label class="inputlist">Interview Date <span class="astric">*</span>: </ion-label>
+                        <ion-label classs="inputlist">Interview Date <span class="astric">*</span>: </ion-label>
                     </div>
                     <div class="col">
                         <span style="font-size: 20px" ion-datepicker [(value)]="initDate" [min]="initDate" locale="en-US" clear class="ScheduleDate">
-                            <span>{{initDate | date}}<ion-icon name="clipboard" item-left ></ion-icon> </span>
+                            <span>{{initDate | date :'shortDate'}}<ion-icon name="clipboard" item-left ></ion-icon> </span>
                         </span>
                     </div>
                   </div>
+
+                  <div class="row">
+                    <div class="col">
+                     <ion-label class="inputlist">Select Time <span class="astric">*</span>: </ion-label>
+                    </div>
+                    <div class="col">
+                     <ion-item>  
+                       <ion-datetime displayFormat="h:mm:ss a"  [(ngModel)]="finalDate" (ionChange)="showTime($event)"></ion-datetime>
+                     </ion-item>
+                    </div>
+                  </div>
+
                    <div class="row" >
                      <div class="col">
                       <ion-label class="inputlist">Time Zone <span class="astric">*</span>: </ion-label>
@@ -72,11 +84,7 @@
                         </ion-select>
                      </div>
                    </div>
-                   <div class="row">
-                      <span style="font-size: 20px" ion-datepicker [(value)]="inittime"  locale="en-US" clear class="ScheduleDate">
-                        <span>{{inittime | date}}<ion-icon name="clipboard" item-left ></ion-icon> </span>
-                      </span>
-                   </div>
+                   
                      
               </div> 
               <hr>
