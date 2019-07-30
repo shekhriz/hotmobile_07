@@ -11,6 +11,12 @@ page-addrequirement {
         font-size: 15px !important;
         margin-left: 10px !important;
     }
+    .item-label-stacked .text-input-md, .item-label-floating .text-input-md {
+        margin-left: 10px;
+    }
+    .item-md.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner, .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
+        box-shadow: none !important; 
+    }
     .button-md {
         font-size: 1.2rem !important
     }
