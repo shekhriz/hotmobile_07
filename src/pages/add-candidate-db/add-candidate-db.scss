@@ -9,10 +9,12 @@ page-add-candidate-db {
                 flex: 1; 
                 background: #bdbdbd;
                  color: black;
+                 max-width: 50px;
+                 border-color:#fff;
             }
             h1{
                 font-size: 18px;
-                font-weight: bold;
+               
                 flex: 10;
                 margin: 10px;
             }
@@ -37,12 +39,12 @@ page-add-candidate-db {
                                 
                             }
                             h1{
-                                font-size: 17px;
+                                font-size: 16px;
                                 font-weight: bold;
                                 overflow: hidden;
                                 text-overflow: ellipsis;
                                 white-space: nowrap;
-                                width: 200px;
+                                width: 250px;
                             }
                             label{
                                 font-size: 14px;

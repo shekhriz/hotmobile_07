@@ -48,18 +48,35 @@
                     </div>   
                   </div>
 
-                  <!-- <div class="row">
+                  <div class="row">
                     <div class="col">
                         <ion-label class="inputlist">Interview Date <span class="astric">*</span>: </ion-label>
                     </div>
                     <div class="col">
-                        <span style="font-size: 20px" ion-datepicker [(value)]="initDate" locale="en-US" clear class="ScheduleDate">
+                        <span style="font-size: 20px" ion-datepicker [(value)]="initDate" [min]="initDate" locale="en-US" clear class="ScheduleDate">
                             <span>{{initDate | date}}<ion-icon name="clipboard" item-left ></ion-icon> </span>
                         </span>
                     </div>
-                  </div> -->
-                    
-                   
+                  </div>
+                   <div class="row" >
+                     <div class="col">
+                      <ion-label class="inputlist">Time Zone <span class="astric">*</span>: </ion-label>
+                     </div>
+                     <div class="col">
+                        <ion-select [(ngModel)]="timezone"  >
+                          <ion-option value="" selected="" disabled="">Select</ion-option>
+                          <ion-option value="Asia/Kolkata">(GMT+05:30) India Standard Time - Kolkata</ion-option>
+                          <ion-option value="America/New York">(GMT-04:00) Eastern Time - New York</ion-option>
+                          <ion-option value="America/Chicago">(GMT-05:00) Central Time - Chicago</ion-option>
+                          <ion-option value="America/Los Angeles">(GMT-07:00) Pacific Time - Los Angeles</ion-option>
+                        </ion-select>
+                     </div>
+                   </div>
+                   <div class="row">
+                      <span style="font-size: 20px" ion-datepicker [(value)]="inittime"  locale="en-US" clear class="ScheduleDate">
+                        <span>{{inittime | date}}<ion-icon name="clipboard" item-left ></ion-icon> </span>
+                      </span>
+                   </div>
                      
               </div> 
               <hr>
