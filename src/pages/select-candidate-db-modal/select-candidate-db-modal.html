@@ -54,7 +54,7 @@
                     </div>
                     <div class="col">
                         <span style="font-size: 20px" ion-datepicker [(value)]="initDate" [min]="initDate" locale="en-US" clear class="ScheduleDate">
-                            <span>{{initDate | date :'shortDate'}}<ion-icon name="clipboard" item-left ></ion-icon> </span>
+                            <span>{{initDate | date }}<ion-icon name="clipboard" item-left ></ion-icon> </span>
                         </span>
                     </div>
                   </div>
@@ -65,7 +65,7 @@
                     </div>
                     <div class="col">
                      <ion-item>  
-                       <ion-datetime displayFormat="h:mm:ss a"  [(ngModel)]="finalDate" (ionChange)="showTime($event)"></ion-datetime>
+                       <ion-datetime displayFormat="h:mm:ss a"  [(ngModel)]="finalTime" (ionChange)="showTime($event)"></ion-datetime>
                      </ion-item>
                     </div>
                   </div>
