@@ -95,7 +95,7 @@ deleteskillValue() {
       this.details = data;
       this.CandidateDetails = this.details['Candidate Details'];
       this.skillArray =  this.CandidateDetails.candidateSkillsSet;
-      this.resume = JSON.parse(this.details.resume);
+      // this.resume = JSON.parse(this.details.resume);
       this.detailsResume =this.resume.Resume;
 
         loading.dismiss();
