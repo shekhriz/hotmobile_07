@@ -16,8 +16,8 @@
                   <div style="font-size: 18px;">{{details.firstName}} {{details.lastName}}</div>
                   <div style="font-weight: 400">{{details.emailId}}</div>
                   <hr>
-                </div>                 
-              </ion-card-header>                            
+                </div>
+              </ion-card-header>
               <ion-item class="_row">
                 <ion-label floating>Submission Type<span class="astric">*</span></ion-label>
                 <ion-select class="fieldBorder" [(ngModel)]="details.mySubType"  (ngModelChange)="onSelectChange($event)">
@@ -32,10 +32,10 @@
                       <ion-label floating>Screen By<span class="astric">*</span></ion-label>
                       <ion-select class="fieldBorder" [(ngModel)]="details.selectedScr">
                         <ion-option value="" disabled=true>Select</ion-option>
-                        <ion-option *ngFor="let data of scrData" >{{data.firstName}}</ion-option>                      
+                        <ion-option *ngFor="let data of scrData" >{{data.firstName}}</ion-option>
                       </ion-select>
                   </ion-item>
-                    
+
               <!-- <div class="row">
                   <div class="col">
                       <ion-label classs="inputlist">Interview Date<span class="astric">*</span>: </ion-label>
@@ -49,15 +49,17 @@
               <ion-item class="_row">
                 <ion-label floating class="labelBorder">Screening Date <span class="astric">*</span>
                 </ion-label>
-                <ion-input class="fieldBorder ScheduleDate" type="text" 
+                <!-- <ion-input class="fieldBorder ScheduleDate" type="text"
                           ion-datepicker [(value)]="initDate" [min]="initDate" locale="en-US" clear [(ngModel)]="initDate">
-                      </ion-input>
+                      </ion-input> -->
+                  <ion-datetime class="fieldBorder" displayFormat="DD/MM/YYYY" [min]="startDateNew" [max]="endDateNew"
+                    [(ngModel)]="selectedDate" (ionChange)="showDate($event)"></ion-datetime>
               </ion-item>
               <ion-item class="_row">
                     <ion-label floating class="labelBorder">Screening Time <span class="astric">*</span>
-                    </ion-label>                    
+                    </ion-label>
                         <ion-datetime displayFormat="h:mm:ss a" class="fieldBorder"
-                         [(ngModel)]="finalTime" (ionChange)="showTime($event)"></ion-datetime>               
+                         [(ngModel)]="finalTime" (ionChange)="showTime($event)"></ion-datetime>
               </ion-item>
               <ion-item class="_row">
                   <ion-label floating>Time Zone<span class="astric">*</span></ion-label>
@@ -73,12 +75,12 @@
                 </div>
 
             </ion-list>
-          </ion-card-content>          
-        </ion-card>      
+          </ion-card-content>
+        </ion-card>
   </ion-content>
- 
+
   <ion-footer class="commonFooter">
     <button ion-button full color='danger' (click)='cancelData()'>Close</button>
     <button ion-button full color='dark' (click)='submitCandidate()'>Submit</button>
-    
+
   </ion-footer>

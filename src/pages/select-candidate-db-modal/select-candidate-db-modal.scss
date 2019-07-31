@@ -11,7 +11,7 @@ page-select-candidate-db-modal {
     font-weight: bold;
     font-size: 14px;
 }
-.label-md[stacked], .label-md[floating] {        
+.label-md[stacked], .label-md[floating] {
     font-size: 15px !important;
     margin-left: 10px !important;
 }
@@ -19,7 +19,7 @@ page-select-candidate-db-modal {
     margin-left: 10px;
 }
 .item-md.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner, .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
-    box-shadow: none !important; 
+    box-shadow: none !important;
 }
 .button-md {
     font-size: 1.2rem !important
@@ -28,9 +28,9 @@ page-select-candidate-db-modal {
     border-bottom: none !important;
 }
 .list-md .item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child, .list-md .item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child {
-    box-shadow: none !important; 
+    box-shadow: none !important;
 }
-.select-md {       
+.select-md {
     height: 38px !important;
 }
 .label-ios[floating] {
@@ -60,9 +60,9 @@ page-select-candidate-db-modal {
     margin-top: -6px !important;
     float: right !important;
 }
-.labelBorder{        
+.labelBorder{
     font-size: 15px;
-}   
+}
 .item-ios.item-label-stacked .text-input, .item-ios.item-label-floating .text-input {
     margin-left: 12px !important;
     font-size: 15px !important;
@@ -98,7 +98,7 @@ page-select-candidate-db-modal {
             background-color: #343434;
             margin-right: 10px;
             max-width: 50px;
-            
+
         }
     }
         ion-navbar{
@@ -108,7 +108,7 @@ page-select-candidate-db-modal {
         }
       }
       .header{
-        
+
         .left{
           flex: 1;
         }
@@ -133,9 +133,9 @@ page-select-candidate-db-modal {
           .inner-body{
             margin-top:2px;
             margin-bottom: 3px;
-           
+
           }
-        
+
           .inputlist{
             color:black!important
           }
@@ -149,14 +149,14 @@ page-select-candidate-db-modal {
               height: 40px;
             }
           }
-          
+
         }
       }
 
       ion-card{
-       
+
         ion-card-content{
-           
+
             ion-list{
                 ._row{
                     ._text{
@@ -164,7 +164,7 @@ page-select-candidate-db-modal {
                         font-size:17px;
                         margin-left: 2px
                     }
-                    
+
                 }
                 .inc-dec-btn-txt{
                     display: flex;
@@ -197,19 +197,19 @@ page-select-candidate-db-modal {
                     padding-bottom: 10px;
                     margin:5px;
                     padding-left: 0px;
-                    
+
                 }
                 .headerClass{
-                    font-size: 15px; 
-                    color: #222; 
-                    padding: 16px; 
+                    font-size: 15px;
+                    color: #222;
+                    padding: 16px;
                     padding-bottom: 0px;
                 }
-               
-               
+
+
             }
         }
     }
 
-    
+
 }
