@@ -40,6 +40,11 @@ page-candidate-response {
     .item-label-stacked .text-input-md, .item-label-floating .text-input-md {
         margin-left: 10px;
     }
+    .candNotes{
+        .item-ios{
+            margin-left: -18px;
+        }
+    }
     ion-header{
         .addBtn{
             display: flex;
