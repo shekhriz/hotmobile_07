@@ -44,13 +44,13 @@
         </ion-list>
       </ion-card-content>
     </ion-card>
-    <ion-card>
-      <ion-card-header class="headerClass">Add Candidate Skills
-          <button class="skillAdd" ion-button color='dark' (click)="addskillValue()">+</button>
-          <button class="skillAdd" ion-button color='dark' (click)="deleteskillValue()">-</button>
-      </ion-card-header>
+    <ion-card>      
       <ion-card-content style=" padding: 6px 0px;">
-        <ion-list>          
+        <ion-list>
+            <ion-card-header class="headerClass">Add Candidate Skills
+                <button class="skillAdd" ion-button color='dark' (click)="addskillValue()">+</button>
+                <button class="skillAdd" ion-button color='dark' (click)="deleteskillValue()">-</button>
+            </ion-card-header>          
           <div class="tsDetails" *ngFor="let skill of skillArray;">
             <ion-item class="_row " style="flex: 5">
               <ion-label class="labelBorder" floating>Type</ion-label>
