@@ -1,63 +1,46 @@
 <ion-header>
     <main-header></main-header>
-</ion-header>
-  <ion-content padding>
-      
-     
-     <div class="modal_body" >
-        <div class="form-container">
-          <div class="scroll-content">
-            <div class="heading">
-              <h1 >Submission Type: </h1>
-            </div>
-            <hr>
-             <div class="body" *ngFor="let details of selecteddetails">
-                <div class="inner-body" >
-                    <ion-icon name="contact">  <span ><b>{{details.firstName}} {{details.lastName}}</b></span></ion-icon> 
+    <div class="addBtn">
+      <button ion-button class="btn1" outline (click)="goBack()">
+        <ion-icon name="undo"></ion-icon>
+      </button>
+      <h1>Select Submission Type</h1>
+    </div>
+  </ion-header>
+  <ion-content>
+      <ion-card *ngFor="let details of selecteddetails">
+          <ion-card-content style=" padding: 6px 0px;">
+            <ion-list>
+              <ion-card-header class="headerClass">
+                <div>
+                  <div style="font-size: 18px;">{{details.firstName}} {{details.lastName}}</div>
+                  <div style="font-weight: 400">{{details.emailId}}</div>
+                  <hr>
                 </div>
-                <div class="inner-body" >
-                    <ion-icon name="mail">  <span >{{details.emailId}}</span></ion-icon> 
-                </div>
-                <div class="inner-body" >
-                    <ion-icon name="call">  <span >{{details.cellPhoneNumber}}</span></ion-icon> 
-                </div>
-               
-              <div class="row">
-                  <ion-label class="inputlist">Submission Type <span class="astric">*</span>: </ion-label>
-                  
-                  <select [(ngModel)]="details.mySubType"  (ngModelChange)="onSelectChange($event)" >
-                    <option value="" disabled="true" >Select </option>
-                    <option value="One Way" >One Way </option>
-                    <option value="Prospect" >Prospect</option> 
-                    <option value="Zoom" >Zoom</option> 
-                    
-                  </select>
-              </div>
-              
-               <div  *ngIf="details.mySubType == 'Zoom' ">
-                  
-                  <div class="row">
-                    <div class="col">
-                        <ion-label class="inputlist">Screen by <span class="astric">*</span>: </ion-label>
-                    </div>
-                    <div class="col">
-                        <select [(ngModel)]="details.selectedScr"  >
-                            <option value="" disabled="true">Select</option>
-                            <option [value]="data.firstName" *ngFor="let data of scrData" >{{data.firstName}}</option>
-                        </select>
-                    </div>   
-                  </div>
+              </ion-card-header>
+              <ion-item class="_row">
+                <ion-label floating>Submission Type<span class="astric">*</span></ion-label>
+                <ion-select class="fieldBorder" [(ngModel)]="details.mySubType"  (ngModelChange)="onSelectChange($event)">
+                  <ion-option value="" disabled=true>Select</ion-option>
+                  <ion-option value="One Way">One Way</ion-option>
+                  <ion-option value="Prospect">Prospect</ion-option>
+                  <ion-option value="Zoom">Zoom</ion-option>
+                </ion-select>
+              </ion-item>
+              <div *ngIf="details.mySubType == 'Zoom' ">
+                  <ion-item class="_row">
+                      <ion-label floating>Screen By<span class="astric">*</span></ion-label>
+                      <ion-select class="fieldBorder" [(ngModel)]="details.selectedScr">
+                        <ion-option value="" disabled=true>Select</ion-option>
+                        <ion-option *ngFor="let data of scrData" >{{data.firstName}}</ion-option>
+                      </ion-select>
+                  </ion-item>
 
-                  <div class="row">
-                    <div class="col">
-                        <ion-label classs="inputlist">Interview Date <span class="astric">*</span>: </ion-label>
-                    </div>
-                    <div class="col">
-                        <span style="font-size: 20px" ion-datepicker [(value)]="initDate" [min]="initDate" locale="en-US" clear class="ScheduleDate">
-                            <span>{{initDate | date }}<ion-icon name="clipboard" item-left ></ion-icon> </span>
-                        </span>
-                    </div>
+              <!-- <div class="row">
+                  <div class="col">
+                      <ion-label classs="inputlist">Interview Date<span class="astric">*</span>: </ion-label>
                   </div>
+<<<<<<< HEAD
 
                   <div class="row">
                     <div class="col">
@@ -68,37 +51,49 @@
                        <ion-datetime displayFormat="h:mm:ss a"  [(ngModel)]="initTime" (ionChange)="showTime($event)"></ion-datetime>
                      </ion-item>
                     </div>
+=======
+                  <div class="col">
+                      <span style="font-size: 20px" ion-datepicker [(value)]="initDate" [min]="initDate" locale="en-US" clear class="ScheduleDate">
+                          <span>{{initDate | date }}<ion-icon name="clipboard" item-left ></ion-icon> </span>
+                      </span>
+>>>>>>> aae81a58c93127e2be24b6e9c6feb99ee44e77ea
                   </div>
+                </div>         -->
+              <ion-item class="_row">
+                <ion-label floating class="labelBorder">Screening Date <span class="astric">*</span>
+                </ion-label>
+                <!-- <ion-input class="fieldBorder ScheduleDate" type="text"
+                          ion-datepicker [(value)]="initDate" [min]="initDate" locale="en-US" clear [(ngModel)]="initDate">
+                      </ion-input> -->
+                  <ion-datetime class="fieldBorder" displayFormat="DD/MM/YYYY" [min]="startDateNew" [max]="endDateNew"
+                    [(ngModel)]="selectedDate" (ionChange)="showDate($event)"></ion-datetime>
+              </ion-item>
+              <ion-item class="_row">
+                    <ion-label floating class="labelBorder">Screening Time <span class="astric">*</span>
+                    </ion-label>
+                        <ion-datetime displayFormat="h:mm:ss a" class="fieldBorder"
+                         [(ngModel)]="finalTime" (ionChange)="showTime($event)"></ion-datetime>
+              </ion-item>
+              <ion-item class="_row">
+                  <ion-label floating>Time Zone<span class="astric">*</span></ion-label>
+                  <ion-select class="fieldBorder" [(ngModel)]="timezone">
+                      <ion-option value="" selected="" disabled="">Select</ion-option>
+                      <ion-option value="Asia/Kolkata">(GMT+05:30) India Standard Time - Kolkata</ion-option>
+                      <ion-option value="America/New York">(GMT-04:00) Eastern Time - New York</ion-option>
+                      <ion-option value="America/Chicago">(GMT-05:00) Central Time - Chicago</ion-option>
+                      <ion-option value="America/Los Angeles">(GMT-07:00) Pacific Time - Los Angeles</ion-option>
+                  </ion-select>
+                </ion-item>
 
-                   <div class="row" >
-                     <div class="col">
-                      <ion-label class="inputlist">Time Zone <span class="astric">*</span>: </ion-label>
-                     </div>
-                     <div class="col">
-                        <ion-select [(ngModel)]="timezone"  >
-                          <ion-option value="" selected="" disabled="">Select</ion-option>
-                          <ion-option value="Asia/Kolkata">(GMT+05:30) India Standard Time - Kolkata</ion-option>
-                          <ion-option value="America/New York">(GMT-04:00) Eastern Time - New York</ion-option>
-                          <ion-option value="America/Chicago">(GMT-05:00) Central Time - Chicago</ion-option>
-                          <ion-option value="America/Los Angeles">(GMT-07:00) Pacific Time - Los Angeles</ion-option>
-                        </ion-select>
-                     </div>
-                   </div>
-                   
-                     
-              </div> 
-              <hr>
-            </div> 
-            
-           
-          </div>
-        </div>
-      </div>
-      
+                </div>
+
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
   </ion-content>
- 
+
   <ion-footer class="commonFooter">
     <button ion-button full color='danger' (click)='cancelData()'>Close</button>
     <button ion-button full color='dark' (click)='submitCandidate()'>Submit</button>
-    
+
   </ion-footer>

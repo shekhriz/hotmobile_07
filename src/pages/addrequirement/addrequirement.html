@@ -115,8 +115,8 @@
             </ion-item>
           </div>
           <ion-item class="_row">
-            <ion-label class="labelBorder" floating>Description</ion-label>
-            <ion-input class="fieldBorder" [(ngModel)]="description" name="description"></ion-input>
+            <ion-label class="labelBorder" floating>Job Description</ion-label>
+            <ion-textarea class="fieldBorder" rows=6 [(ngModel)]="description" name="description"></ion-textarea>
           </ion-item>
           <ion-item class="_row">
             <ion-label class="labelBorder" floating>No of Open Positions <span class="astric">*</span>
@@ -206,7 +206,7 @@
           </ion-item>
           <ion-item class="_row">
             <ion-label class="labelBorder" floating>Notes</ion-label>
-            <ion-input style="margin-bottom: 10px;" class="fieldBorder" [(ngModel)]="area_desc" name="description"></ion-input>
+            <ion-textarea style="margin-bottom: 10px;" rows=6 class="fieldBorder" [(ngModel)]="area_desc" name="description"></ion-textarea>
           </ion-item>
         </ion-list>
       </ion-card-content>

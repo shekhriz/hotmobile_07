@@ -47,10 +47,15 @@ export class SelectCandidateDbModalPage {
   workflowId:any;
   timezone:string;
   initTime:string;
- 
+  finalDate:string;
+  finalTime:string;
+  startDateNew:string;
+  endDateNew:string;
+  selectedDate:string;
   @ViewChild(DatePickerDirective) public datepicker: DatePickerDirective;
   public localDate: Date = new Date();
   public initDate: Date = new Date();
+  public startDate: Date = new Date();
 
   public localeString = {
     monday: true,
@@ -64,9 +69,13 @@ export class SelectCandidateDbModalPage {
     public util: UtilsProvider,
     public loadingCtrl:LoadingController,
     public viewCtrl : ViewController) {
-    this.selecteddetails = navParams.get('selecteddetails');
-   
-  
+      this.startDateNew=moment().format('YYYY-MM-DD');
+      this.endDateNew=moment().add('years', 1).format('YYYY-MM-DD');
+      this.selecteddetails = navParams.get('selecteddetails');
+      this.finalDate = moment(this.initDate).format("DD-MM-YYYY");
+
+      console.log('newdt',this.finalDate);
+
 
     this.reqId = navParams.get('reqId');
     this.workflowId = navParams.get('workflowId');
@@ -78,16 +87,15 @@ export class SelectCandidateDbModalPage {
     //   this.selecteddetails[i].mySubType = "";
     //   console.log(this.selecteddetails[key]);
     // }
-   
+
    console.log("selecteddetails",this.selecteddetails);
    console.log("candidateId",this.selecteddetails.candidateId);
     this.token = this.util.getToken();
-   
- 
+
 
   }
-
   ionViewDidLoad() {
+
     console.log('ionViewDidLoad SelectCandidateDbModalPage');
   }
 
@@ -97,7 +105,13 @@ export class SelectCandidateDbModalPage {
   }
   showTime(){
     this.initTime;
-   
+    this.finalTime=moment(this.initTime).format("HH:mm:ss");
+    console.log('init',this.initTime);
+    console.log('this.finalTime',this.initTime);
+  }
+
+  showDate(){
+    console.log(this.selectedDate)
   }
   public Log(stuff): void {
     this.datepicker.open();
@@ -109,10 +123,9 @@ export class SelectCandidateDbModalPage {
     this.localDate = data;
   }
   setDate(date: Date) {
-    console.log("kkkkkkkk",date);
+    console.log(date);
     this.initDate = date;
-   
-    
+
 
   }
 
@@ -121,25 +134,25 @@ export class SelectCandidateDbModalPage {
 
 //////////////
   onSelectChange(selectedValue) {
-    
+
     console.log('Selected', selectedValue);
     this.submissionType = selectedValue;
-    console.log("adyasa",this.submissionType); 
+    console.log("adyasa",this.submissionType);
     if(this.submissionType == 'Zoom' || this.submissionType == 'Skype'){
       this.restProvider.getRequirementUserStatics(this.token,this.reqId)
       .then((data:any)=>{
         this.scrData = data
-        console.log("rizwan",this.scrData); 
+        console.log("rizwan",this.scrData);
       },errrr=>{
       });
-   
+
 
     }
-    
+
   }
 
   submitCandidate(){
-   
+
     let loading = this.loadingCtrl.create({
       content: 'Please wait while candidate adding...'
     });
@@ -147,13 +160,13 @@ export class SelectCandidateDbModalPage {
       this.util.showToast("Please select Submission Type.","ERROR");
       return;
     }
-    
+
     // if(this.selectedScr == undefined || this.selectedScr == "" ){
     //   this.util.showToast("Please enter First Name.","ERROR");
     //   return;
     // }
     loading.present();
-   
+
     Object.keys(this.selecteddetails).forEach(key => {
      if(this.selecteddetails[key].mySubType == "One Way" || this.selecteddetails[key].mySubType == "Prospect" || this.selecteddetails[key].mySubType == "Two Way") {
       this.tempArray.push({
@@ -196,8 +209,8 @@ export class SelectCandidateDbModalPage {
         'willingToRelocate': this.selecteddetails[key].willingToRelocate
       })
      }
-     
- 
+
+
 console.log("candidateIdnmmmm",this.tempArray);
 
 });
@@ -205,42 +218,37 @@ console.log("candidateIdnmmmm",this.tempArray);
       candidatesBean:this.tempArray,
 
       "user":this.loginUser,
-   
+
     }
     jsonData.user.groupsSet=[];
     jsonData.user.technicalScreenerDetailsSkillsSet=[];
-    if(( this.initDate != undefined || this.initDate != null)&& ( this.initTime != undefined || this.initTime != null)){
-        this.restProvider.AvailabilityTime(this.token,moment(this.initDate).format('DD-MM-YYYY'),this.initTime)
-        .then((data:any) => { 
-           if(data == "Meeting rooms are available"){
-
-           }
+    if(this.selectedDate != '' || this.selectedDate != undefined || this.selectedDate != null){
+        this.restProvider.AvailabilityTime(this.token,moment(this.selectedDate).format("DD-MM-YYYY"),this.finalTime)
+        .then((data:any) => {
         },error => {
           this.util.showToast("Something went wrong.","ERROR");
         });
-      }else{
-        // one way code goes here...
-      }                  
-        this.restProvider.addcandidates(this.token,jsonData) 
+     }
+        this.restProvider.addcandidates(this.token,jsonData)
         .then((data:any) => {
             this.restProvider.candidates(this.token,this.reqId,this.loginUser)
             .then((data:any) => {
 
               loading.dismiss();
-              
+
             },error => {
                 this.util.showToast("Something went wrong.","ERROR");
         });
       //
-      Object.keys(this.selecteddetails).forEach(key => {  
+      Object.keys(this.selecteddetails).forEach(key => {
         let jsonData2={
-          
+
             body:"<!DOCTYPE html><body><p>Welcome to HOT</p></body></html>",
             candidatesId:[this.selecteddetails[key].candidateId],
             isAlreadyAdded:false,
             requirementId:this.reqId,
             subject:"Candidate Added for the Requirement",
-        
+
           "user":this.loginUser,
         }
         jsonData2.user.userImage= null;
@@ -250,10 +258,10 @@ console.log("candidateIdnmmmm",this.tempArray);
 
         if(this.selecteddetails[key].mySubType == "Zoom" ||this.selecteddetails[key].mySubType == "Skype"){
           let jsonData3={
-          
+
               candidateEmail:this.selecteddetails[key].emailId,
               candidateId:this.selecteddetails[key].candidateId,
-              date:moment(this.initDate).format('DD-MM-YYYY'), 
+              date:moment(this.selectedDate).format("DD-MM-YYYY"),
               jwtDetails:{
                 emailId:this.loginUser.emailId,
                 firstName:this.loginUser.firstName,
@@ -268,31 +276,31 @@ console.log("candidateIdnmmmm",this.tempArray);
                 screenByUserEmail: this.scrData[key].emailId,
                 screenByUserId: this.scrData[key].id,
                 submissionType: this.selecteddetails[key].mySubType,
-                time:this.initTime,
+                time:this.finalTime,
                 timezone:this.timezone
                }
-        
+
                 if(this.selecteddetails[key].mySubType == "Zoom"){
-                       
+
                           this.restProvider.zoomApi(this.token,jsonData3)
                           .then((data:any) => {
-                      
+
                             this.restProvider.refresh(this.token)
                             .then((data:any) => {
-                            
+
                                 this.navCtrl.push(CandidatePage,{reqId:this.reqId,workflowId:this.workflowId});
-                            
+
                             } ,error => {
                             this.util.showToast("Something went wrong.","ERROR");
                             });
 
                           },error => {
-                            this.util.showToast("Something went wrong.","ERROR"); 
+                            this.util.showToast("Something went wrong.","ERROR");
                         });
-    
+
                 }
             }
-          
+
           });
             },error => {
                 this.util.showToast("Something went wrong.","ERROR");
@@ -300,9 +308,9 @@ console.log("candidateIdnmmmm",this.tempArray);
           },error => {
               this.util.showToast("Something went wrong.","ERROR");
           });
- 
-  }  //if 
-  
+
+  }  //if
+
   closeModal(){
     this.navCtrl.pop();
   }
@@ -315,8 +323,8 @@ console.log("candidateIdnmmmm",this.tempArray);
   }
 
 
- 
+
  /////////date///
-  
- 
+
+
 }
