@@ -18,15 +18,15 @@
 <ion-content padding>
         <ion-list>       
                 <div >
-                        <div class="row" style="float: right;"  *ngIf="lastMileStone == 'TechScreenerAdded'">
-                                <button ion-button  class="btn4" (click)="addQuestionDb()" >Add From db</button>
-                                <button ion-button  class="btn4"  (click)="createNew()">Create New</button>
+                        <div class="row" style="float: right;"  >
+                                <button ion-button  class="btn4" *ngIf="lastMileStone == 'TechScreenerAdded'" (click)="addQuestionDb()" >Add From db</button>
+                                <button ion-button  class="btn4"  *ngIf="lastMileStone == 'TechScreenerAdded'" (click)="createNew()">Create New</button>
+                                <button ion-button  class="btn4"  (click)="submitQuestions()">Submit</button>
                         </div>
                         
-                        <div class="row" *ngIf="technicals == '' || technicals == 'undefined'">
-                            <div class="col">
+                        <div class="row"style="width:100%" *ngIf="technicals == '' || technicals == 'undefined'">
+                          
                                     <h1>No records found</h1>
-                            </div>
                             
                         </div>
                     </div>

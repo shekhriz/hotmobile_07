@@ -2065,5 +2065,43 @@ AvailabilityTime(token,date,time){
     });
   });  
 }
-
+submitQuestions(token,reqId,data){
+  return new Promise((resolve, reject) => {
+    this.http.post(this.apiUrl+'hot/requirement/submitQuestions/'+reqId,JSON.stringify(data), {
+      headers: new HttpHeaders().set('Authorization', token)
+              .append('Accept', 'application/json;odata=verbose')
+              .append('Content-Type','application/json')
+     }).subscribe(res => {
+        resolve(res);
+      }, (err) => {
+        reject(err);
+      });
+  });
+}
+submitQuestionsMail(reqId,data,token){
+  return new Promise((resolve, reject) => {
+    this.http.post(this.apiUrl+'hot/requirement/submitQuestions/mail/'+reqId,JSON.stringify(data), {
+      headers: new HttpHeaders().set('Authorization', token)
+              .append('Accept', 'application/json;odata=verbose')
+              .append('Content-Type','application/json')
+     }).subscribe(res => {
+        resolve(res);
+      }, (err) => {
+        reject(err);
+      });
+  });
+}
+detailsForDropdown(token){
+  return new Promise(resolve => {
+    this.http.get(this.apiUrl+'hot/requirement/detailsForDropdown',{
+      headers: new HttpHeaders().set('Authorization', token)
+              .append('Accept', 'application/json;odata=verbose')
+              .append('Content-Type','application/json')
+     }).subscribe(data => {
+      resolve(data);
+    }, err => {
+      console.log(err);
+    });
+  });  
+}
   }

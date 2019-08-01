@@ -41,6 +41,7 @@ page-technical-question {
         ion-card{
             .row{
                 font-size: 17px;
+                max-width:100%
             }
         }
         .innerAtb{
@@ -58,13 +59,12 @@ page-technical-question {
         }
         button.item-ios:not([detail-none]) .item-inner {
             background-image: none !important;
+        .btn4{
+            border-color: #222;
+            color: white;
+            background-color: #343434;
+            float: right
         }
-    
-    .btn4{
-        border-color: #222;
-        color: white;
-        background-color: #343434;
-        float: right
     }
     
 }

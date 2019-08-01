@@ -47,8 +47,7 @@ export class SelectCandidateDbModalPage {
   workflowId:any;
   timezone:string;
   initTime:string;
-  finalDate:string;
-  finalTime:string;
+ 
   @ViewChild(DatePickerDirective) public datepicker: DatePickerDirective;
   public localDate: Date = new Date();
   public initDate: Date = new Date();
@@ -67,10 +66,7 @@ export class SelectCandidateDbModalPage {
     public viewCtrl : ViewController) {
     this.selecteddetails = navParams.get('selecteddetails');
    
-    this.finalDate = moment(this.initDate).format("DD-MM-YYYY");
   
-console.log('newdt',this.finalDate);
-
 
     this.reqId = navParams.get('reqId');
     this.workflowId = navParams.get('workflowId');
@@ -87,9 +83,10 @@ console.log('newdt',this.finalDate);
    console.log("candidateId",this.selecteddetails.candidateId);
     this.token = this.util.getToken();
    
+ 
 
   }
-return;
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad SelectCandidateDbModalPage');
   }
@@ -100,9 +97,7 @@ return;
   }
   showTime(){
     this.initTime;
-    this.finalTime=moment(this.initTime).format("HH:mm:ss");
-    console.log('init',this.initTime);
-    console.log('this.finalTime',this.initTime);
+   
   }
   public Log(stuff): void {
     this.datepicker.open();
@@ -114,8 +109,9 @@ return;
     this.localDate = data;
   }
   setDate(date: Date) {
-    console.log(date);
+    console.log("kkkkkkkk",date);
     this.initDate = date;
+   
     
 
   }
@@ -151,7 +147,7 @@ return;
       this.util.showToast("Please select Submission Type.","ERROR");
       return;
     }
-
+    
     // if(this.selectedScr == undefined || this.selectedScr == "" ){
     //   this.util.showToast("Please enter First Name.","ERROR");
     //   return;
@@ -213,13 +209,18 @@ console.log("candidateIdnmmmm",this.tempArray);
     }
     jsonData.user.groupsSet=[];
     jsonData.user.technicalScreenerDetailsSkillsSet=[];
-    if(this.finalDate != '' || this.finalDate != undefined || this.finalDate != null){
-        this.restProvider.AvailabilityTime(this.token,this.finalDate,this.finalTime)
-        .then((data:any) => {  
+    if(( this.initDate != undefined || this.initDate != null)&& ( this.initTime != undefined || this.initTime != null)){
+        this.restProvider.AvailabilityTime(this.token,moment(this.initDate).format('DD-MM-YYYY'),this.initTime)
+        .then((data:any) => { 
+           if(data == "Meeting rooms are available"){
+
+           }
         },error => {
           this.util.showToast("Something went wrong.","ERROR");
         });
-     }                  
+      }else{
+        // one way code goes here...
+      }                  
         this.restProvider.addcandidates(this.token,jsonData) 
         .then((data:any) => {
             this.restProvider.candidates(this.token,this.reqId,this.loginUser)
@@ -252,7 +253,7 @@ console.log("candidateIdnmmmm",this.tempArray);
           
               candidateEmail:this.selecteddetails[key].emailId,
               candidateId:this.selecteddetails[key].candidateId,
-              date:this.finalDate, 
+              date:moment(this.initDate).format('DD-MM-YYYY'), 
               jwtDetails:{
                 emailId:this.loginUser.emailId,
                 firstName:this.loginUser.firstName,
@@ -267,7 +268,7 @@ console.log("candidateIdnmmmm",this.tempArray);
                 screenByUserEmail: this.scrData[key].emailId,
                 screenByUserId: this.scrData[key].id,
                 submissionType: this.selecteddetails[key].mySubType,
-                time:this.finalTime,
+                time:this.initTime,
                 timezone:this.timezone
                }
         

@@ -28,7 +28,8 @@ export class TechnicalDbPage {
   interviewType:string;
   buttonDisabled:boolean=true;
   outcomes:any;
-  i=0;
+  i=1;
+  currentReqActions:any;
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     public util: UtilsProvider,
@@ -41,6 +42,7 @@ export class TechnicalDbPage {
       this.reqId = navParams.get('reqId');
       this.token = this.util.getToken();
       this.loginUser = this.util.getSessionUser();
+      this.workflowId =navParams.get('workflowId');
       this.technicalQuestionFromDb();
       console.log("interviewType",this.interviewType)
   }
@@ -108,6 +110,19 @@ export class TechnicalDbPage {
     content: 'Please wait...'
   });
     loading.present();
+    let jsonContact = {
+      "role":this.loginUser.role,
+      "userId":this.loginUser.id,
+      "workflowId":this.workflowId
+    }
+   
+    this.restProvider.allowedActions(jsonContact,this.token)
+    .then(res => {
+      this.currentReqActions = res;
+    },error => {
+     
+    });
+
       Object.keys(this.selecteddetails).forEach(key=> {
       let jsonData={
         positionId:this.reqId,
@@ -128,6 +143,8 @@ export class TechnicalDbPage {
         loading.dismiss();
       });
   });
+
+ 
  }
 
 }

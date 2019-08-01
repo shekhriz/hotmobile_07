@@ -18,10 +18,18 @@
     <ion-content padding>
     
             <div >
-                    <div class="row" style="float: right;"  *ngIf="lastMileStone == 'TechnicalQuestionsAdded'">
-                             <button ion-button  class="btn4" (click)="addQuestionDb()" >Add From db</button>
-                             <button ion-button  class="btn4"  (click)="createNew()">Create New</button>
-                     </div>
+                    <div class="row" style="float: right;"  >
+                            <button ion-button  class="btn4" *ngIf="this.submit == true" (click)="approveQuestion()" >Approve Question</button>
+                            <button ion-button  class="btn4" *ngIf="this.submit == true" (click)="rejectQuestion()">Reject Question</button>
+                            
+                            
+                   </div>
+                    <div class="row" style="float: right;"  >
+                             <button ion-button  class="btn4" *ngIf="this.submit == true" (click)="addQuestionDb()" >+ db</button>
+                             <button ion-button  class="btn4" *ngIf="this.submit == true" (click)="createNew()">Create New</button>
+                             <button ion-button  class="btn4"  (click)="submitQuestions()">Submit</button>
+                             
+                    </div>
                      
                      <div class="row" *ngIf="generals == '' || generals == 'undefined'">
                          <div class="col">
