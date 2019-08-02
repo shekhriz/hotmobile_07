@@ -44,6 +44,7 @@ export class CandidateResponsePage {
   comment:string;
   average:any;
   workflowId:string;
+  interview_details:any;
   
   constructor(public navCtrl: NavController,  public util: UtilsProvider,
     public loadingCtrl: LoadingController,
@@ -58,7 +59,15 @@ export class CandidateResponsePage {
     this.workflowId=navParams.get('workflowId'); 
     this.loginUser = this.util.getSessionUser(); 
     this.candidateResponse( );
+    this.getsecondRound();
+    this.mutlipleRoundsSelfRating();
+    this.getTop3Req();
+    this.screenerFeedBackInterviewRound();
     this.responseBycandidateId( );
+    
+   
+    
+   
   }
 
   ionViewDidLoad() {
@@ -99,8 +108,31 @@ export class CandidateResponsePage {
     });
   }
 
- 
-
+  getsecondRound(){
+    this.restProvider.responseBycandidateId(this.token,this.cId)
+    .then((res:any)=>{
+    },errrr=>{
+    });
+  }
+  mutlipleRoundsSelfRating(){
+    this.restProvider.mutlipleRoundsSelfRating(this.token,this.reqId,this.cId)
+    .then((res:any)=>{
+    },errrr=>{
+    });
+  }
+  getTop3Req(){
+    this.restProvider.getTop3Req(this.token,this.cId)
+    .then((res:any)=>{
+    },errrr=>{
+    });
+  }
+  screenerFeedBackInterviewRound(){
+    this.restProvider.screenerFeedBackInterviewRound(this.token,this.reqId,this.cId,1)
+    .then((res:any)=>{
+      this.interview_details= res;
+    },errrr=>{
+    });
+  }
   openModal(question:any){
     let chooseModal = this.modalCtrl.create(InterviewModalPage,{questions:question,workflowId:this.workflowId});
   //  console.log("gggggggggggggggggggg",this.question);
@@ -126,9 +158,10 @@ export class CandidateResponsePage {
 
   gotoQuestionResponse(){
     this.navCtrl.push(QuestionResponsePage,
-      {qdetails: this.qdetails,finalVerdict:this.finalVerdict,workflowId:this.workflowId,videos: this.videos,reqId: this.reqId,cId:this.cId});
-     // console.log("adyasa",this.videos);
+      {qdetails: this.qdetails,finalVerdict:this.finalVerdict,workflowId:this.workflowId,videos: this.videos,reqId: this.reqId,cId:this.cId,interview_details: this.interview_details});
+      console.log(" this.interview_details", this.interview_details);
   }
+
   goBack(){
     this.navCtrl.pop();
   }

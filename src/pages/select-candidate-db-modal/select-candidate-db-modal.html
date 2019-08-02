@@ -36,16 +36,7 @@
                       </ion-select>
                   </ion-item>
 
-              <!-- <div class="row">
-                  <div class="col">
-                      <ion-label classs="inputlist">Interview Date<span class="astric">*</span>: </ion-label>
-                  </div>
-                  <div class="col">
-                      <span style="font-size: 20px" ion-datepicker [(value)]="initDate" [min]="initDate" locale="en-US" clear class="ScheduleDate">
-                          <span>{{initDate | date }}<ion-icon name="clipboard" item-left ></ion-icon> </span>
-                      </span>
-                  </div>
-                </div>         -->
+             
               <ion-item class="_row">
                 <ion-label floating class="labelBorder">Screening Date <span class="astric">*</span>
                 </ion-label>
@@ -54,7 +45,7 @@
                       </ion-input> -->
                   <ion-datetime class="fieldBorder" displayFormat="DD/MM/YYYY" [min]="startDateNew" [max]="endDateNew"
                     [(ngModel)]="selectedDate" (ionChange)="showDate($event)"></ion-datetime>
-              </ion-item>
+                    </ion-item>
               <ion-item class="_row">
                     <ion-label floating class="labelBorder">Screening Time <span class="astric">*</span>
                     </ion-label>

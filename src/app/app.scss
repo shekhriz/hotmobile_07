@@ -152,5 +152,10 @@ ion-header{
 button.item-ios:not([detail-none]) .item-inner {
   background-image: none !important;
 }
+ion-app.platform-ios12 ion-content { pointer-events: auto; /*fix scroll lock on ios12.2*/ }
 
-
+scroll-content {
+overflow-y: scroll;
+-webkit-overflow-scrolling: touch;
+height:100%;
+}

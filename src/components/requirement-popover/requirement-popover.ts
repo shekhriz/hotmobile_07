@@ -26,6 +26,7 @@ export class RequirementPopoverComponent {
   interviewType:string;
   interviewArray:Array<Object> = [];
   clientName:string;
+  currentReqActions:any=[];
   constructor(  public navCtrl: NavController, 
                 public navParams: NavParams,
                 public util: UtilsProvider,
@@ -59,12 +60,6 @@ candidateReq(){
 console.log("interviewTypekk",this.interviewType)
 
 }
-questionAdd(){
-  this.viewCtrl.dismiss();
-  this.appCtrl.getRootNav().push(GeneralQuestionsPage,{reqId:this.requirementId,lastMileStone:this.lastMileStone});
-    console.log('this.lastMileStone',this.lastMileStone);
-
-}
 allowedAction(){
   let jsonContact = {
     "role":this.loginUser.role,
@@ -74,12 +69,17 @@ allowedAction(){
  
   this.restProvider.allowedActions(jsonContact,this.token)
   .then(res => {
-  
+    this.currentReqActions = res;
   },error => {
    
   })
 }
+questionAdd(){
+  this.viewCtrl.dismiss();
+  this.appCtrl.getRootNav().push(GeneralQuestionsPage,{reqId:this.requirementId,lastMileStone:this.lastMileStone,currentReqActions:this.currentReqActions,workflowId:this.workflowId});
+    console.log('this.currentReqActions',this.currentReqActions);
 
+}
 addResources(){
   this.viewCtrl.dismiss();
   this.appCtrl.getRootNav().push(AddResourcePage,{reqId:this.requirementId,workflowId: this.workflowId,jobTitle:this.jobTitle,actMgrId:this.actMgrId});

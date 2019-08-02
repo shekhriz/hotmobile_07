@@ -21,7 +21,9 @@ export class QuestionResponsePage {
   finalVerdict:string;
   workflowId:any;
   total_question:Array<Object> = [];
-
+  interview_details:any;
+  ScreenerFeedBackBean:any;
+  videoLink:string;
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public viewCtrl : ViewController,
     public modalCtrl:ModalController) {
@@ -31,6 +33,12 @@ export class QuestionResponsePage {
       this.video_questions=navParams.get('videos');
       this.finalVerdict=navParams.get('finalVerdict');
       this.workflowId=navParams.get('workflowId');
+      this.interview_details=navParams.get('interview_details');
+      this.ScreenerFeedBackBean = this.interview_details.ScreenerFeedBackBean
+      this.videoLink = this.ScreenerFeedBackBean[0].videoLink
+      console.log("interview_details" , this.interview_details);
+      console.log("ScreenerFeedBackBean" , this.ScreenerFeedBackBean);
+      console.log("candidateLink" , this.videoLink);
       
       // this.total_question =[this.detail1,this.video_questions];
       // this.total_question= 
@@ -39,7 +47,7 @@ export class QuestionResponsePage {
         Object.keys(this.video_questions).forEach(key=> {
           this.total_question.push(this.video_questions[key])
         });
-         console.log("kelooooo" , this.total_question);
+        // console.log("kelooooo" , this.total_question);
       }
      
   }

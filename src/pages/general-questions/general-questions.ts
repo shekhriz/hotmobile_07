@@ -23,7 +23,11 @@ export class GeneralQuestionsPage {
   lastMileStone:string;
   token:string;
   generals:Array<Object> = [];
-
+  allowAction:any;
+  currentReqActions:any={};
+  workflowId:string;
+  actions:any=[];
+  submit:boolean;
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public loadingCtrl: LoadingController,
     public restProvider: RestProvider,
@@ -32,6 +36,13 @@ export class GeneralQuestionsPage {
     this.token = this.util.getToken();
     this.reqId = navParams.get('reqId');
     this.lastMileStone = navParams.get('lastMileStone');
+    this.workflowId=navParams.get('workflowId');
+    this.currentReqActions =navParams.get('currentReqActions');
+    this.submit= navParams.get('submit');
+    console.log(' this.currentReqActions', this.currentReqActions);
+   
+    console.log(' this.workflowId', this.workflowId);
+   
    
 
     this.genquestionById();
@@ -66,15 +77,22 @@ export class GeneralQuestionsPage {
     
   }
   gotoTechnicals(){
-    this.navCtrl.push(TechnicalQuestionPage,{reqId:this.reqId,lastMileStone:this.lastMileStone});
+    this.navCtrl.push(TechnicalQuestionPage,{reqId:this.reqId,lastMileStone:this.lastMileStone,currentReqActions:this.currentReqActions,workflowId:this.workflowId});
   console.log("adyasa",this.reqId);
   console.log("lastMileStone",this.lastMileStone);
+  console.log("currentReqActions",this.currentReqActions);
   }
   addQuestionDb(){
-    this.navCtrl.push(GeneralDbPage,{reqId:this.reqId});
+    this.navCtrl.push(GeneralDbPage,{reqId:this.reqId,currentReqActions:this.currentReqActions});
   }
   createNew(){
   this.navCtrl.push(AddGeneralPage);
 
   }
+  approveQuestion(){
+    this.viewCtrl.dismiss();
+   }
+   rejectQuestion(){
+    this.viewCtrl.dismiss();
+   }
 }

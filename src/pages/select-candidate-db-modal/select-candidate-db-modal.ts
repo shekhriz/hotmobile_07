@@ -52,6 +52,7 @@ export class SelectCandidateDbModalPage {
   startDateNew:string;
   endDateNew:string;
   selectedDate:string;
+  zoomCount :number= 0;
   @ViewChild(DatePickerDirective) public datepicker: DatePickerDirective;
   public localDate: Date = new Date();
   public initDate: Date = new Date();
@@ -150,166 +151,347 @@ export class SelectCandidateDbModalPage {
     }
 
   }
-
   submitCandidate(){
-
     let loading = this.loadingCtrl.create({
-      content: 'Please wait while candidate adding...'
+      content: 'Please wait while candidate is added...'
     });
+   
     if(this.submissionType == undefined || this.submissionType == ""){
-      this.util.showToast("Please select Submission Type.","ERROR");
+      this.util.showToast("Please select submission type.","ERROR");
       return;
     }
-
-    // if(this.selectedScr == undefined || this.selectedScr == "" ){
-    //   this.util.showToast("Please enter First Name.","ERROR");
-    //   return;
-    // }
+   
     loading.present();
-
-    Object.keys(this.selecteddetails).forEach(key => {
-     if(this.selecteddetails[key].mySubType == "One Way" || this.selecteddetails[key].mySubType == "Prospect" || this.selecteddetails[key].mySubType == "Two Way") {
-      this.tempArray.push({
-        'candidateId': this.selecteddetails[key].candidateId,
-        'chancesOfExtension': this.selecteddetails[key].chancesOfExtension,
-        'educationalYear': this.selecteddetails[key].educationalYear,
-        'emailId': this.selecteddetails[key].emailId,
-        'internalSubEmailTemp': "",
-        'isAlreadyAdded':false,
-        'isBlackListed': this.selecteddetails[key].isBlackListed,
-        'linkedInProfileURL':this.selecteddetails[key].linkedInProfileURL,
-        'note': this.selecteddetails[key].note,
-        'relocateWithFamily': this.selecteddetails[key].relocateWithFamily,
-        'requirementId': this.reqId,
-        'subVendorId': this.selecteddetails[key].subVendorId,
-        'submissionType': this.selecteddetails[key].mySubType,
-        'willingToRelocate': this.selecteddetails[key].willingToRelocate
-      })
-     }
-     if(this.selecteddetails[key].mySubType == 'Zoom' ||this.selecteddetails[key].mySubType == 'Skype') {
-      this.tempArray.push({
-        'candidateId': this.selecteddetails[key].candidateId,
-        'chancesOfExtension': this.selecteddetails[key].chancesOfExtension,
-        'educationalYear': this.selecteddetails[key].educationalYear,
-        'emailId': this.selecteddetails[key].emailId,
-        'internalSubEmailTemp': "",
-        'isAlreadyAdded':false,
-        'isBlackListed': this.selecteddetails[key].isBlackListed,
-        'linkedInProfileURL':this.selecteddetails[key].linkedInProfileURL,
-        'note': this.selecteddetails[key].note,
-        'relocateWithFamily': this.selecteddetails[key].relocateWithFamily,
-        'requirementId': this.reqId,
-        'body':"<!DOCTYPE html><body><p>Welcome to HOT</p></body></html>",
-        'recScheduledDate':'',
-        'screenByUser': this.scrData[key].firstName,
-        'screenByUserEmail': this.scrData[key].emailId,
-        'screenByUserId':this.scrData[key].id,
-        'subVendorId': this.selecteddetails[key].subVendorId,
-        'submissionType': this.selecteddetails[key].mySubType,
-        'willingToRelocate': this.selecteddetails[key].willingToRelocate
-      })
-     }
-
-
-console.log("candidateIdnmmmm",this.tempArray);
-
-});
-    let jsonData={
-      candidatesBean:this.tempArray,
-
-      "user":this.loginUser,
+    if(this.submissionType == 'Zoom'){
+          this.restProvider.AvailabilityTime(this.token,moment(this.selectedDate).format("DD-MM-YYYY"),this.finalTime)
+          .then((data:any) => {  
+      },error => {
+       
+      });
 
     }
-    jsonData.user.groupsSet=[];
-    jsonData.user.technicalScreenerDetailsSkillsSet=[];
-    if(this.selectedDate != '' || this.selectedDate != undefined || this.selectedDate != null){
-        this.restProvider.AvailabilityTime(this.token,moment(this.selectedDate).format("DD-MM-YYYY"),this.finalTime)
+     
+    Object.keys(this.selecteddetails).forEach(key=> {   
+        //////candidate///
+      
+        if(this.selecteddetails[key].mySubType == "One Way" || this.selecteddetails[key].mySubType == "Prospect" || this.selecteddetails[key].mySubType == "Two Way") {
+          this.tempArray.push({
+            'candidateId': this.selecteddetails[key].candidateId,
+            'chancesOfExtension': this.selecteddetails[key].chancesOfExtension,
+            'educationalYear': this.selecteddetails[key].educationalYear,
+            'emailId': this.selecteddetails[key].emailId,
+            'internalSubEmailTemp': "",
+            'isAlreadyAdded':false,
+            'isBlackListed': this.selecteddetails[key].isBlackListed,
+            'linkedInProfileURL':this.selecteddetails[key].linkedInProfileURL,
+            'note': this.selecteddetails[key].note,
+            'relocateWithFamily': this.selecteddetails[key].relocateWithFamily,
+            'requirementId': this.reqId,
+            'subVendorId': this.selecteddetails[key].subVendorId,
+            'submissionType': this.selecteddetails[key].mySubType,
+            'willingToRelocate': this.selecteddetails[key].willingToRelocate
+          })
+         }
+         if(this.selecteddetails[key].mySubType == 'Zoom' ) {
+          this.zoomCount++;
+            console.log("ppppppppppppppp",this.zoomCount)
+          this.tempArray.push({
+            'candidateId': this.selecteddetails[key].candidateId,
+            'chancesOfExtension': this.selecteddetails[key].chancesOfExtension,
+            'educationalYear': this.selecteddetails[key].educationalYear,
+            'emailId': this.selecteddetails[key].emailId,
+            'internalSubEmailTemp': "",
+            'isAlreadyAdded':false,
+            'isBlackListed': this.selecteddetails[key].isBlackListed,
+            'linkedInProfileURL':this.selecteddetails[key].linkedInProfileURL,
+            'note': this.selecteddetails[key].note,
+            'relocateWithFamily': this.selecteddetails[key].relocateWithFamily,
+            'requirementId': this.reqId,
+            'body':"<!DOCTYPE html><body><p>Welcome to HOT</p></body></html>",
+            'recScheduledDate':'',
+            'screenByUser': this.scrData[key].firstName,
+            'screenByUserEmail': this.scrData[key].emailId,
+            'screenByUserId':this.scrData[key].id,
+            'subVendorId': this.selecteddetails[key].subVendorId,
+            'submissionType': this.selecteddetails[key].mySubType,
+            'willingToRelocate': this.selecteddetails[key].willingToRelocate
+          })
+     
+         }
+      
+         let jsonData={
+          candidatesBean:this.tempArray,
+  
+          "user":this.loginUser,
+  
+        }
+       
+        jsonData.user.groupsSet=[];
+        jsonData.user.technicalScreenerDetailsSkillsSet=[];
+      
+        this.restProvider.addcandidates(this.token,jsonData)
         .then((data:any) => {
+          this.restProvider.candidates(this.token,this.reqId,this.loginUser)
+          .then((data:any) => {
+  
+           
+  
+              },error => {
+                  this.util.showToast("Something went wrong.","ERROR");
+              });
         },error => {
           this.util.showToast("Something went wrong.","ERROR");
         });
-     }
-        this.restProvider.addcandidates(this.token,jsonData)
-        .then((data:any) => {
-            this.restProvider.candidates(this.token,this.reqId,this.loginUser)
-            .then((data:any) => {
 
-              loading.dismiss();
+        
+    })//ob1
+     Object.keys(this.selecteddetails).forEach(key=> {   
+     let jsonData2={
+      body:"<!DOCTYPE html><body><p>Welcome to HOT</p></body></html>",
+      candidatesId:[this.selecteddetails[key].candidateId],
+      isAlreadyAdded:false,
+      requirementId:this.reqId,
+      subject:"Candidate Added for the Requirement",
 
-            },error => {
-                this.util.showToast("Something went wrong.","ERROR");
-        });
-      //
-      Object.keys(this.selecteddetails).forEach(key => {
-        let jsonData2={
+    "user":this.loginUser,
+     } 
+     this.restProvider.fromFrontend(this.token,jsonData2)
+     .then((data:any) => {
+     
+      this.navCtrl.push(CandidatePage,{reqId:this.reqId,workflowId:this.workflowId});
+      if(this.selecteddetails[key].mySubType == "Zoom" ){
+                  let jsonData3={
+                
+                    candidateEmail:this.selecteddetails[key].emailId,
+                    candidateId:this.selecteddetails[key].candidateId,
+                    date:moment(this.selectedDate).format("DD-MM-YYYY"),
+                    jwtDetails:{
+                      emailId:this.loginUser.emailId,
+                      firstName:this.loginUser.firstName,
+                      id:this.loginUser.id,
+                      lastName:this.loginUser.lastName,
+                      role:this.loginUser.role,
+                      userName:this.loginUser.userName
+                    },
+                      loginEmaild: this.loginUser.emailId,
+                      requirementId: this.reqId,
+                      screenByUser: this.scrData[key].firstName +''+this.scrData[key].lastName,
+                      screenByUserEmail: this.scrData[key].emailId,
+                      screenByUserId: this.scrData[key].id,
+                      submissionType: this.selecteddetails[key].mySubType,
+                      time:this.finalTime,
+                      timezone:this.timezone
+                  }
 
-            body:"<!DOCTYPE html><body><p>Welcome to HOT</p></body></html>",
-            candidatesId:[this.selecteddetails[key].candidateId],
-            isAlreadyAdded:false,
-            requirementId:this.reqId,
-            subject:"Candidate Added for the Requirement",
+                  this.restProvider.zoomApi(this.token,jsonData3)
+                  .then((data:any) => {
 
-          "user":this.loginUser,
-        }
-        jsonData2.user.userImage= null;
-        this.restProvider.fromFrontend(this.token,jsonData2)
-        .then((data:any) => {
-          this.navCtrl.push(CandidatePage,{reqId:this.reqId,workflowId:this.workflowId});
+                    this.restProvider.refresh(this.token)
+                    .then((data:any) => {
+                    
+                        this.navCtrl.push(CandidatePage,{reqId:this.reqId,workflowId:this.workflowId});
 
-        if(this.selecteddetails[key].mySubType == "Zoom" ||this.selecteddetails[key].mySubType == "Skype"){
-          let jsonData3={
+                    } ,error => {
+                    this.util.showToast("Something went wrong.","ERROR");
+                    });
 
-              candidateEmail:this.selecteddetails[key].emailId,
-              candidateId:this.selecteddetails[key].candidateId,
-              date:moment(this.selectedDate).format("DD-MM-YYYY"),
-              jwtDetails:{
-                emailId:this.loginUser.emailId,
-                firstName:this.loginUser.firstName,
-                id:this.loginUser.id,
-                lastName:this.loginUser.lastName,
-                role:this.loginUser.role,
-                userName:this.loginUser.userName
-              },
-                loginEmaild: this.loginUser.emailId,
-                requirementId: this.reqId,
-                screenByUser: this.scrData[key].firstName +''+this.scrData[key].lastName,
-                screenByUserEmail: this.scrData[key].emailId,
-                screenByUserId: this.scrData[key].id,
-                submissionType: this.selecteddetails[key].mySubType,
-                time:this.finalTime,
-                timezone:this.timezone
-               }
+                  },error => {
+                    this.util.showToast("Something went wrong.","ERROR");
+                });
+              }
+     },error => {
+      loading.dismiss();
+      })//frontend
+    });//obj2
+       
+  
+  }
+  submitCandidate1(){
 
-                if(this.selecteddetails[key].mySubType == "Zoom"){
+    // let loading = this.loadingCtrl.create({
+    //   content: 'Please wait while candidate adding...'
+    // });
+ 
+    // if(this.firstName == undefined || this.scrData.firstName == ""){
+    //   this.util.showToast("Please select Screener.","ERROR");
+    //   return;
+    // }
+  
+    // if(this.selectedDate == undefined || this.selectedDate == ""){
+    //   this.util.showToast("Please select Date.","ERROR");
+    //   return;
+    // }
+    // if(this.finalTime == undefined || this.finalTime == ""){
+    //   this.util.showToast("Please select Time .","ERROR");
+    //   return;
+    // }
+    // if(this.timezone == undefined || this.timezone == ""){
+    //   this.util.showToast("Please select Timezone.","ERROR");
+    //   return;
+    // }
+  //   if(this.submissionType == 'Zoom' && this.zoomCount >1  ){ 
+  //     this.util.showToast("Sorry, We can't schedule more than one zoom interview here.  ","ERROR");
+  //  //   console.log('lllllllllllllllllll',this.zoomCount)  
+  //     return;    
 
-                          this.restProvider.zoomApi(this.token,jsonData3)
-                          .then((data:any) => {
+  //   }
+   // loading.present();
 
-                            this.restProvider.refresh(this.token)
-                            .then((data:any) => {
+//     Object.keys(this.selecteddetails).forEach(key => {
+     
+//      if(this.selecteddetails[key].mySubType == "One Way" || this.selecteddetails[key].mySubType == "Prospect" || this.selecteddetails[key].mySubType == "Two Way") {
+//       this.tempArray.push({
+//         'candidateId': this.selecteddetails[key].candidateId,
+//         'chancesOfExtension': this.selecteddetails[key].chancesOfExtension,
+//         'educationalYear': this.selecteddetails[key].educationalYear,
+//         'emailId': this.selecteddetails[key].emailId,
+//         'internalSubEmailTemp': "",
+//         'isAlreadyAdded':false,
+//         'isBlackListed': this.selecteddetails[key].isBlackListed,
+//         'linkedInProfileURL':this.selecteddetails[key].linkedInProfileURL,
+//         'note': this.selecteddetails[key].note,
+//         'relocateWithFamily': this.selecteddetails[key].relocateWithFamily,
+//         'requirementId': this.reqId,
+//         'subVendorId': this.selecteddetails[key].subVendorId,
+//         'submissionType': this.selecteddetails[key].mySubType,
+//         'willingToRelocate': this.selecteddetails[key].willingToRelocate
+//       })
+//      }
+//      if(this.selecteddetails[key].mySubType == 'Zoom' ||this.selecteddetails[key].mySubType == 'Skype') {
+//       this.zoomCount++;
+//         console.log("ppppppppppppppp",this.zoomCount)
+//       this.tempArray.push({
+//         'candidateId': this.selecteddetails[key].candidateId,
+//         'chancesOfExtension': this.selecteddetails[key].chancesOfExtension,
+//         'educationalYear': this.selecteddetails[key].educationalYear,
+//         'emailId': this.selecteddetails[key].emailId,
+//         'internalSubEmailTemp': "",
+//         'isAlreadyAdded':false,
+//         'isBlackListed': this.selecteddetails[key].isBlackListed,
+//         'linkedInProfileURL':this.selecteddetails[key].linkedInProfileURL,
+//         'note': this.selecteddetails[key].note,
+//         'relocateWithFamily': this.selecteddetails[key].relocateWithFamily,
+//         'requirementId': this.reqId,
+//         'body':"<!DOCTYPE html><body><p>Welcome to HOT</p></body></html>",
+//         'recScheduledDate':'',
+//         'screenByUser': this.scrData[key].firstName,
+//         'screenByUserEmail': this.scrData[key].emailId,
+//         'screenByUserId':this.scrData[key].id,
+//         'subVendorId': this.selecteddetails[key].subVendorId,
+//         'submissionType': this.selecteddetails[key].mySubType,
+//         'willingToRelocate': this.selecteddetails[key].willingToRelocate
+//       })
+      
 
-                                this.navCtrl.push(CandidatePage,{reqId:this.reqId,workflowId:this.workflowId});
 
-                            } ,error => {
-                            this.util.showToast("Something went wrong.","ERROR");
-                            });
+//      }
+    
+//       console.log("candidateIdnmmmm",this.tempArray);
 
-                          },error => {
-                            this.util.showToast("Something went wrong.","ERROR");
-                        });
+// });
+//     let jsonData={
+//       candidatesBean:this.tempArray,
 
-                }
-            }
+//       "user":this.loginUser,
 
-          });
-            },error => {
-                this.util.showToast("Something went wrong.","ERROR");
-            });
-          },error => {
-              this.util.showToast("Something went wrong.","ERROR");
-          });
+//     }
+//     jsonData.user.groupsSet=[];
+//     jsonData.user.technicalScreenerDetailsSkillsSet=[];
 
-  }  //if
+   
+//     if((this.selectedDate != '' || this.selectedDate != undefined || this.selectedDate != null)&& (this.finalTime != '' || this.finalTime != undefined ||this.finalTime != null )){
+//         this.restProvider.AvailabilityTime(this.token,moment(this.selectedDate).format("DD-MM-YYYY"),this.finalTime)
+//         .then((data:any) => {
+//         },error => {
+//           this.util.showToast("Something went wrong.","ERROR");
+//         });
+//      }
+//       this.restProvider.addcandidates(this.token,jsonData)
+//       .then((data:any) => {
+//           this.restProvider.candidates(this.token,this.reqId,this.loginUser)
+//           .then((data:any) => {
+  
+//               //  loading.dismiss();
+  
+//               },error => {
+//                   this.util.showToast("Something went wrong.","ERROR");
+//              });
+//         //
+//      Object.keys(this.selecteddetails).forEach(key => {
+          
+//           let jsonData2={
+//               body:"<!DOCTYPE html><body><p>Welcome to HOT</p></body></html>",
+//               candidatesId:[this.selecteddetails[key].candidateId],
+//               isAlreadyAdded:false,
+//               requirementId:this.reqId,
+//               subject:"Candidate Added for the Requirement",
+  
+//             "user":this.loginUser,
+//           }
+//           jsonData2.user.userImage= null;
+//           this.restProvider.fromFrontend(this.token,jsonData2)
+//           .then((data:any) => {
+//             this.navCtrl.push(CandidatePage,{reqId:this.reqId,workflowId:this.workflowId});
+  
+//             if(this.selecteddetails[key].mySubType == "Zoom" ){
+             
+//                   let jsonData3={
+        
+//                       candidateEmail:this.selecteddetails[key].emailId,
+//                       candidateId:this.selecteddetails[key].candidateId,
+//                       date:moment(this.selectedDate).format("DD-MM-YYYY"),
+//                       jwtDetails:{
+//                         emailId:this.loginUser.emailId,
+//                         firstName:this.loginUser.firstName,
+//                         id:this.loginUser.id,
+//                         lastName:this.loginUser.lastName,
+//                         role:this.loginUser.role,
+//                         userName:this.loginUser.userName
+//                       },
+//                         loginEmaild: this.loginUser.emailId,
+//                         requirementId: this.reqId,
+//                         screenByUser: this.scrData[key].firstName +''+this.scrData[key].lastName,
+//                         screenByUserEmail: this.scrData[key].emailId,
+//                         screenByUserId: this.scrData[key].id,
+//                         submissionType: this.selecteddetails[key].mySubType,
+//                         time:this.finalTime,
+//                         timezone:this.timezone
+//                     }
+                    
+//                               this.restProvider.zoomApi(this.token,jsonData3)
+//                               .then((data:any) => {
+    
+//                                 this.restProvider.refresh(this.token)
+//                                 .then((data:any) => {
+    
+//                                     this.navCtrl.push(CandidatePage,{reqId:this.reqId,workflowId:this.workflowId});
+    
+//                                 } ,error => {
+//                                 this.util.showToast("Something went wrong.","ERROR");
+//                                 });
+    
+//                               },error => {
+//                                 this.util.showToast("Something went wrong.","ERROR");
+//                             });
+    
+                    
+//                 }//if zoom
+  
+        
+//               },error => {
+//                   this.util.showToast("Something went wrong.","ERROR");
+//               });//fronend
+
+         
+//         });//obj end
+
+//       },error => {
+//           this.util.showToast("Something went wrong.","ERROR");
+//       });//add candidate
+    
+   
+  
+  }  
 
   closeModal(){
     this.navCtrl.pop();

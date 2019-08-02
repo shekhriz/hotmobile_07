@@ -12,16 +12,26 @@
               <button ion-button  class="btn2" outline >General</button>
               <button ion-button  class="btn3" outline (click)="gotoTechnicals()">Technical</button>
         </div>
+        <ion-row center style="float: right;" >
+            <ion-col>
+                <button ion-button  class="btn4" *ngIf="currentReqActions.actions.includes('approvetechquestions')" (click)="approveQuestion()" >Approve Question</button>
+                <button ion-button  class="btn4" *ngIf="currentReqActions.actions.includes('approvetechquestions')" (click)="rejectQuestion()">Reject Question</button>  
+           </ion-col> 
+         </ion-row>
+         <div class="row" style="float: right;"  >
+            <button ion-button *ngIf="currentReqActions.actions.includes('addgeneralquestions') ||currentReqActions.actions.includes('resubmitquestionssssss') " class="btn4"  (click)="addQuestionDb()" >+ db</button>
+            <button ion-button *ngIf="currentReqActions.actions.includes('addgeneralquestions') ||currentReqActions.actions.includes('resubmitquestionssssss') " class="btn4"  (click)="createNew()">Create New</button>
+            <button ion-button *ngIf="currentReqActions.actions.includes('submittechquestions')"  class="btn4"  (click)="submitQuestions()">Submit</button>
+            
+        </div>
     </ion-header>
     
     
     <ion-content padding>
     
             <div >
-                    <div class="row" style="float: right;"  *ngIf="lastMileStone == 'TechnicalQuestionsAdded'">
-                             <button ion-button  class="btn4" (click)="addQuestionDb()" >Add From db</button>
-                             <button ion-button  class="btn4"  (click)="createNew()">Create New</button>
-                     </div>
+                   
+                    
                      
                      <div class="row" *ngIf="generals == '' || generals == 'undefined'">
                          <div class="col">
@@ -66,59 +76,7 @@
             </ion-list>
     
         
-          <!-- <ion-card *ngFor ="let question of generals;let i=index">
-              <ion-card-content>      
-                    <div class="container">
-                        <div class = "row"  >
-                            <div class = "col" ><b>{{i + 1}}. {{question.questionName}} </b><br>
-     
-                            </div>
-    <main-header></main-header>
-    <div class="addBtn"> 
-          <button ion-button  class="btn1" outline (click)="goBack()"><ion-icon name="undo" ></ion-icon></button>
-          <button ion-button  class="btn2" outline >General Questions</button>
-          <button ion-button  class="btn3" outline (click)="gotoTechnicals()">Technical Questions</button>
-    </div>
-</ion-header> -->
-
-
-<!-- <ion-content padding>
-        <div >
-               <div class="row" style="float: right;"  *ngIf="lastMileStone == 'TechnicalQuestionsAdded'">
-                        <button ion-button  class="btn4" (click)="addQuestionDb()" >Add From db</button>
-                        <button ion-button  class="btn4"  (click)="createNew()">Create New</button>
-                </div>
-                
-                <div class="row" *ngIf="generals == '' || generals == 'undefined'">
-                    <div class="col">
-                            <h1>No records found</h1>
-                    </div>
-                    
-                </div>
-            </div>
-      <ion-card *ngFor ="let question of generals;let i=index">
-          <ion-card-content>      
-                <div class="container">
-                    <div class = "row"  >
-                        <div class = "col" ><b>{{i + 1}}. {{question.questionName}} </b><br>
- 
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                          <b>Type</b> : <span>{{question.type}}</span>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                              <b>Type</b> : <span>{{question.type}}</span>
-                            </div>
-                            <div class="col">
-                                <b>Author</b> : <span>{{question.createdUserName}}</span>
-                            </div>
-                        </div>
-                    </div>
-              </ion-card-content>
-          </ion-card> -->
+           
     </ion-content>
     
     

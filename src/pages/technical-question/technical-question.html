@@ -12,21 +12,28 @@
           <button ion-button  class="btn3" outline>Technical</button>
           
     </div>
+    <ion-row center style="float: right;" >
+        <ion-col>
+            <button ion-button  class="btn4" *ngIf="currentReqActions.actions.includes('approvetechquestions')" (click)="approveQuestion()" >Approve Question</button>
+            <button ion-button  class="btn4" *ngIf="currentReqActions.actions.includes('approvetechquestions')" (click)="rejectQuestion()">Reject Question</button>  
+       </ion-col> 
+    </ion-row>
+    <div class="row" style="float: right;"  >
+        <button ion-button  class="btn4"  *ngIf="currentReqActions.actions.includes('addtechquestions') || currentReqActions.actions.includes('resubmitquestion')" (click)="addQuestionDb()" >+DB</button>
+        <button ion-button  class="btn4" *ngIf="currentReqActions.actions.includes('addtechquestions')|| currentReqActions.actions.includes('resubmitquestion') " (click)="createNew()">Create New</button>
+        <button ion-button  class="btn4"  *ngIf="currentReqActions.actions.includes('submittechquestions')" (click)="submitQuestions()">Submit</button>
+    </div>
 </ion-header>
 
 
 <ion-content padding>
         <ion-list>       
                 <div >
-                        <div class="row" style="float: right;"  *ngIf="lastMileStone == 'TechScreenerAdded'">
-                                <button ion-button  class="btn4" (click)="addQuestionDb()" >Add From db</button>
-                                <button ion-button  class="btn4"  (click)="createNew()">Create New</button>
-                        </div>
+                      
                         
-                        <div class="row" *ngIf="technicals == '' || technicals == 'undefined'">
-                            <div class="col">
+                        <div class="row"style="width:100%" *ngIf="technicals == '' || technicals == 'undefined'">
+                          
                                     <h1>No records found</h1>
-                            </div>
                             
                         </div>
                     </div>
@@ -73,53 +80,6 @@
         </ion-list>
 
 
-      <!-- <ion-card *ngFor ="let question of technicals;let i=index">
-    <div >
-            <div class="row" style="float: right;"  *ngIf="lastMileStone == 'TechnicalQuestionsAdded'">
-                    <button ion-button  class="btn4" (click)="addQuestionDb()" >Add From db</button>
-                    <button ion-button  class="btn4"  (click)="createNew()">Create New</button>
-            </div>
-            
-            <div class="row" *ngIf="technicals == '' || technicals == 'undefined'">
-                <div class="col">
-                        <h1>No records found</h1>
-                </div>
-                
-            </div>
-        </div>
-      <ion-card *ngFor ="let question of technicals;let i=index">
-          <ion-card-content>      
-                <div class="container">
-                    <div class = "row"  >
-                        <div class = "col" ><b>{{i + 1}}. {{question.questionName}} </b><br>
- 
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                          <b>Type</b> : <span>{{question.type}}</span>
-                        </div>
-                        <div class="col">
-                            <b>Author</b> : <span>{{question.createdUserName}}</span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                          <b>Domain</b> : <span>{{question.domain}}</span>
-                        </div>
-                        <div class="col">
-                            <b>Level</b> : <span>{{question.level}}</span>
-                        </div>
-                    </div>
-                </div>
-          </ion-card-content>
-      </ion-card> -->
-      <!-- <div class="row" *ngIf="technicals == '' || technicals == 'undefined'">
-          <div class="col">
-              <h3>No records found</h3>
-          </div>
-      </div>
-      </ion-card> -->
-     
+    
 </ion-content>
 

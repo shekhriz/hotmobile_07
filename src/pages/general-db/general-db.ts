@@ -28,6 +28,7 @@ export class GeneralDbPage {
   interviewType:string;
   buttonDisabled:boolean=true;
   outcomes:any;
+  currentReqActions:any={};
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
@@ -41,6 +42,8 @@ export class GeneralDbPage {
       this.reqId = navParams.get('reqId');
       this.token = this.util.getToken();
       this.loginUser = this.util.getSessionUser();
+     
+      this.currentReqActions =navParams.get('currentReqActions');
       this.technicalQuestionFromDb();
       console.log("interviewType",this.interviewType)
   }
@@ -123,7 +126,7 @@ export class GeneralDbPage {
          this.outcomes = res;
         console.log('this.outcomes',this.outcomes);
         loading.dismiss();
-        this.navCtrl.push(GeneralQuestionsPage,{reqId:this.reqId});
+        this.navCtrl.push(GeneralQuestionsPage,{reqId:this.reqId,currentReqActions:this.currentReqActions});
       },error => {
         loading.dismiss();
       });

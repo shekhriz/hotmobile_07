@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController,ViewController} from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController,ViewController,AlertController} from 'ionic-angular';
 import { UtilsProvider } from '../../providers/utils/utils';
 import { RestProvider } from '../../providers/rest/rest';
 import { GeneralQuestionsPage }  from '../../pages/general-questions/general-questions';
@@ -24,16 +24,26 @@ export class TechnicalQuestionPage {
   token:string;
   technicals:string;
   lastMileStone:string;
+  currentReqActions:any={};
+ 
+  workflowId:string;
+  loginUser:any;
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public loadingCtrl: LoadingController,
     public restProvider: RestProvider,
     public viewCtrl : ViewController,
-    public util: UtilsProvider,) {
+    public util: UtilsProvider,
+    public alertCtrl:AlertController) {
     this.token = this.util.getToken();
     this.reqId = navParams.get('reqId');
     this.lastMileStone = navParams.get('lastMileStone');
-    console.log('this.lastMileStone',this.lastMileStone);
-    
+    this.currentReqActions =navParams.get('currentReqActions');
+   
+    this.workflowId=navParams.get('workflowId');
+    this.loginUser = this.util.getSessionUser();
+    console.log(' this.workflowId', this.workflowId);
+  
+    console.log(' this.currentReqActions', this.currentReqActions);
    
     this.techquestionById();
   }
@@ -62,7 +72,10 @@ export class TechnicalQuestionPage {
     
   }
   gotoGeneral(){
-    this.navCtrl.push(GeneralQuestionsPage,{reqId:this.reqId,lastMileStone:this.lastMileStone});
+    
+    this.navCtrl.push(GeneralQuestionsPage,{reqId:this.reqId,lastMileStone:this.lastMileStone,currentReqActions:this.currentReqActions});
+  console.log("currentReqActions",this.currentReqActions);
+
   }
   goBack(){
     //this.navCtrl.pop();
@@ -71,11 +84,108 @@ export class TechnicalQuestionPage {
  }
  addQuestionDb(){
   
-  this.navCtrl.push(TechnicalDbPage,{reqId:this.reqId});
+  this.navCtrl.push(TechnicalDbPage,{reqId:this.reqId,workflowId:this.workflowId,currentReqActions:this.currentReqActions});
 
  }
  createNew(){
   this.navCtrl.push(AddTechnicalPage);
 
+ }
+ submitQuestions(){
+  let confirm = this.alertCtrl.create({
+    title: 'Submit Question',
+    message: 'Are you sure you want to submit the questions for this requirement?',
+    buttons: [
+      {
+        text: 'No',
+        handler: () => {
+          console.log('No clicked');
+        }
+      },
+      {
+        text: 'Yes',
+        handler: () => {
+          let loading = this.loadingCtrl.create({
+            content: 'Please wait...'
+          });
+          
+          let jsonData = {
+         
+          'requirementId': this.reqId,
+          'user': this.loginUser,
+         
+          }
+         jsonData.user.groupsSet =[];
+         jsonData.user.technicalScreenerDetailsSkillsSet =[];
+
+
+          loading.present();
+          this.restProvider.submitQuestions(this.token,this.reqId,jsonData)
+          .then(data => {
+          
+            loading.dismiss();
+            let jsonData2= {
+         
+              'emailId': this.loginUser.emailId,
+              'firstName': this.loginUser.firstName,
+              'id': this.loginUser.id,
+              'lastName': this.loginUser.lastName,
+              'questionId': 0,
+              'questionType': "string",
+              'requirementId': this.reqId,
+              'role': this.loginUser.role,
+              'userName': this.loginUser.userName
+             
+              }
+            this.restProvider.submitQuestionsMail(this.reqId,jsonData2,this.token)
+            .then(data => {
+            },error => {
+              loading.dismiss(); 
+              
+            })
+              
+              let jsonContact = {
+                "role":this.loginUser.role,
+                "userId":this.loginUser.id,
+                "workflowId":this.workflowId
+              }
+             
+              this.restProvider.allowedActions(jsonContact,this.token)
+              .then(res => {
+               
+              },error => {
+                this.restProvider.editCandidate(this.token,this.reqId)
+                .then(res => {
+
+                },error => {
+                 
+                })
+                this.restProvider.detailsForDropdown(this.token)
+                .then(res => {
+                  this.navCtrl.push(GeneralQuestionsPage,{reqId:this.reqId,submit:true});
+                },error => {
+                 
+                })
+               
+              })
+            },error => {
+              loading.dismiss();
+             
+            })
+   
+         
+       
+         
+        }
+      }
+    ]
+  });
+  confirm.present();
+ }
+ approveQuestion(){
+  this.viewCtrl.dismiss();
+ }
+ rejectQuestion(){
+  this.viewCtrl.dismiss();
  }
 }
