@@ -1,0 +1,119 @@
+<!--
+  Generated template for the UsersPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <main-header></main-header>
+  <div class="addBtn" *ngIf="candidates != '' "> 
+       <button ion-button class="btn1" outline (click)="goBack()"><ion-icon name="undo" ></ion-icon></button>
+       <h1>Candidates</h1>        
+         <button ion-button color="dark" class="btn2" outline (click)="AddCandidateDb()">+ Db</button>
+        <button ion-button color="dark" class="btn2" outline (click)="gotoAddCandidate()">+ New</button>
+  </div>
+  <div class="addBtn" *ngIf="candidates == '' || candidates == 'undefined'"> 
+    <button ion-button color="grey"  style="background: #bdbdbd;color: black;" outline (click)="goBack()"><ion-icon name="undo" ></ion-icon></button>
+  </div>
+  
+  <ion-row center >
+     
+      <ion-col >
+         <ion-searchbar
+         [(ngModel)]="myInput">
+       </ion-searchbar>
+     </ion-col> 
+     
+     
+   </ion-row> 
+</ion-header>
+
+
+<ion-content>
+  
+  <ion-list>
+          
+
+          <div class="body"  *ngFor="let candidate of candidates| search : myInput;let i= index" >
+              
+              <div class="body-left" >
+                  
+                     
+                  <div ion-item >
+                   
+                        <div class="inner-body" >
+                          <span style="font-size: 18px;margin-top: -1px;" ><b>{{i + 1}}:</b></span>    
+                          <label class="inner-left"> &nbsp;   <span style="font-size: 17px"><b>{{candidate.firstName }} {{candidate.lastName}}</b></span></label> 
+                         </div>
+                         <div class="innerContent">
+                            <div class="inner-body" >
+                                <label class="inner-left">Added By &nbsp;:  <span >{{candidate.addedBy}}</span></label> 
+                            </div>
+                            <div class="inner-body" >
+                                <label class="inner-left">Status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  <span >{{candidate.status}} </span>
+                                  
+                                </label> 
+                        </div> 
+                        <!-- <div class="inner-body" >
+                            <label class="inner-left">Result &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:  <span >{{candidate.finalVerdict}}</span> 
+                              <span *ngIf="candidate.linkExpired == false" class="_green" (click)="candidateLinkActive(candidate)" > [Link Active]</span>
+                              <span *ngIf="candidate.linkExpired == true" class="_red"> [Link Expired]</span>
+                            </label>
+                         </div> -->
+                         
+                        
+                         
+                         <div class="inner-body" >
+                            <label class="inner-left">Email id &nbsp;&nbsp;&nbsp;&nbsp;:  <span >{{candidate.emailId}}</span></label> 
+                         </div>
+                         </div>
+                         
+                    </div> 
+                   
+              </div>
+             
+              
+
+              <div class="actionMenu">   
+                  <button ion-item (click)="presentPopover($event,candidate)" >  
+                          <ion-icon ios="ios-menu" md="md-menu" class="popbtn"></ion-icon>
+                  </button>  
+              </div>
+          </div>
+          <div class="row" *ngIf="candidates == '' || candidates == 'undefined'"> 
+            <div class="col">
+              <div style="text-align: center; margin-top:100px;">
+                  <h3>No Candidates are added to this requirement</h3>
+              </div>
+                
+            </div>
+             
+          </div>
+          
+          
+            
+  </ion-list>
+  
+    
+</ion-content>
+<!-- <ion-header *ngIf="!candidates">
+    <main-header></main-header>
+    <div class="addBtn"> 
+            <ion-icon name="undo" (click)="goBack()"></ion-icon>
+            <h1>Candidates : QA testing requirement</h1>
+           
+    </div>
+  </ion-header>
+  
+  
+  <ion-content>
+    
+    <ion-list>
+            
+        <h1>hddddddddddd</h1>
+            
+              
+    </ion-list>
+  
+      
+  </ion-content> -->
