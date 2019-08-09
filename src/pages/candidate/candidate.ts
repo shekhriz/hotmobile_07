@@ -1,3 +1,7 @@
+
+
+
+
 import { Component } from '@angular/core';
 import { IonicPage,NavController,MenuController, NavParams,LoadingController,PopoverController,AlertController,ViewController } from 'ionic-angular';
 import { UtilsProvider } from '../../providers/utils/utils';
@@ -30,6 +34,8 @@ export class CandidatePage {
   jobTitle:string;
   interviewType:string;
   interviewArray =[];
+  currentReqActions:any={};
+
   constructor(public util: UtilsProvider,
     public navParams: NavParams,
     public navCtrl: NavController,
@@ -47,6 +53,7 @@ export class CandidatePage {
       this.candidateLink = navParams.get('candidateLink');
       this.jobTitle = navParams.get('jobTitle');
       this.interviewType = navParams.get('interviewType');
+      this.currentReqActions =navParams.get('currentReqActions');
       console.log('interviewType',this.interviewType);
       this.loginUser = this.util.getSessionUser();
       this.candidatesById(this.loginUser);
@@ -69,6 +76,7 @@ export class CandidatePage {
         this.candidates = data;
         loading.dismiss();
       console.log("hhhhhasdsdhh",this.candidates);
+      console.log("length",this.candidates.length);
       
     },error => {
         this.util.showToast("Something went wrong.","ERROR");
@@ -130,7 +138,9 @@ export class CandidatePage {
 
   AddCandidateDb(){
     this.interviewArray =[this.interviewType];
-    this.navCtrl.push(AddCandidateDbPage,{reqId:this.reqId,workflowId:this.workflowId,actMgrId:this.actMgrId,jobTitle:this.jobTitle,interviewType:this.interviewType});
-    console.log("adyasa,workflowId",this.reqId,this.workflowId,"interviewType",this.interviewType);
+    this.navCtrl.push(AddCandidateDbPage,{reqId:this.reqId,workflowId:this.workflowId,actMgrId:this.actMgrId,jobTitle:this.jobTitle,interviewType:this.interviewType,currentReqActions:this.currentReqActions});
+  //  console.log("adyasa,workflowId",this.reqId,this.workflowId,"interviewType",this.interviewType);
+    console.log('currentReqActions',this.currentReqActions);
+
   }
 }

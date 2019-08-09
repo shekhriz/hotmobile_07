@@ -55,7 +55,7 @@ export class RequirementPopoverComponent {
 
 candidateReq(){
   this.viewCtrl.dismiss();
-  this.appCtrl.getRootNav().push(CandidatePage,{reqId:this.requirementId, workflowId:this.workflowId,actMgrId:  this.actMgrId,jobTitle:this.jobTitle, interviewType:this.interviewArray });
+  this.appCtrl.getRootNav().push(CandidatePage,{reqId:this.requirementId, workflowId:this.workflowId,actMgrId:  this.actMgrId,jobTitle:this.jobTitle, interviewType:this.interviewArray,currentReqActions:this.currentReqActions });
 //  console.log("bjjjjjj",this.requirementId)
 console.log("interviewTypekk",this.interviewType)
 

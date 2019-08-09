@@ -100,12 +100,10 @@ import { ViewAllScreenerPage }  from '../pages/view-all-screener/view-all-screen
 import { FeedbackFormPage }  from '../pages/feedback-form/feedback-form';
 import { TechnicalDbPage }  from '../pages/technical-db/technical-db';
 import { GeneralDbPage }  from '../pages/general-db/general-db';
-import { DatePickerPage }  from '../pages/date-picker/date-picker';
-
-
-//import { Calendar } from '@ionic-native/calendar/ngx';
 
 import { DatePickerModule } from 'ion-datepicker';
+//import { Calendar } from '@ionic-native/calendar/ngx';
+
 import * as moment from 'moment';
 
 
@@ -197,8 +195,7 @@ import * as moment from 'moment';
     ViewAllScreenerPage,
     FeedbackFormPage,
     TechnicalDbPage,
-    GeneralDbPage,
-    DatePickerPage
+    GeneralDbPage
   ],
 
   imports: [ 
@@ -208,7 +205,6 @@ import * as moment from 'moment';
     SelectSearchableModule,
     StarRatingModule,
     DatePickerModule,
-    
 
     IonicModule.forRoot(MyApp ,{}, {
       links: [
@@ -348,8 +344,7 @@ import * as moment from 'moment';
     ViewAllScreenerPage,
     FeedbackFormPage,
     TechnicalDbPage,
-    GeneralDbPage,
-    DatePickerPage
+    GeneralDbPage
 
   ],
   providers: [

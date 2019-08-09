@@ -9,12 +9,10 @@ import { RequirementsPage } from '../../pages/requirements/requirements';
 import { CandidateSidePage }  from '../../pages/candidate-side/candidate-side';
 import { ViewAllRecruiterPage }  from '../../pages/view-all-recruiter/view-all-recruiter';
 import { ViewAllScreenerPage }  from '../../pages/view-all-screener/view-all-screener';
-import { DatePickerDirective } from 'ion-datepicker';
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html',
-  providers: [DatePickerDirective],
+  templateUrl: 'home.html'
 })
 export class HomePage {
   requirementStatics:any;  

@@ -574,20 +574,35 @@ export class RestProvider {
     });
   }
 
+  // candidates(token,reqId,user){
+  //   return new Promise(resolve => {
+  //     this.http.get(this.apiUrl+'hot/requirement/candidates/'+reqId+'/'+user.id+'/'
+  //     +user.firstName+'/'+user.lastName+'/'+user.userName+'/'+user.role,{
+  //       headers: new HttpHeaders().set('Authorization', token)
+  //               .append('Accept', 'application/json;odata=verbose')
+  //               .append('Content-Type','application/json')
+  //      }).subscribe(data => {
+  //       resolve(data);
+  //     }, err => {
+  //       console.log(err);
+  //     });
+  //   });
+  // }
+
   candidates(token,reqId,user){
     return new Promise(resolve => {
-      this.http.get(this.apiUrl+'hot/requirement/candidates/'+reqId+'/'+user.id+'/'
-      +user.firstName+'/'+user.lastName+'/'+user.userName+'/'+user.role,{
-        headers: new HttpHeaders().set('Authorization', token)
-                .append('Accept', 'application/json;odata=verbose')
-                .append('Content-Type','application/json')
-       }).subscribe(data => {
-        resolve(data);
-      }, err => {
-        console.log(err);
-      });
+    this.http.get(this.apiUrl+'hot/requirementCandidate/get/reqCandidates/'+reqId,{
+    headers: new HttpHeaders().set('Authorization', token)
+    .append('Accept', 'application/json;odata=verbose')
+    .append('Content-Type','application/json')
+    }).subscribe(data => {
+    resolve(data);
+    }, err => {
+    console.log(err);
     });
-  }
+    });
+    }
+    
 
   candidateResponse(token,id,candidateId){
     return new Promise(resolve => {

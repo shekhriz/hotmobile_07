@@ -30,6 +30,8 @@ export class AddCandidateDbPage {
   jobTitle:string;
   interviewType:string;
   buttonDisabled:boolean=true;
+  currentReqActions:any={};
+
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     public util: UtilsProvider,
@@ -44,6 +46,8 @@ export class AddCandidateDbPage {
       this.actMgrId = navParams.get('actMgrId');
       this.jobTitle = navParams.get('jobTitle');
       this.interviewType = navParams.get('interviewType');
+      this.currentReqActions =navParams.get('currentReqActions');
+
       this.token = this.util.getToken();
       this.loginUser = this.util.getSessionUser();
       this.getCandidatesFromDb();
@@ -131,7 +135,7 @@ gotoEditdetails(details){
 addCandidate(){
   
   
-  let chooseModal = this.modalCtrl.create(SelectCandidateDbModalPage,{reqId:this.reqId,selecteddetails:this.selecteddetails,interviewType:this.interviewType,workflowId:this.workflowId});
+  let chooseModal = this.modalCtrl.create(SelectCandidateDbModalPage,{reqId:this.reqId,selecteddetails:this.selecteddetails,interviewType:this.interviewType,workflowId:this.workflowId,currentReqActions:this.currentReqActions});
    console.log("gggggggggggggggggggginterviewType",this.reqId,this.interviewType);
     chooseModal.present(); 
 }

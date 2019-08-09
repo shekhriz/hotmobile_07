@@ -34,7 +34,7 @@ export class CandidatePopoverComponent {
   submitToClient:string;
   submissionType:string;
   status:string;
-  candidateEnableDisable:string;
+  candidateEnableDisable:boolean;
   firstName:string;
   isBlackListed:string;
   candidateLink:string;
@@ -68,8 +68,7 @@ export class CandidatePopoverComponent {
   
 
   responseCandidate(){
-    this.viewCtrl.dismiss();
-   
+   this.viewCtrl.dismiss();  
     this.appCtrl.getRootNav().push(CandidateResponsePage,{cId:this.cId,reqId: this.reqId,workflowId:this.workflowId});
     console.log(this.cId,this.reqId)
   }

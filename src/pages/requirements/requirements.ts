@@ -83,7 +83,7 @@ loginUser:any = {};
 
   candidateReq(requirement){
   
-    this.navCtrl.push(CandidatePage,{reqId:requirement.positionId, workflowId:requirement.workflowId,actMgrId:  requirement.actMgrId,jobTitle:requirement.jobTitle, interviewType:requirement.interviewArray });
+    //this.navCtrl.push(CandidatePage,{reqId:requirement.positionId, workflowId:requirement.workflowId,actMgrId:  requirement.actMgrId,jobTitle:requirement.jobTitle, interviewType:requirement.interviewArray });
 
   console.log("interviewTypekk",requirement.interviewType)
   
