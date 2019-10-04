@@ -24,9 +24,22 @@
    <button ion-item (click)="downloadResume1()"  >
       Download Resume
    </button>
-   <!-- <button ion-item (click)="previewResume()"  >
-    Preview Resume
- </button> -->
+   <button ion-item (click)="RescheduleInterview()"  >
+      Reschedule Interview
+   </button>
+    <ion-list *ngIf="hideMe">
+      <div *ngIf="candidate.submissionType == 'Zoom' && candidate.status == 'Email Sent'">
+          <button ion-item class="link" (click)="reSchedule()">Re-Schedule interview</button>
+          <button ion-item class="link" (click)="reSendEmail()">Re-Send Email</button>
+          <button ion-item class="link" (click)="reGenerate()">Re-Generate Link</button>
+      </div>
+      <div *ngIf="candidate.status =='Prospect'">
+          <button ion-item class="link" (click)="reScreening()">Schedule Screening</button> 
+      </div>
+      <div *ngIf="candidate.submissionType == 'One Way' && currentReqActions.actions[0] != 'reopenrequirement'" >
+        <button  *ngIf="(candidate.status=='Email Not Send') || (candidate.status=='Email Not Sent') || (candidate.status=='Email Sent' && loginUser.role=='Admin') || (candidate.status=='Email Sent' && loginUser.role=='VpOfSales') || (candidate.status=='Email Sent' && loginUser.role=='ManagerOfRecruiting')" ion-item class="link" (click)="reGenEmail()">Re-Send Email</button>
+      </div>
+    </ion-list>  
    <button ion-item (click)="addNotes()" >
      Add Notes
    </button>

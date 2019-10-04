@@ -25,7 +25,7 @@ export class CandidateDetailPage {
     this.reqId=navParams.get('reqId');  
     this.cId=navParams.get('cId');  
     console.log("detail1",this.reqId);
-    console.log("this.detail2",this.cId);
+    console.log("this.detail2",this.detail2);
   }
 
 

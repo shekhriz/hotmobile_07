@@ -100,11 +100,13 @@ import { TechnicalDbPage }  from '../pages/technical-db/technical-db';
 import { GeneralDbPage }  from '../pages/general-db/general-db';
 import { ResourceModalPage }  from '../pages/resource-modal/resource-modal';
 import { CsmPage }  from '../pages/csm/csm';
+import { ReScheduleModelPage }  from '../pages/re-schedule-model/re-schedule-model';
 
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatePickerModule } from 'ion-datepicker';
 //import { Calendar } from '@ionic-native/calendar/ngx';
 import * as moment from 'moment';
+//import { OneSignal } from '@ionic-native/onesignal';
 
 
 
@@ -192,7 +194,8 @@ import * as moment from 'moment';
     TechnicalDbPage,
     GeneralDbPage,
     ResourceModalPage,
-    CsmPage
+    CsmPage,
+    ReScheduleModelPage
   ],
 
   imports: [ 
@@ -202,7 +205,7 @@ import * as moment from 'moment';
     SelectSearchableModule,
     StarRatingModule,
     DatePickerModule,
-
+    BrowserAnimationsModule,
     IonicModule.forRoot(MyApp ,{}, {
       links: [
               {component: HomePage,  segment: 'home'},
@@ -338,7 +341,8 @@ import * as moment from 'moment';
     TechnicalDbPage,
     GeneralDbPage,
     ResourceModalPage,
-    CsmPage
+    CsmPage,
+    ReScheduleModelPage
 
   ],
   providers: [
@@ -352,7 +356,8 @@ import * as moment from 'moment';
     FileTransferObject,
     DocumentViewer,
     FileOpener,
-    AndroidPermissions
+    AndroidPermissions,
+  //  OneSignal
     
   ]
 })

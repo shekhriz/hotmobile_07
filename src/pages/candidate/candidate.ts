@@ -9,6 +9,7 @@ import { RestProvider } from '../../providers/rest/rest';
 import { CandidatePopoverComponent }  from '../../components/candidate-popover/candidate-popover';
 import { CreateCandidatePage }  from '../../pages/create-candidate/create-candidate';
 import { AddCandidateDbPage }  from '../../pages/add-candidate-db/add-candidate-db';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 /**
  * Generated class for the CandidatePage page.
@@ -24,7 +25,7 @@ import { AddCandidateDbPage }  from '../../pages/add-candidate-db/add-candidate-
 })
 export class CandidatePage {
   token:string;
-  candidates:Array<Object> = [];
+  candidates:Array<any> = [];
   user:any;
   loginUser:any;
   reqId:any;
@@ -36,6 +37,9 @@ export class CandidatePage {
   interviewArray =[];
   currentReqActions:any={};
   candidateEnableDisable:boolean;
+  tempStatus:Array<Object> = [];
+  hideMe:boolean=false;
+  selectedCandidates:any;
   constructor(public util: UtilsProvider,
     public navParams: NavParams,
     public navCtrl: NavController,
@@ -61,6 +65,7 @@ export class CandidatePage {
       console.log('candidateEnableDisable',this.candidateEnableDisable);
       console.log('workflowId',this.workflowId);
       console.log('currentReqActions',this.currentReqActions);
+     
 
       this.loginUser = this.util.getSessionUser();
       this.candidatesById(this.loginUser);
@@ -81,10 +86,39 @@ export class CandidatePage {
     this.restProvider.candidates(this.token,this.reqId,user)
     .then((data:any) => {
         this.candidates = data;
+       
         loading.dismiss();
       console.log("hhhhhasdsdhh",this.candidates);
       console.log("length",this.candidates.length);
+    
+
+      this.candidates.forEach(function(candidate) {
+
+               if(candidate.status){
+                 let statusArray =  candidate.status.split(',');
+                let statusLength = statusArray.length;
+                 candidate.totalRounds = [];
+                 console.log('statusLength',statusLength);
+                  if(statusLength > 1){
+                    for(let i =1;i <= statusLength;i++){
+                      candidate.totalRounds.push({i});
+                 console.log('totalArray', candidate.totalRounds);
+
+                    }
+             
+
+                  }
+               }
+           
+          
+             
+      })
       
+      console.log("changed Array", this.candidates);
+
+      
+      
+     
     },error => {
         this.util.showToast("Something went wrong.","ERROR");
         loading.dismiss();
@@ -150,5 +184,29 @@ export class CandidatePage {
   //  console.log("adyasa,workflowId",this.reqId,this.workflowId,"interviewType",this.interviewType);
     console.log('currentReqActions',this.currentReqActions);
 
+  }
+  onSelectChange(selectedvalue1,selectedvalue2){
+    
+
+      if(selectedvalue1.i >1){
+        
+            this.restProvider.getsecondRound(this.reqId,selectedvalue2,selectedvalue1.i,this.token)
+           
+          .then((res:any) => {
+           
+           // this.candidates = res;
+           // this.hideMe = !this.hideMe;
+           // console.log('this.hideMe',this.hideMe);
+            console.log('selectedCandidates',this.selectedCandidates);
+
+          },error => {
+          
+          })
+          return ;
+       }
+    
+  
+   
+   
   }
 }

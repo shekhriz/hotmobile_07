@@ -15,8 +15,15 @@ page-add-candidate-db {
             h1{
                 font-size: 18px;
                
-                flex: 10;
+                flex: 2;
                 margin: 10px;
+            }
+            ion-item{
+                display: flex;
+                flex: 3;
+                ion-select{
+                   flex:1
+                }
             }
            
         }

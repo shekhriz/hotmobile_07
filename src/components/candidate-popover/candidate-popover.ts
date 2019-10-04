@@ -13,6 +13,7 @@ import { File } from '@ionic-native/file';
 import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer';
 import { FileOpener } from '@ionic-native/file-opener';
 import { AndroidPermissions } from '@ionic-native/android-permissions'
+import { ReScheduleModelPage }  from '../../pages/re-schedule-model/re-schedule-model';
 
 
 /**
@@ -33,7 +34,7 @@ export class CandidatePopoverComponent {
   reqId:string;
   response:any;
   workflowId:string;
-  loginUser:any;
+  loginUser:any = {};
   user:any;
   linkCount:string;
   candidate:any;
@@ -49,6 +50,7 @@ export class CandidatePopoverComponent {
   statusresult:any;
   appPath: string;
   dataPath: string;
+  hideMe:boolean;
   private fileTransfer: FileTransferObject; 
   constructor(public navCtrl: NavController,
     public util: UtilsProvider,
@@ -87,6 +89,7 @@ export class CandidatePopoverComponent {
     console.log("this.candidate",this.candidate);
    
    console.log("this.workflowId",this.workflowId);
+   console.log("this.loginUser",this.loginUser);
    console.log("this.currentReqActions",this.currentReqActions);
 this.definePaths();
   }
@@ -534,8 +537,131 @@ this.definePaths();
 
     console.log("candidateLink",this.candidateLink)
   }
-
+  RescheduleInterview(){
+    this.hideMe = !this.hideMe;
+  }
+  reSchedule(){
+   
+    let chooseModal = this.modalCtrl.create(ReScheduleModelPage,{selecteddetails:this.candidate,link:'rescheduleInterview',currentReqActions:this.currentReqActions,workflowId:this.workflowId});
+    console.log("this.userIdccccccccccc",this.candidate)
+    chooseModal.present(); 
+   // this.viewCtrl.dismiss();
+  }
+  reGenerate(){
+   
+    let chooseModal = this.modalCtrl.create(ReScheduleModelPage,{selecteddetails:this.candidate,link:'regenerateZoomInterview',currentReqActions:this.currentReqActions,workflowId:this.workflowId});
+    console.log("this.userIdccccccccccc",this.candidate)
+    chooseModal.present(); 
+  }
+  reScreening(){
+    
+    let chooseModal = this.modalCtrl.create(ReScheduleModelPage,{selecteddetails:this.candidate,link:'updateSubmissionType',currentReqActions:this.currentReqActions,workflowId:this.workflowId});
+    chooseModal.present();
+  }
+  reSendEmail(){
+    let confirm = this.alertCtrl.create({
+      title: "Please resend the mail to the candidate.",
+      message: 'Are you sure you want to Re-Send Email to this Candidate',
+    
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            console.log('No clicked');
+          }
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            let loading = this.loadingCtrl.create({
+              content: 'Please wait...'
+            });
+            
+            let jsonData = {
+           
+              'candidateId': this.cId,
+              'interviewRound': this.candidate.interviewRounds,
+              'jwtDetails':{
+                'emailId': this.loginUser.emailId,
+                'firstName': this.loginUser.fileName,
+                'id': this.loginUser.id,
+                'lastName': this.loginUser.lastName,
+                'role': this.loginUser.role,
+                'userName': this.loginUser.userName
+              },
+              'requirementId':this.reqId
+            }
+           
   
- 
- 
+            loading.present();
+            this.restProvider.reSendEmail(jsonData,this.token)
+            .then(data => {
+              this.navCtrl.push(CandidatePage,{reqId:this.reqId,workflowId:this.workflowId,currentReqActions:this.currentReqActions});
+              loading.dismiss();
+              this.util.showToast("Email sent sucessfuly","SUCCESS");
+             
+            },error => {
+              loading.dismiss();
+              this.util.showToast("Something went wrong.","ERROR");
+            })
+            
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+  reGenEmail(){
+    let confirm = this.alertCtrl.create({
+      title: "Please resend the mail to the candidate.",
+      message: 'Are you sure you want to Re-Send Email to this Candidate',
+    
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            console.log('No clicked');
+          }
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            let loading = this.loadingCtrl.create({
+              content: 'Please wait...'
+            });
+            
+            let jsonData = {
+           
+              'candidateId': this.cId,
+              'interviewRound': this.candidate.interviewRounds,
+              'jwtDetails':{
+                'emailId': this.loginUser.emailId,
+                'firstName': this.loginUser.fileName,
+                'id': this.loginUser.id,
+                'lastName': this.loginUser.lastName,
+                'role': this.loginUser.role,
+                'userName': this.loginUser.userName
+              },
+              'requirementId':this.reqId
+            }
+           
+  
+            loading.present();
+            this.restProvider.regenerateEmail(this.token,this.reqId,this.cId,this.loginUser)
+            .then(data => {
+              this.navCtrl.push(CandidatePage,{reqId:this.reqId,workflowId:this.workflowId,currentReqActions:this.currentReqActions});
+              loading.dismiss();
+              this.util.showToast("Candidate Email is regenerated and email send successfully","SUCCESS");
+             
+            },error => {
+              loading.dismiss();
+              this.util.showToast("Something went wrong.","ERROR");
+            })
+            
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
 }

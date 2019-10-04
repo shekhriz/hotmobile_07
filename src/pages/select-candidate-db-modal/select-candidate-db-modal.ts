@@ -65,7 +65,8 @@ export class SelectCandidateDbModalPage {
   timeDiv:boolean=false;
   currentReqActions:any={};
   currentCandidate : number = -1;
-  
+  fullName:string;
+  screenByUserId:string;
   @ViewChild(DatePickerDirective) public datepicker: DatePickerDirective;
   public localDate: Date = new Date();
   public initDate :Date = new Date();
@@ -323,6 +324,18 @@ getTime() {
   this.timeDiv = false;
 console.log('timenjkkk',this.time)
 }
+onSelectChange2(selectedValue){
+  this.submissionType = selectedValue;
+  console.log("adyasa",this.submissionType);
+
+  this.fullName = selectedValue;
+    Object.keys(this.scrData).forEach(key=> {
+      if(this.scrData[key].firstName +' '+this.scrData[key].lastName == selectedValue){
+          this.emailId=this.scrData[key].emailId;
+          this.screenByUserId=this.scrData[key].id;
+      }
+    }); 
+}
 submitCandidate(){
   this.zoomCount = 0;
   let totalLenght = this.selecteddetails.length;
@@ -375,6 +388,8 @@ submitCandidate(){
         if(data == "Meeting rooms are available"){
           this.addCandidate();
           this.fromFrontend();
+        }else{
+          this.util.showToast("All the rooms are booked during the selected time, Please select different time OR Contact with system admin.","ERROR");
         }
           
         },error => {
@@ -437,9 +452,9 @@ addCandidate(){
         'requirementId': this.reqId,
         'body':"<!DOCTYPE html><body><p>Welcome to HOT</p></body></html>",
         'recScheduledDate':'',
-        'screenByUser': this.scrData[key].firstName,
-        'screenByUserEmail': this.scrData[key].emailId,
-        'screenByUserId':this.scrData[key].id,
+        'screenByUser': this.fullName,
+        'screenByUserEmail': this.emailId,
+        'screenByUserId':this.screenByUserId,
         'subVendorId': this.selecteddetails[key].subVendorId,
         'submissionType': this.selecteddetails[key].mySubType,
         'willingToRelocate': this.selecteddetails[key].willingToRelocate
@@ -497,9 +512,9 @@ fromFrontend(){
                    },
                      loginEmaild: this.loginUser.emailId,
                      requirementId: this.reqId,
-                     screenByUser: this.scrData[key].firstName +''+this.scrData[key].lastName,
-                     screenByUserEmail: this.scrData[key].emailId,
-                     screenByUserId: this.scrData[key].id,
+                     screenByUser: this.fullName,
+                     screenByUserEmail: this.emailId,
+                     screenByUserId: this.screenByUserId,
                      submissionType: this.selecteddetails[key].mySubType,
                      time: moment(this.time, ["h:mm A"]).format("HH:mm:ss"),
                      timezone:this.selecteddetails[key].timezone

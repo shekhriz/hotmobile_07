@@ -4,33 +4,45 @@
     <button ion-button class="btn1" outline (click)="goBack()">
       <ion-icon name="undo"></ion-icon>
     </button>
-    <h1>Select Submission Type</h1>
+    <h1 *ngIf="link == 'rescheduleInterview'">Zoom Re-Schedule Interview</h1>
+    <h1 *ngIf="link == 'regenerateZoomInterview'">Zoom Re-Generate Interview Link</h1>
   </div>
 </ion-header>
 <ion-content>
-    <ion-card *ngFor="let details of selecteddetails">
+    <ion-card>
         <ion-card-content style=" padding: 6px 0px;">
           <ion-list>
             <ion-card-header class="headerClass">
               <div>
-                <div style="font-size: 18px;">{{details.firstName}} {{details.lastName}}</div>
-                <div style="font-weight: 400">{{details.emailId}}</div>
+                <div style="font-size: 18px;"><ion-icon ios="ios-person" md="md-person"></ion-icon>&nbsp; {{selecteddetails.firstName}} {{selecteddetails.lastName}}</div>
+                <div style="font-weight: 400"><ion-icon ios="ios-mail" md="md-mail"></ion-icon>&nbsp; {{selecteddetails.emailId}}</div>
+                <div style="font-weight: 400"><ion-icon ios="ios-call" md="md-call"></ion-icon>&nbsp; {{selecteddetails.cellPhoneNumber}}</div>
+
                 <hr>
               </div>
             </ion-card-header>
-            <ion-item class="_row">
+            <ion-item class="_row" *ngIf="selecteddetails.submissionType =='Zoom'">
               <ion-label floating>Submission Type<span class="astric">*</span></ion-label>
-              <ion-select class="fieldBorder" [(ngModel)]="details.mySubType"  (ngModelChange)="onSelectChange($event)">
+              <ion-select class="fieldBorder" [(ngModel)]="selecteddetails.mySubType"  (ngModelChange)="onSelectChange($event)">
                 <ion-option value="" disabled=true>Select</ion-option>
-                <ion-option value="One Way">One Way</ion-option>
-                <ion-option value="Prospect">Prospect</ion-option>
+                <!-- <ion-option value="One Way">One Way</ion-option>
+                <ion-option value="Prospect">Prospect</ion-option> -->
                 <ion-option value="Zoom">Zoom</ion-option>
               </ion-select>
             </ion-item>
-            <div *ngIf="details.mySubType == 'Zoom' ">
+            <ion-item class="_row" *ngIf="selecteddetails.submissionType =='Prospect'">
+              <ion-label floating>Submission Type<span class="astric">*</span></ion-label>
+              <ion-select class="fieldBorder" [(ngModel)]="selecteddetails.mySubType"  (ngModelChange)="onSelectChange2($event)">
+                <ion-option value="" disabled=true>Select</ion-option>
+                <ion-option value="Prospect" disabled=true [selected]=true >Prospect</ion-option>
+                 <ion-option value="One Way">One Way</ion-option>          
+                 <ion-option value="Zoom">Zoom</ion-option>
+              </ion-select>
+            </ion-item>
+            <div *ngIf="selecteddetails.mySubType == 'Zoom' ">
                 <ion-item class="_row">
                     <ion-label floating>Screen By<span class="astric">*</span></ion-label>
-                    <ion-select class="fieldBorder" [(ngModel)]="details.selectedScr" (ngModelChange)="onSelectChange2($event)">
+                    <ion-select class="fieldBorder" [(ngModel)]="selecteddetails.selectedScr" (ngModelChange)="onSelectChange3($event)">
                       <ion-option value="" disabled=true>Select</ion-option>
                       <ion-option *ngFor="let data of scrData" >{{data.firstName}} {{data.lastName}}</ion-option>
                     </ion-select>
@@ -41,22 +53,22 @@
               <ion-label floating class="labelBorder">Screening Date <span class="astric">*</span>
               </ion-label>
               <ion-input class="fieldBorder ScheduleDate" 
-                        ion-datepicker [(value)]="details.recScheduledDate" readonly  [min]="details.screeningDate" locale="en-US" [ngModel]="details.recScheduledDate | date: 'dd-MMM-yyyy'" >
+                        ion-datepicker [(value)]="selecteddetails.recScheduledDate" readonly  [min]="selecteddetails.screeningDate" locale="en-US" [ngModel]="selecteddetails.recScheduledDate | date: 'dd-MMM-yyyy'" >
                     </ion-input>
                
               </ion-item> 
       
-            <ion-item class="_row">
-              <ion-label floating class="labelBorder">Select Time <span class="astric">*</span>
-              </ion-label>
-                    <ion-input class="fieldBorder ScheduleDate" readonly [(value)]="details.recScheduledTime"  [ngModel]="details.recScheduledTime" (tap)="selectTime()">
-              </ion-input>
-            </ion-item>
+              <ion-item class="_row">
+                    <ion-label floating class="labelBorder">Select Time <span class="astric">*</span>
+                    </ion-label>
+                          <ion-input class="fieldBorder ScheduleDate" readonly [(value)]="selecteddetails.recScheduledTime"  [ngModel]="selecteddetails.recScheduledTime" (tap)="selectTime()">
+                    </ion-input>
+                  </ion-item>
            
             
             <ion-item class="_row">
                 <ion-label floating>Time Zone<span class="astric">*</span></ion-label>
-                <ion-select class="fieldBorder" [(ngModel)]="details.timezone">
+                <ion-select class="fieldBorder" [(ngModel)]="selecteddetails.timezone">
                     <ion-option value="" selected="" disabled="">Select</ion-option>
                     <ion-option value="Asia/Kolkata">(GMT+05:30) India Standard Time - Kolkata</ion-option>
                     <ion-option value="America/New York">(GMT-04:00) Eastern Time - New York</ion-option>
@@ -72,11 +84,11 @@
       </ion-card>
 </ion-content>
 
-<ion-footer class="commonFooter">
+<ion-footer class="commonFooter"  >
   <button ion-button full color='danger' (click)='cancelData()'>Close</button>
   <button ion-button full color='dark' (click)='submitCandidate()'>Submit</button>
-
 </ion-footer>
+
 <!---------->
 
 <ion-content class="timeDiv" padding *ngIf="timeDiv == true">
@@ -94,7 +106,7 @@
                     (click)="selecting = 'minute'">{{ minute }}</span>
           </div>
       </ion-card-header>
-      <ion-card-content>
+      <ion-card-content style="margin-top: -24px;">
           <div #hourClock class="clock hour-clock" *ngIf="selecting === 'hour'" (click)="tappedClock($event)">
               <div class="tick-number">
                   <div class="clock-number">12</div>

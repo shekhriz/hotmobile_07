@@ -143,7 +143,7 @@ export class CandidateResponsePage {
       this.candidateDetails = this.responsebyid['Candidate Details']
       this.firstName =  this.candidateDetails.firstName;
       this.lastName = this.candidateDetails.lastName;
-      
+      console.log("adyasa", this.responsebyid);
     },errrr=>{
     });
   }
@@ -174,9 +174,16 @@ export class CandidateResponsePage {
   }
 
   gotoCanditateDetails(){
-    this.navCtrl.push(CandidateDetailPage,
-      {details:this.response,detailsById: this.candidateDetails,reqId: this.reqId,cId:this.cId,workflowId:this.workflowId});
-    //console.log("adyasa",this.candidateDetails);
+    this.restProvider.responseBycandidateId(this.token,this.cId)
+    .then((res:any)=>{
+      this.responsebyid = res;
+      this.candidateDetails = this.responsebyid['Candidate Details']
+      this.navCtrl.push(CandidateDetailPage,
+        {details:this.response,detailsById: this.candidateDetails,reqId: this.reqId,cId:this.cId,workflowId:this.workflowId});
+      console.log("adyasa",this.candidateDetails);
+    },errrr=>{
+    });
+   
   }
   gotoQuestions(){
     this.navCtrl.push(OquestionPage,

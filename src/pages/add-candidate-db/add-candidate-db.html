@@ -4,7 +4,14 @@
     <div class="addBtn"> 
         <button ion-button class="btn1" outline (click)="goBack()"><ion-icon name="undo" ></ion-icon></button>
         <h1>{{jobTitle}}</h1>
-           
+        <ion-item class="_row">
+            <ion-select [(ngModel)]="type"  (ngModelChange)="onSelectChange($event)">
+               <ion-option value="90" selected="true">Last 90 days</ion-option> 
+               <ion-option value="180">Last 180 days</ion-option> 
+               <ion-option value="365" >Last 1 year</ion-option>               
+               <ion-option value="All" >All</ion-option>               
+            </ion-select>
+        </ion-item>     
     </div>
   
     <ion-row center >

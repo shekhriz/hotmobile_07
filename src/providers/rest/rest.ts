@@ -620,7 +620,19 @@ export class RestProvider {
     });
     });
     }
-    
+    reqCandidates(token,reqId){
+      return new Promise(resolve => {
+      this.http.get(this.apiUrl+'hot/requirementCandidate/get/reqCandidates/'+reqId,{
+      headers: new HttpHeaders().set('Authorization', token)
+      .append('Accept', 'application/json;odata=verbose')
+      .append('Content-Type','application/json')
+      }).subscribe(data => {
+      resolve(data);
+      }, err => {
+      console.log(err);
+      });
+      });
+      } 
 
   candidateResponse(token,id,candidateId){
     return new Promise(resolve => {
@@ -635,9 +647,9 @@ export class RestProvider {
       });
     });
   }
-  candidatesfromdb(token,candidateId){
+  candidatesfromdb(token,candidateId,selectedValue){
     return new Promise(resolve => {
-      this.http.get(this.apiUrl+'hot/requirement/candidatesfromdb/'+candidateId,{
+      this.http.get(this.apiUrl+'hot/requirement/candidatesfromdb/'+candidateId+'/'+selectedValue,{
         headers: new HttpHeaders().set('Authorization', token)
                 .append('Accept', 'application/json;odata=verbose')
                 .append('Content-Type','application/json')
@@ -2111,6 +2123,20 @@ AvailabilityTime(token,date,time){
     });
   });  
 }
+deleteZoomMeeting(time,token){
+  return new Promise(resolve => {
+    this.http.delete(this.apiUrl+'hot/delte/zoomMeeting/'+time,{
+      headers: new HttpHeaders().set('Authorization', token)
+              .append('Accept', 'application/json;odata=verbose')
+              .append('Content-Type','application/json')
+     }).subscribe(res => {
+      resolve(res);
+    }, err => {
+      console.log(err);
+    });
+  });
+} 
+
 submitQuestions(token,reqId,data){
   return new Promise((resolve, reject) => {
     this.http.post(this.apiUrl+'hot/requirement/submitQuestions/'+reqId,JSON.stringify(data), {
@@ -2369,4 +2395,70 @@ mutlipleRoundsSelfRating(token,id,candidateId){
             });
           });
         }
+        getsecondRound(cId,reqId,round,token){
+          return new Promise(resolve => {
+            this.http.get(this.apiUrl+'hot/requirement/getsecondRound/nterviewDetails/'+cId+'/'+reqId+'/'+round,{
+            headers: new HttpHeaders().set('Authorization', token)
+            .append('Accept', 'application/json;odata=verbose')
+            .append('Content-Type','application/json')
+            }).subscribe(data => {
+            resolve(data);
+            }, err => {
+            console.log(err);
+            });
+            });  
+        }
+        reSendEmail(data,token){
+          return new Promise((resolve, reject) => {
+            this.http.post(this.apiUrl+'hot/token/zoom/reSendEmail',JSON.stringify(data), {
+              headers: new HttpHeaders().set('Authorization', token)
+                      .append('Accept', 'application/json;odata=verbose')
+                      .append('Content-Type','application/json')
+             }).subscribe(res => {
+                resolve(res);
+              }, (err) => {
+                reject(err);
+              });
+          });
+        }
+        updateSubmissionType(data,token){
+          return new Promise((resolve, reject) => {
+            this.http.post(this.apiUrl+'hot/candidate/updateSubmissionType/',JSON.stringify(data), {
+              headers: new HttpHeaders().set('Authorization', token)
+                      .append('Accept', 'application/json;odata=verbose')
+                      .append('Content-Type','application/json')
+             }).subscribe(res => {
+                resolve(res);
+              }, (err) => {
+                reject(err);
+              });
+          });
+        }
+        rescheduleInterview(data,token){
+          return new Promise((resolve, reject) => {
+            this.http.post(this.apiUrl+'hot/zoom/rescheduleInterview',JSON.stringify(data), {
+              headers: new HttpHeaders().set('Authorization', token)
+                      .append('Accept', 'application/json;odata=verbose')
+                      .append('Content-Type','application/json')
+             }).subscribe(res => {
+                resolve(res);
+              }, (err) => {
+                reject(err);
+              });
+          }); 
+        }
+        regenerateZoomInterview(data,token){
+          return new Promise((resolve, reject) => {
+            this.http.post(this.apiUrl+'hot/token/zoom/regenerateZoomInterview',JSON.stringify(data), {
+              headers: new HttpHeaders().set('Authorization', token)
+                      .append('Accept', 'application/json;odata=verbose')
+                      .append('Content-Type','application/json')
+             }).subscribe(res => {
+                resolve(res);
+              }, (err) => {
+                reject(err);
+              });
+          }); 
+        }
+        
   }

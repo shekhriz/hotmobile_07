@@ -30,7 +30,7 @@
 
           <div class="body"  *ngFor="let candidate of candidates| search : myInput;let i= index" >
              
-              <div class="body-left col">
+            <div class="body-left col">
                   
                 <div ion-item >
                     <h1 ><span class=""></span>[{{ i + 1 }}] &nbsp;  {{candidate.firstName }} {{candidate.lastName}}</h1>
@@ -38,17 +38,63 @@
                     <div class="inner-body" >
                         <label class="inner-left">Added By :  <span >{{candidate.addedBy}}</span></label> 
                     </div>
-                    <div class="inner-body" >
+                     <div class="inner-body" >
                         <label class="inner-left">Status :  <span >{{candidate.reasonStatus}}</span></label> 
-                    </div>
+                    </div> 
                     <div class="inner-body" >
                           <label class="inner-left">Email id :  <span >{{candidate.emailId}}</span></label> 
-                      </div>
-                  </div>   
-            
-           
+                    </div>
+                </div> 
+                <ion-list *ngIf="candidate.totalRounds.length > 1">
+                  <ion-item class="_row">
+                     <ion-label floating>Select Round : </ion-label>
+                     <ion-select  [(ngModel)]="roundNo" (ngModelChange)="onSelectChange($event,candidate.candidateId)">
+                          <ion-option [value]="i" *ngFor="let i of candidate.totalRounds; let idx = index" selected="{{idx==0}}">Round{{i.i}}</ion-option> 
+                     </ion-select>
+                   </ion-item>        
+                 </ion-list> 
+                 
+                  <div ion-item style="margin-top: -16px" >
+                 
+                    <h1 ><span class="">Screening status :</span> {{candidate.status }} </h1>    
+                    <div class="inner-body" >
+                        <label class="inner-left" *ngIf="candidate.submissionType == 'Zoom' || candidate.submissionType == 'Skype'">Screening Type :  <span >{{candidate.submissionType}}</span></label> 
+                    </div>
+                    <div class="inner-body" >
+                        <label class="inner-left" *ngIf="candidate.submissionType == 'Prospect'"><span >Screening not initiated in HookedOn Talent</span></label> 
+                    </div>
+                    <div class="inner-body" >
+                        <label class="inner-left" *ngIf="candidate.submissionType != 'Zoom' && candidate.submissionType != 'Skype' && candidate.submissionType != 'Prospect'">Screening Type :<span *ngIf="candidate.status !=='Answered'">One Way</span></label> 
+                    </div>
+                    <div class="inner-body" >
+                        <label class="inner-left">Date :  <span >{{candidate.updated_DATE | date :'medium'}} IST</span></label> 
+                    </div>
+                    <div class="inner-body" *ngIf="candidate.linkExpired == true">
+                          <label class="inner-left"> <span style="color:red" >Link Expired</span></label> 
+                    </div>
+                    <div class="inner-body" *ngIf="candidate.linkExpired == false" >
+                      <label class="inner-left"> <span style="color:green" >Link Active</span></label> 
+                    </div>
+                  </div> 
+                   
+               <!-- <div *ngIf="selectedCandidates.roundNo >1">
+                <div ion-item style="margin-top: -16px"  *ngIf="hideMe == true" >
+                 
+                  <h1 ><span class="">Screening statusdddddddddddd :</span> {{selectedCandidates.status }} </h1>    
+                  <div class="inner-body" >
+                      <label class="inner-left" >Screening Type :  <span >{{selectedCandidates.submissionType}}</span></label> 
+                  </div>
+                 
+                  <div class="inner-body" >
+                      <label class="inner-left">Date :  <span >{{selectedCandidates.screeningDate | date :'medium'}} IST</span></label> 
+                  </div>
+                 
+                </div> 
+               </div> -->
+              
+             
             </div>
-            
+                
               <div class="actionMenu">   
                   <button ion-item (click)="presentPopover($event,candidate)" >  
                           <ion-icon ios="ios-menu" md="md-menu" class="popbtn"></ion-icon>
@@ -56,7 +102,7 @@
               </div>
             
           </div>
-         
+        
          
           <div class="row" *ngIf="(currentReqActions.actions.includes('addcandidates')) && (candidates.length == 0) "> 
             <div class="col">

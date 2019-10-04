@@ -49,6 +49,7 @@ currentReqActions:any=[];
 
     let loading = this.loadingCtrl.create({
       content: 'Please wait...'
+      
     });
     loading.present();
     this.restProvider.getRequirements(this.token,user)

@@ -63,7 +63,7 @@ export class AddCandidateDbPage {
       content: 'Please wait...'
     });
     loading.present();
-    this.restProvider.candidatesfromdb(this.token,this.reqId)
+    this.restProvider.candidatesfromdb(this.token,this.reqId,90)
     .then( res=> {
       this.candidates = res;
       console.log('this.Clients',this.candidates);
@@ -138,6 +138,16 @@ addCandidate(){
   let chooseModal = this.modalCtrl.create(SelectCandidateDbModalPage,{reqId:this.reqId,selecteddetails:this.selecteddetails,interviewType:this.interviewType,workflowId:this.workflowId,currentReqActions:this.currentReqActions});
    console.log("gggggggggggggggggggginterviewType",this.reqId,this.interviewType);
     chooseModal.present(); 
+}
+onSelectChange(selectedValue){
+  console.log('selectedValue',selectedValue);
+  this.restProvider.candidatesfromdb(this.token,this.reqId,selectedValue)
+  .then( res=> {
+ 
+  },error => {
+   
+  });
+
 }
 
 }
