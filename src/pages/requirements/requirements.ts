@@ -48,7 +48,8 @@ currentReqActions:any=[];
   getRequirement(user){
 
     let loading = this.loadingCtrl.create({
-      content: 'Please wait...'
+      cssClass: 'transparent',
+      spinner:'bubbles'
       
     });
     loading.present();

@@ -79,7 +79,8 @@ export class CandidatePage {
   candidatesById(user){
   
     let loading = this.loadingCtrl.create({
-      content: 'Please wait...'
+      cssClass: 'transparent',
+      spinner:'bubbles'
     });
     
     loading.present();

@@ -18,14 +18,34 @@ page-add-candidate-db {
                 flex: 2;
                 margin: 10px;
             }
-            ion-item{
-                display: flex;
-                flex: 3;
-                ion-select{
-                   flex:1
-                }
-            }
            
+        }
+        .search{
+            display: flex;
+            ion-item{
+                flex:1;
+                .select-md .select-icon {
+                    position: absolute;
+                    width: 12px;
+                    height: 19px;
+                    margin-left: 100px;
+                }
+                .select-text {
+                    /* overflow: hidden; */
+                    -webkit-box-flex: 1;
+                    -webkit-flex: 1;
+                    -ms-flex: 1;
+                    flex: 1;
+                    min-width: 16px;
+                    font-size: inherit;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+                
+            } 
+            ion-searchbar{
+                flex:1
+            }
         }
     }
     ion-content{
@@ -120,3 +140,4 @@ page-add-candidate-db {
             }
     }
     }
+    

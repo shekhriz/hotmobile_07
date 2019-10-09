@@ -413,7 +413,8 @@ findObjectsInArray(data, property, value) {
   }
 addCandidate(){
   let loading = this.loadingCtrl.create({
-        content: 'Please wait while candidate is adding...'
+        content:`assets/images/cam_loader 'Please wait while candidate is adding...'`
+        
       });
       loading.present();
   Object.keys(this.selecteddetails).forEach(key=> {

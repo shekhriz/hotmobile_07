@@ -63,7 +63,7 @@ export class AddCandidateDbPage {
       content: 'Please wait...'
     });
     loading.present();
-    this.restProvider.candidatesfromdb(this.token,this.reqId,90)
+    this.restProvider.candidatesfromdb(this.token,this.reqId,30)
     .then( res=> {
       this.candidates = res;
       console.log('this.Clients',this.candidates);

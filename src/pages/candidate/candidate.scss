@@ -138,3 +138,16 @@ page-candidate {
     .label-md {
         margin: 15px 8px 13px 0;
     }
+    ion-loading.transparent {
+        .loading-wrapper {
+            background-color: white;
+            opacity: 1 !important;
+            position: fixed;
+            
+      
+          .spinner-crescent circle {
+            stroke-width: 8px;
+            
+          }
+        }
+      }
