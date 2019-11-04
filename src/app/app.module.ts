@@ -106,7 +106,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatePickerModule } from 'ion-datepicker';
 //import { Calendar } from '@ionic-native/calendar/ngx';
 import * as moment from 'moment';
-//import { OneSignal } from '@ionic-native/onesignal';
+import { OneSignal } from '@ionic-native/onesignal';
 
 
 
@@ -357,7 +357,7 @@ import * as moment from 'moment';
     DocumentViewer,
     FileOpener,
     AndroidPermissions,
-  //  OneSignal
+   OneSignal
     
   ]
 })
