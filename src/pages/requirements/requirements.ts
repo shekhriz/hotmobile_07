@@ -63,6 +63,7 @@ currentReqActions:any=[];
     },error => {
       loading.dismiss();
     });
+  
   }
   
  
@@ -97,6 +98,7 @@ currentReqActions:any=[];
     },error =>{
 
     });
+   
    
   }
   createRequirement(){

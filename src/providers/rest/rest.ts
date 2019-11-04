@@ -2461,9 +2461,10 @@ mutlipleRoundsSelfRating(token,id,candidateId){
               });
           }); 
         }
-        regenerateZoomInterview2(data,token){
+       
+        cancelZoomMeeting(data,token){
           return new Promise((resolve, reject) => {
-            this.http.post(this.apiUrl+'hot/token/zoom/regenerateZoomInterview',JSON.stringify(data), {
+            this.http.post(this.apiUrl+'hot/token/cancel/zoomMeeting',JSON.stringify(data), {
               headers: new HttpHeaders().set('Authorization', token)
                       .append('Accept', 'application/json;odata=verbose')
                       .append('Content-Type','application/json')

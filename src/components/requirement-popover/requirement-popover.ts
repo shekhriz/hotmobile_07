@@ -7,6 +7,7 @@ import { GeneralQuestionsPage }  from '../../pages/general-questions/general-que
 import { AddResourcePage }  from '../../pages/add-resource/add-resource';
 import { CloseReqPopoverComponent }  from '../../components/close-req-popover/close-req-popover';
 import { EditrequirementsPage }  from '../../pages/editrequirements/editrequirements';
+import { OneSignal } from '@ionic-native/onesignal';
 
 @Component({
   selector: 'requirement-popover',
@@ -27,6 +28,8 @@ export class RequirementPopoverComponent {
   interviewArray:Array<Object> = [];
   clientName:string;
   currentReqActions:any=[];
+  additionalData:any;
+
   constructor(  public navCtrl: NavController, 
                 public navParams: NavParams,
                 public util: UtilsProvider,
@@ -35,7 +38,8 @@ export class RequirementPopoverComponent {
                 public restProvider: RestProvider,
                 public appCtrl: App,
                 public viewCtrl : ViewController,
-                public alertCtrl: AlertController) {
+                public alertCtrl: AlertController,
+                private oneSignal: OneSignal,    ) {
                 this.requirementId=navParams.get('positionId');
                 this.workflowId = navParams.get('workflowId');
                 this.actMgrId = navParams.get('actMgrId');
@@ -277,7 +281,7 @@ allowCandidates(){
 
           this.restProvider.addNoMoreCandidateMail(this.token,jsonData)
           .then(data => {
-          //  this.ccRequirement = data;
+            this.setupPush();
             loading.dismiss();
             this.util.showToast("Added sucessfuly","SUCCESS");
            
@@ -295,6 +299,33 @@ gotoEditRequirement(){
   this.viewCtrl.dismiss();
   this.navCtrl.push(EditrequirementsPage,{clientId:this.requirementId,clientName:this.clientName})
  console.log("hello");
+}
+setupPush() {
+  this.oneSignal.startInit('b7fd84f4-0a54-4550-9c4d-e12bac3a7cfe', '133871082435');
+
+//this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.Notification);
+this.oneSignal.handleNotificationReceived().subscribe(data => {
+  let msg = data.payload.body;
+  let title = data.payload.title;
+  this.additionalData = data.payload.additionalData;
+  console.log(title, msg, this.additionalData);
+ 
+});
+
+// // // Notifcation was received in general
+
+
+// // Notification was really clicked/opened
+this.oneSignal.handleNotificationOpened().subscribe(data => {
+  // Just a note that the data is a different place here!
+  let additionalData = data.notification.payload.additionalData;
+ // this.navCtrl.push(CandidateResponsePage,{cId:this.additionalData.cid,reqId:this.additionalData.pId});
+
+  console.log('Notification opened', 'You already read this before', additionalData.task);
+});
+
+    this.oneSignal.endInit();
+
 }
 
 }

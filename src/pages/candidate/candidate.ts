@@ -40,6 +40,7 @@ export class CandidatePage {
   tempStatus:Array<Object> = [];
   hideMe:boolean=false;
   selectedCandidates:any;
+  result:any;
   constructor(public util: UtilsProvider,
     public navParams: NavParams,
     public navCtrl: NavController,
@@ -116,16 +117,19 @@ export class CandidatePage {
       })
       
       console.log("changed Array", this.candidates);
-
-      
-      
      
     },error => {
         this.util.showToast("Something went wrong.","ERROR");
         loading.dismiss();
        // console.log(error);
     });
-    
+    this.restProvider.editRequirements(this.reqId,this.token)
+    .then( res=> {
+     this.result = res;
+     //console.log('this.result',this.result.tsId)
+    },error => {
+     
+    });  
       let jsonContact = {
         "role":this.loginUser.role,
         "userId":this.loginUser.id,

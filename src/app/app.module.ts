@@ -107,8 +107,13 @@ import { DatePickerModule } from 'ion-datepicker';
 //import { Calendar } from '@ionic-native/calendar/ngx';
 import * as moment from 'moment';
 import { OneSignal } from '@ionic-native/onesignal';
+<<<<<<< HEAD
 
 
+=======
+import { WebIntent } from '@ionic-native/web-intent';
+import { Diagnostic } from '@ionic-native/diagnostic';
+>>>>>>> c180d970903cd0bfcbcbda4484fd3d5c882549d3
 
 @NgModule({
   declarations: [  
@@ -357,7 +362,13 @@ import { OneSignal } from '@ionic-native/onesignal';
     DocumentViewer,
     FileOpener,
     AndroidPermissions,
+<<<<<<< HEAD
    OneSignal
+=======
+    OneSignal,
+    WebIntent,
+    Diagnostic
+>>>>>>> c180d970903cd0bfcbcbda4484fd3d5c882549d3
     
   ]
 })

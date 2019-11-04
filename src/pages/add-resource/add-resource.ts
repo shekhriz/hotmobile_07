@@ -9,6 +9,7 @@ import { MgrRecruitingPage }  from '../../pages/mgr-recruiting/mgr-recruiting';
 import { RecruiterPage }  from '../../pages/recruiter/recruiter';
 import { ResourceModalPage }  from '../../pages/resource-modal/resource-modal';
 import { CsmPage }  from '../../pages/csm/csm';
+import { RequirementsPage } from '../../pages/requirements/requirements';
 
 
 /**
@@ -57,7 +58,7 @@ export class AddResourcePage {
       this.loginUser = this.util.getSessionUser();
 
 
-
+      this.goBack();
       this.getRoles();
       this.getAssoicatedUsers();
       this.requirementResource();
@@ -77,6 +78,9 @@ export class AddResourcePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddResourcePage');
+  }
+  goBack(){
+    this.viewCtrl.dismiss({reqId:this.reqId});
   }
   getRoles(){
     let loading = this.loadingCtrl.create({
@@ -147,7 +151,7 @@ export class AddResourcePage {
   goTechScreener(){
         let chooseModal = this.modalCtrl.create(TechScreenerPage,{reqId:this.reqId,roles_details:this.roles_details});  
         chooseModal.present();    
-      } 
+   } 
   goVpSales(){
     let chooseModal = this.modalCtrl.create(VpSalesPage,{reqId:this.reqId,roles_details:this.roles_details});
     
@@ -350,9 +354,7 @@ deleteResource(res){
   }
 
 
-  goBack(){
-    this.viewCtrl.dismiss();
-  }
+ 
   requirementResource(){
     let loading = this.loadingCtrl.create({
       content: 'Please wait...'
@@ -460,4 +462,5 @@ deleteResource(res){
     });
     confirm.present();
   }
+ 
 }

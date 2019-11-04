@@ -24,7 +24,12 @@ export class MyApp {
     public utilProvider: UtilsProvider,
     public alertCtrl: AlertController,
     public restProvider: RestProvider,
+<<<<<<< HEAD
     private oneSignal: OneSignal,
+=======
+ //  private oneSignal: OneSignal,
+   public util: UtilsProvider,
+>>>>>>> c180d970903cd0bfcbcbda4484fd3d5c882549d3
 
     ) {
     platform.ready().then(() => {
@@ -35,7 +40,11 @@ export class MyApp {
       this.user = this.utilProvider.getSessionUser();
       this.userToken = this.utilProvider.getToken();
       this.userTokenStartTime = this.utilProvider.getTokenTime();
+<<<<<<< HEAD
       this.setupPush()
+=======
+    //  this.setupPush();
+>>>>>>> c180d970903cd0bfcbcbda4484fd3d5c882549d3
       if(this.userToken != undefined && this.userToken != null && this.userTokenStartTime != null && this.user != null) {
         this.rootPage = HomePage;
         let diff = (new Date().getTime() - this.userTokenStartTime) / 1000;
@@ -65,7 +74,11 @@ export class MyApp {
       this.utilProvider.removeAllLocalStorage();
       this.rootPage = LoginPage;
     }
+<<<<<<< HEAD
   
+=======
+   
+>>>>>>> c180d970903cd0bfcbcbda4484fd3d5c882549d3
 
     });
   }
@@ -76,6 +89,7 @@ export class MyApp {
  
     this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.None);
  
+<<<<<<< HEAD
     // Notifcation was received in general
     this.oneSignal.handleNotificationReceived().subscribe(data => {
       let msg = data.payload.body;
@@ -83,6 +97,18 @@ export class MyApp {
       let additionalData = data.payload.additionalData;
       console.log(title, msg, additionalData.task);
     });
+=======
+  //   // Notifcation was received in general
+  //   this.oneSignal.handleNotificationReceived().subscribe(data => {
+  //     let msg = data.payload.body;
+  //     let title = data.payload.title;
+  //     let additionalData = data.payload.additionalData;
+  //     console.log(title, msg, additionalData);
+  //     if(additionalData.id == 1185){
+  //       console.log('push notification is set');
+  //     }
+  //   });
+>>>>>>> c180d970903cd0bfcbcbda4484fd3d5c882549d3
  
     // Notification was really clicked/opened
     this.oneSignal.handleNotificationOpened().subscribe(data => {
