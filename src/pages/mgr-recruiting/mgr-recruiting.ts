@@ -92,7 +92,7 @@ export class MgrRecruitingPage {
     });
   }
   goBack(){
-    this.navCtrl.push(AddResourcePage);
+    this.viewCtrl.dismiss({reqId:this.reqId});
   }
   editUser(id){
     let chooseModal = this.modalCtrl.create(ResourceModalPage,{userId:id});  

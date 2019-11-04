@@ -14,7 +14,9 @@ import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-vi
 import { FileOpener } from '@ionic-native/file-opener';
 import { AndroidPermissions } from '@ionic-native/android-permissions'
 import { ReScheduleModelPage }  from '../../pages/re-schedule-model/re-schedule-model';
-
+import { OneSignal } from '@ionic-native/onesignal';
+import { normalizeURL } from 'ionic-angular';
+import { Diagnostic } from '@ionic-native/diagnostic';
 
 /**
  * Generated class for the CandidatePopoverComponent component.
@@ -51,6 +53,8 @@ export class CandidatePopoverComponent {
   appPath: string;
   dataPath: string;
   hideMe:boolean;
+  additionalData:any;
+  public fileUrl:any = '';
   private fileTransfer: FileTransferObject; 
   constructor(public navCtrl: NavController,
     public util: UtilsProvider,
@@ -67,6 +71,8 @@ export class CandidatePopoverComponent {
     private platform:Platform,
     //public fileTransfer: FileTransferObject,
     public fileOpener: FileOpener,
+    private oneSignal: OneSignal,
+    private diagnostic: Diagnostic,
     private androidPermissions :AndroidPermissions) {
       this.candidate=navParams.get('candidate');
       this.mainWorkflowId=navParams.get('mainWorkflowId');
@@ -85,6 +91,7 @@ export class CandidatePopoverComponent {
       this.firstName = this.candidate.firstName;
       this.isBlackListed = this.candidate.isBlackListed;
       this.currentReqActions =navParams.get('currentReqActions');
+      
     //  this.allowedAction();
     console.log("this.candidate",this.candidate);
    
@@ -110,11 +117,11 @@ this.definePaths();
     }
   }
   // previewResume(){
-  //   // const options:DocumentViewerOptions ={
-  //   //   title:'My PDF'
-  //   // }
-  //   // this.document.viewDocument('file:///android_asset/www/assets/5-tools.pdf','application/pdf',options)
-  //   //            console.log(this.document.viewDocument)
+  //   const options:DocumentViewerOptions ={
+  //     title:'My PDF'
+  //   }
+  //   this.document.viewDocument('file:///android_asset/www/assets/5-tools.pdf','application/pdf',options)
+  //              console.log(this.document.viewDocument)
 
 
   //              let filePath = this.file.applicationDirectory + 'www/assets';
@@ -134,6 +141,25 @@ this.definePaths();
   //                this.document.viewDocument(`${filePath}/5-tools.pdf`, 'application/pdf', options);
   //              }
   //  }
+  
+  getPermission() {
+    
+      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE).then(
+        result => {
+          if (result.hasPermission) {
+            this.downloadResume1();
+          } else {
+            this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE).then(result => {
+              if (result.hasPermission) {
+                this.downloadResume1();
+              }
+            });
+          }
+        },
+        err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE)
+      ); 
+  }
+  
    downloadResume1(){
     this.restProvider.downloadCandidateResume(this.token,this.candidate.candidateId,this.loginUser)
     .then(data => {
@@ -150,7 +176,7 @@ this.definePaths();
  
      let link = this.candidate.resumeUrl;
  
-      fileTransfer.download(link, this.file.externalRootDirectory +'/Download/' + fileName).then((entry) => {
+      fileTransfer.download(link, this.file.externalRootDirectory  +'Download/'+ fileName).then((entry) => {
       console.log('download complete: ' + entry.toURL());
           let url = entry.toURL();
           let fileExtn=fileName.split('.').reverse()[0];
@@ -158,10 +184,12 @@ this.definePaths();
       
           if (this.platform.is('ios')) {
             this.document.viewDocument(url, fileMIMEType, {});
+            console.log('ios')
           } else {
             this.fileOpener.open(url, fileMIMEType)
               .then(() => console.log('File is opened'))
               .catch(e => console.log('Error opening file', e));
+              console.log('android')
           }
         }, (error) => {
           console.log(error)
@@ -238,7 +266,7 @@ this.definePaths();
 
             this.restProvider.regenerateEmail(this.token,this.reqId,this.cId,jsonData.user)
             .then(res => {
-            
+              this.setupPush();
             },error => {
             
             })
@@ -611,6 +639,70 @@ this.definePaths();
     });
     confirm.present();
   }
+  cancelMeeting(){
+    let x =(this.candidateLink).split('/');
+    let meetingId = x[4];
+    let confirm = this.alertCtrl.create({
+      title: "Delete Zoom meeting",
+      message: 'Are you sure you want to delete zoom meeting for candidate: ['+this.candidate.candidateId+']- '+this.candidate.candidateName,
+      inputs: [
+        {
+          name: 'reason',
+          placeholder: 'Reason',
+          
+        },
+       
+      ],
+      
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            console.log('No clicked');
+          }
+        },
+        {
+          text: 'Yes',
+          handler: (data) => {
+           
+            if(data.reason == null ||data.reason ==''){
+              this.util.showToast('Please write reason for cancel meeting',"ERROR")
+              return;
+            }else{
+               let loading = this.loadingCtrl.create({
+              content: 'Please wait...'
+            });
+            
+                let jsonData = {
+              
+                  'cancelReason': data.reason,
+                  'meetingId':meetingId ,
+                  'userName': this.loginUser.userName,
+                }
+              
+      
+                loading.present();
+                this.restProvider.cancelZoomMeeting(jsonData,this.token)
+                .then(data => {
+                  this.navCtrl.push(CandidatePage,{reqId:this.reqId,workflowId:this.workflowId,currentReqActions:this.currentReqActions});
+                  loading.dismiss();
+                  this.util.showToast("Email sent sucessfuly","SUCCESS");
+                
+                },error => {
+                  loading.dismiss();
+                  this.util.showToast("Something went wrong.","ERROR");
+                })
+             
+            }
+            
+            //
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+ 
   reGenEmail(){
     let confirm = this.alertCtrl.create({
       title: "Please resend the mail to the candidate.",
@@ -664,4 +756,32 @@ this.definePaths();
     });
     confirm.present();
   }
+  setupPush() {
+    this.oneSignal.startInit('b7fd84f4-0a54-4550-9c4d-e12bac3a7cfe', '133871082435');
+  
+  //this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.Notification);
+  this.oneSignal.handleNotificationReceived().subscribe(data => {
+    let msg = data.payload.body;
+    let title = data.payload.title;
+    this.additionalData = data.payload.additionalData;
+    console.log(title, msg, this.additionalData);
+   
+  });
+  
+  // // // Notifcation was received in general
+ 
+
+  // // Notification was really clicked/opened
+  this.oneSignal.handleNotificationOpened().subscribe(data => {
+    // Just a note that the data is a different place here!
+    let additionalData = data.notification.payload.additionalData;
+   // this.navCtrl.push(CandidateResponsePage,{cId:this.additionalData.cid,reqId:this.additionalData.pId});
+
+    console.log('Notification opened', 'You already read this before', additionalData.task);
+  });
+ 
+      this.oneSignal.endInit();
+
+}
+   
 }

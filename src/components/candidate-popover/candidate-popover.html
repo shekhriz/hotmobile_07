@@ -21,9 +21,12 @@
    <button ion-item (click)="disableCandidate()" *ngIf="candidateEnableDisable == false && submitToClient!=='Yes' " >
     Enable
   </button>
-   <button ion-item (click)="downloadResume1()"  >
+   <button ion-item (click)="getPermission()"  >
       Download Resume
    </button>
+   <button ion-item (click)="uploadResume()"  >
+      Preview Resume
+  </button> 
    <button ion-item (click)="RescheduleInterview()"  >
       Reschedule Interview
    </button>
@@ -32,7 +35,9 @@
           <button ion-item class="link" (click)="reSchedule()">Re-Schedule interview</button>
           <button ion-item class="link" (click)="reSendEmail()">Re-Send Email</button>
           <button ion-item class="link" (click)="reGenerate()">Re-Generate Link</button>
+          <button *ngIf="candidate.cancelReason == null || candidate.cancelReason == 'null' || candidate.cancelReason == ''" ion-item class="link" (click)="cancelMeeting()">Cancel Meeting</button> 
       </div>
+     
       <div *ngIf="candidate.status =='Prospect'">
           <button ion-item class="link" (click)="reScreening()">Schedule Screening</button> 
       </div>

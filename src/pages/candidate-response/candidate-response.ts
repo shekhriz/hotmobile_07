@@ -7,6 +7,7 @@ import { CandidateDetailPage }  from '../../pages/candidate-detail/candidate-det
 import { OquestionPage }  from '../../pages/oquestion/oquestion';
 import { SelfRatingPage }  from '../../pages/self-rating/self-rating';
 import { QuestionResponsePage }  from '../../pages/question-response/question-response';
+import { OneSignal } from '@ionic-native/onesignal';
 
 
 /**
@@ -50,12 +51,16 @@ export class CandidateResponsePage {
   candidateLink:string;
   roundNo:number;
   videoLink:string;
+  additionalData:any;
+
   constructor(public navCtrl: NavController,  public util: UtilsProvider,
     public loadingCtrl: LoadingController,
     public restProvider: RestProvider,
     public navParams: NavParams,
     public modalCtrl:ModalController,
     public viewCtrl : ViewController,
+    private oneSignal: OneSignal,
+
     ) {
     this.token = this.util.getToken();
     this.reqId=navParams.get('reqId');  
@@ -286,6 +291,32 @@ export class CandidateResponsePage {
           });   
            
   }
+  setupPush() {
+    this.oneSignal.startInit('b7fd84f4-0a54-4550-9c4d-e12bac3a7cfe', '133871082435');
+  
+  //this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.Notification);
+  this.oneSignal.handleNotificationReceived().subscribe(data => {
+    let msg = data.payload.body;
+    let title = data.payload.title;
+    this.additionalData = data.payload.additionalData;
+    console.log(title, msg, this.additionalData);
+   
+  });
+  
+  // // // Notifcation was received in general
+ 
+
+  // // Notification was really clicked/opened
+  this.oneSignal.handleNotificationOpened().subscribe(data => {
+    // Just a note that the data is a different place here!
+    let additionalData = data.notification.payload.additionalData;
+    this.navCtrl.push(CandidateResponsePage,{cId:this.additionalData.cid,reqId:this.additionalData.pId});
+
+    console.log('Notification opened', 'You already read this before', additionalData.task);
+  });
+ 
+      this.oneSignal.endInit(); 
+}
   
   
 }

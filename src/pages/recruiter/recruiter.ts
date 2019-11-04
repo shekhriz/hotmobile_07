@@ -85,7 +85,7 @@ export class RecruiterPage {
     });
   }
   goBack(){
-    this.navCtrl.push(AddResourcePage);
+    this.viewCtrl.dismiss({reqId:this.reqId});
   }
 
   editUser(id){

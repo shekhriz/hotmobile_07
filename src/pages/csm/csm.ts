@@ -119,7 +119,7 @@ export class CsmPage {
     })
   }
   goBack(){
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss({reqId:this.reqId});
   }
 
   editUser(id){

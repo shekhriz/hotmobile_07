@@ -24,7 +24,8 @@ export class MyApp {
     public utilProvider: UtilsProvider,
     public alertCtrl: AlertController,
     public restProvider: RestProvider,
-  //  private oneSignal: OneSignal,
+ //  private oneSignal: OneSignal,
+   public util: UtilsProvider,
 
     ) {
     platform.ready().then(() => {
@@ -35,7 +36,7 @@ export class MyApp {
       this.user = this.utilProvider.getSessionUser();
       this.userToken = this.utilProvider.getToken();
       this.userTokenStartTime = this.utilProvider.getTokenTime();
-
+    //  this.setupPush();
       if(this.userToken != undefined && this.userToken != null && this.userTokenStartTime != null && this.user != null) {
         this.rootPage = HomePage;
         let diff = (new Date().getTime() - this.userTokenStartTime) / 1000;
@@ -65,7 +66,7 @@ export class MyApp {
       this.utilProvider.removeAllLocalStorage();
       this.rootPage = LoginPage;
     }
-   // this.setupPush()
+   
 
     });
   }
@@ -81,7 +82,10 @@ export class MyApp {
   //     let msg = data.payload.body;
   //     let title = data.payload.title;
   //     let additionalData = data.payload.additionalData;
-  //     console.log(title, msg, additionalData.task);
+  //     console.log(title, msg, additionalData);
+  //     if(additionalData.id == 1185){
+  //       console.log('push notification is set');
+  //     }
   //   });
  
   //   // Notification was really clicked/opened

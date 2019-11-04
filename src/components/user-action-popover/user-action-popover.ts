@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ViewController, AlertController,LoadingController,NavParams } from 'ionic-angular';
 import { RestProvider } from '../../providers/rest/rest';
 import { UtilsProvider } from '../../providers/utils/utils';
+import { OneSignal } from '@ionic-native/onesignal';
+
 /**
  * Generated class for the UserActionPopoverComponent component.
  *
@@ -22,13 +24,16 @@ export class UserActionPopoverComponent {
   statusStr:string;
   status:boolean;
   loginUser:any;
+  additionalData:any;
+
   constructor(public viewCtrl: ViewController,
     
     public alertCtrl:AlertController,
     public loadingCtrl: LoadingController,
     public restProvider: RestProvider,
     public util:UtilsProvider ,
-    public navParams: NavParams) {
+    public navParams: NavParams,
+    private oneSignal: OneSignal ) {
     
       this.loginUser = this.util.getSessionUser();
       this.token = this.util.getToken();
@@ -90,6 +95,7 @@ export class UserActionPopoverComponent {
         //Email Send to user
         this.restProvider.changeUserStatusSendEmailById(jsonData,this.token)
         .then(res => {
+          this.setupPush();
         },error => {
           
         });
@@ -169,5 +175,33 @@ export class UserActionPopoverComponent {
     },error => {
       this.util.showToast("Something went wrong.","ERROR");
     });
+  }
+
+  setupPush() {
+    this.oneSignal.startInit('b7fd84f4-0a54-4550-9c4d-e12bac3a7cfe', '133871082435');
+  
+  //this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.Notification);
+  this.oneSignal.handleNotificationReceived().subscribe(data => {
+    let msg = data.payload.body;
+    let title = data.payload.title;
+    this.additionalData = data.payload.additionalData;
+    console.log(title, msg, this.additionalData);
+   
+  });
+  
+  // // // Notifcation was received in general
+  
+  
+  // // Notification was really clicked/opened
+  this.oneSignal.handleNotificationOpened().subscribe(data => {
+    // Just a note that the data is a different place here!
+    let additionalData = data.notification.payload.additionalData;
+   // this.navCtrl.push(CandidateResponsePage,{cId:this.additionalData.cid,reqId:this.additionalData.pId});
+  
+    console.log('Notification opened', 'You already read this before', additionalData.task);
+  });
+  
+      this.oneSignal.endInit();
+  
   }
 }

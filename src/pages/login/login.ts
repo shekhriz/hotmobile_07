@@ -3,12 +3,10 @@ import { IonicPage, NavController, NavParams,LoadingController,MenuController } 
 import { UtilsProvider } from '../../providers/utils/utils';
 import { RestProvider } from '../../providers/rest/rest';
 import { HomePage } from '../home/home';
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+//import { OneSignal } from '@ionic-native/onesignal';
+import { CandidateResponsePage }  from '../../pages/candidate-response/candidate-response';
+
+ 
 
 @IonicPage()
 @Component({
@@ -20,14 +18,21 @@ export class LoginPage {
   username:string;
   password:string;
   email:string;
-
+  result:any;
+  additionalData:any;
+  showMe:boolean = false;
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public util: UtilsProvider,
               public restProvider: RestProvider,
               public loadingCtrl: LoadingController,
-              public menuCtrl: MenuController) {
+              public menuCtrl: MenuController,
+             // private oneSignal: OneSignal,
+             
+   ) {
               this.menuCtrl.enable(false);
+     
+
   }
 
   ionViewDidLoad() {
@@ -36,9 +41,9 @@ export class LoginPage {
 
   login(){
    
-   
     let loading = this.loadingCtrl.create({
-      content: 'Please wait...'
+      cssClass: 'transparent',
+      spinner:'bubbles'
     });
 
     if(this.username == undefined || this.username == ""){
@@ -51,7 +56,8 @@ export class LoginPage {
       return;
     }
 
-
+    this.isLogin = false;
+    this.showMe = true;
     loading.present();
     let getToken = {
       'username':this.username,
@@ -69,7 +75,11 @@ export class LoginPage {
       this.util.saveTokenTime(new Date().getTime());
       this.restProvider.newLogin(jsonData,token.token)
       .then(data => {
+        this.result = data;
         this.util.saveSessionUser(data);
+      
+         // this.setupPush();
+     
         loading.dismiss();
         this.util.showToast("Successfully Login.","SUCCESS");
         this.navCtrl.push(HomePage);
@@ -135,5 +145,30 @@ export class LoginPage {
     });
 
   }
+  setupPush() {
+    //   this.oneSignal.startInit('b7fd84f4-0a54-4550-9c4d-e12bac3a7cfe', '133871082435');
+    
+    // //this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.Notification);
+    // this.oneSignal.handleNotificationReceived().subscribe(data => {
+    //   let msg = data.payload.body;
+    //   let title = data.payload.title;
+    //   this.additionalData = data.payload.additionalData;
+    //   console.log(title, msg, this.additionalData);
+     
+    // });
+    
+    // // // // Notifcation was received in general
+   
+ 
+    // // // Notification was really clicked/opened
+    // this.oneSignal.handleNotificationOpened().subscribe(data => {
+    //   // Just a note that the data is a different place here!
+    //   let additionalData = data.notification.payload.additionalData;
+    //   this.navCtrl.push(CandidateResponsePage,{cId:this.additionalData.cid,reqId:this.additionalData.pId});
 
+    //   console.log('Notification opened', 'You already read this before', additionalData.task);
+    // });
+   
+    //     this.oneSignal.endInit(); 
+  }
 }
