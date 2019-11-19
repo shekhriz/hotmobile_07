@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams,LoadingController,MenuController } 
 import { UtilsProvider } from '../../providers/utils/utils';
 import { RestProvider } from '../../providers/rest/rest';
 import { HomePage } from '../home/home';
-//import { OneSignal } from '@ionic-native/onesignal';
+import { OneSignal } from '@ionic-native/onesignal';
 import { CandidateResponsePage }  from '../../pages/candidate-response/candidate-response';
 
  
@@ -27,7 +27,7 @@ export class LoginPage {
               public restProvider: RestProvider,
               public loadingCtrl: LoadingController,
               public menuCtrl: MenuController,
-             // private oneSignal: OneSignal,
+              private oneSignal: OneSignal,
              
    ) {
               this.menuCtrl.enable(false);
@@ -78,7 +78,7 @@ export class LoginPage {
         this.result = data;
         this.util.saveSessionUser(data);
       
-         // this.setupPush();
+          //this.setupPush();
      
         loading.dismiss();
         this.util.showToast("Successfully Login.","SUCCESS");
@@ -146,29 +146,29 @@ export class LoginPage {
 
   }
   setupPush() {
-    //   this.oneSignal.startInit('b7fd84f4-0a54-4550-9c4d-e12bac3a7cfe', '133871082435');
+      this.oneSignal.startInit('b7fd84f4-0a54-4550-9c4d-e12bac3a7cfe', '133871082435');
     
-    // //this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.Notification);
-    // this.oneSignal.handleNotificationReceived().subscribe(data => {
-    //   let msg = data.payload.body;
-    //   let title = data.payload.title;
-    //   this.additionalData = data.payload.additionalData;
-    //   console.log(title, msg, this.additionalData);
+    //this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.Notification);
+    this.oneSignal.handleNotificationReceived().subscribe(data => {
+      let msg = data.payload.body;
+      let title = data.payload.title;
+      this.additionalData = data.payload.additionalData;
+      console.log(title, msg, this.additionalData);
      
-    // });
+    });
     
-    // // // // Notifcation was received in general
+    // // // Notifcation was received in general
    
  
-    // // // Notification was really clicked/opened
-    // this.oneSignal.handleNotificationOpened().subscribe(data => {
-    //   // Just a note that the data is a different place here!
-    //   let additionalData = data.notification.payload.additionalData;
-    //   this.navCtrl.push(CandidateResponsePage,{cId:this.additionalData.cid,reqId:this.additionalData.pId});
+    // // Notification was really clicked/opened
+    this.oneSignal.handleNotificationOpened().subscribe(data => {
+      // Just a note that the data is a different place here!
+      let additionalData = data.notification.payload.additionalData;
+      this.navCtrl.push(CandidateResponsePage,{cId:this.additionalData.cid,reqId:this.additionalData.pId});
 
-    //   console.log('Notification opened', 'You already read this before', additionalData.task);
-    // });
+      console.log('Notification opened', 'You already read this before', additionalData.task);
+    });
    
-    //     this.oneSignal.endInit(); 
+        this.oneSignal.endInit(); 
   }
 }

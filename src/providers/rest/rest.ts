@@ -504,18 +504,18 @@ export class RestProvider {
         });
     }); 
   }
-  clientNameForRequirement(clientName,token){
-    return new Promise(resolve => {  
-      this.http.get(this.apiUrl+'hot/client/clientNameForRequirement/'+clientName,{
+  clientNameForRequirement(data,token){
+    return new Promise((resolve, reject) => {
+      this.http.post(this.apiUrl+'hot/client/clientNameForRequirement', JSON.stringify(data),{
         headers: new HttpHeaders().set('Authorization', token)
                 .append('Accept', 'application/json;odata=verbose')
                 .append('Content-Type','application/json')
-       }).subscribe(data => {
-        resolve(data);
-      }, err => {
-        console.log(err);
-      });
-    });
+       }).subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    }); 
   }
 
   contactDetails(id,token){
@@ -1605,7 +1605,19 @@ getCandidates(token){
     });
   });
 }
-
+getCandidatesByDays(token,days){
+  return new Promise(resolve => {
+    this.http.get(this.apiUrl+'hot/candidates/'+days,{
+      headers: new HttpHeaders().set('Authorization', token)
+              .append('Accept', 'application/json;odata=verbose')
+              .append('Content-Type','application/json')
+     }).subscribe(data => {
+      resolve(data);
+    }, err => {
+      console.log(err);
+    });
+  });
+}
 deleteCandidate(token,id,user) {
   let url = 'hot/candidate/delete/'+id+'/'+user.id+'/'+user.firstName+'/'+user.lastName+'/'+user.userName+'/'+user.role;
   return new Promise(resolve => {
@@ -2475,5 +2487,17 @@ mutlipleRoundsSelfRating(token,id,candidateId){
               });
           }); 
         }
-        
+        internalSearch(data,token){
+          return new Promise((resolve, reject) => {
+            this.http.post(this.apiUrl+'hot/cnadidate/internalSearch',JSON.stringify(data), {
+              headers: new HttpHeaders().set('Authorization', token)
+                      .append('Accept', 'application/json;odata=verbose')
+                      .append('Content-Type','application/json')
+             }).subscribe(res => {
+                resolve(res);
+              }, (err) => {
+                reject(err);
+              });
+          }); 
+        }  
   }

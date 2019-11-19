@@ -142,80 +142,77 @@ this.definePaths();
   //              }
   //  }
   
-  getPermission() {
+
     
-      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE).then(
-        result => {
-          if (result.hasPermission) {
-            this.downloadResume1();
-          } else {
-            this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE).then(result => {
-              if (result.hasPermission) {
-                this.downloadResume1();
-              }
-            });
-          }
-        },
-        err => this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE)
-      ); 
-  }
+   
+     
   
-   downloadResume1(){
-    this.restProvider.downloadCandidateResume(this.token,this.candidate.candidateId,this.loginUser)
-    .then(data => {
+  
+  
      
-      this.util.showToast("Added sucessfuly","SUCCESS");
-     
-    },error => {
-
-      this.util.showToast("Something went wrong.","ERROR");
-    })
-
-    const fileTransfer :FileTransferObject = this.transfer.create();
-    let fileName = this.candidate.originalFileName;
- 
-     let link = this.candidate.resumeUrl;
- 
-      fileTransfer.download(link, this.file.externalRootDirectory  +'Download/'+ fileName).then((entry) => {
-      console.log('download complete: ' + entry.toURL());
+    downloadResume1(){
+      this.restProvider.downloadCandidateResume(this.token,this.candidate.candidateId,this.loginUser)
+      .then(data => {
+       
+        this.util.showToast("Added sucessfuly","SUCCESS");
+       
+      },error => {
+  
+        this.util.showToast("Something went wrong.","ERROR");
+      })
+  
+      const fileTransfer :FileTransferObject = this.transfer.create();
+      let fileName = this.candidate.originalFileName;
+   
+       let link = this.candidate.resumeUrl;
+       let dir_name = 'Download';
+       let path = '';
+       let result = this.file.createDir(this.file.externalRootDirectory, dir_name, true);
+       result.then((resp) => {
+        path = resp.toURL();
+        console.log(path);
+        fileTransfer.download(link, path + fileName).then((entry) => {
+          console.log('download complete: ' + entry.toURL());
           let url = entry.toURL();
           let fileExtn=fileName.split('.').reverse()[0];
           let fileMIMEType=this.getMIMEtype(fileExtn);
-      
           if (this.platform.is('ios')) {
             this.document.viewDocument(url, fileMIMEType, {});
-            console.log('ios')
           } else {
             this.fileOpener.open(url, fileMIMEType)
               .then(() => console.log('File is opened'))
               .catch(e => console.log('Error opening file', e));
-              console.log('android')
           }
         }, (error) => {
           console.log(error)
         });
-   
-     }
-     getMIMEtype(extn){
-      let ext=extn.toLowerCase();
-      let MIMETypes={
-        'txt' :'text/plain',
-        'docx':'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        'doc' : 'application/msword',
-        'pdf' : 'application/pdf',
-        'jpg' : 'image/jpeg',
-        'bmp' : 'image/bmp',
-        'png' : 'image/png',
-        'xls' : 'application/vnd.ms-excel',
-        'xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        'rtf' : 'application/rtf',
-        'ppt' : 'application/vnd.ms-powerpoint',
-        'pptx': 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+      }, (err) => {
+        console.log('error on creating path : ' + err);
+      });
+      
+     
+       }
+       getMIMEtype(extn){
+        let ext=extn.toLowerCase();
+        let MIMETypes={
+          'txt' :'text/plain',
+          'docx':'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+          'doc' : 'application/msword',
+          'pdf' : 'application/pdf',
+          'jpg' : 'image/jpeg',
+          'bmp' : 'image/bmp',
+          'png' : 'image/png',
+          'xls' : 'application/vnd.ms-excel',
+          'xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+          'rtf' : 'application/rtf',
+          'ppt' : 'application/vnd.ms-powerpoint',
+          'pptx': 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+        }
+        return MIMETypes[ext];
       }
-      return MIMETypes[ext];
-    }
+    
   
- 
+    
   responseCandidate(){
    this.viewCtrl.dismiss();  
     this.appCtrl.getRootNav().push(CandidateResponsePage,{cId:this.cId,reqId: this.reqId,workflowId:this.workflowId});

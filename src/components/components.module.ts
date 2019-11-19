@@ -9,6 +9,7 @@ import { CloseReqPopoverComponent } from './close-req-popover/close-req-popover'
 import { SubvendorPopoverComponent } from './subvendor-popover/subvendor-popover';
 import { ClientPopoverComponent } from './client-popover/client-popover';
 import { CandidateSidePopoverComponent } from './candidate-side-popover/candidate-side-popover';
+import { CandidatesearchComponent } from './candidatesearch/candidatesearch';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { CandidateSidePopoverComponent } from './candidate-side-popover/candidat
     CloseReqPopoverComponent,
     SubvendorPopoverComponent,
     ClientPopoverComponent,
-    CandidateSidePopoverComponent],
+    CandidateSidePopoverComponent,
+    CandidatesearchComponent],
 	imports: [],
 	exports: [SideMenuComponent,
     UserActionPopoverComponent,
@@ -34,6 +36,7 @@ import { CandidateSidePopoverComponent } from './candidate-side-popover/candidat
     CloseReqPopoverComponent,
     SubvendorPopoverComponent,
     ClientPopoverComponent,
-    CandidateSidePopoverComponent]
+    CandidateSidePopoverComponent,
+    CandidatesearchComponent]
 })
 export class ComponentsModule {}

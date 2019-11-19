@@ -1,0 +1,110 @@
+<ion-header>
+  <main-header></main-header>
+  <div class="addBtn"  > 
+       <button ion-button class="btn1" outline (click)="goBack()"><ion-icon name="undo" ></ion-icon></button>
+              
+        <button ion-button color="dark" class="btn2" outline (click)="editSearch()">Edit Search</button>
+        <button ion-button color="dark" class="btn2" outline (click)="backToSearch()">Back to search</button>
+  </div>
+  <div>
+      <button ion-button color="grey" class="btn3" outline >Status :<span>{{selected.status}}</span></button>
+      <button ion-button color="grey" class="btn3" outline *ngIf="selected.location != ''">Location :<span>{{selected.location}}({{selected.locationType}})</span></button>
+      <button ion-button color="grey" class="btn3" outline *ngIf="selected.dateRange != ''" >DateRange :<span>{{selected.dateRange}} Days</span></button>
+      <button ion-button color="grey" class="btn3" outline *ngIf="selected.name != ''">Name :<span>{{selected.name}}({{selected.nameType}})</span></button>
+      <button ion-button color="grey" class="btn3" outline *ngIf="selected.skills != ''">Skill :<span>{{selected.skills}}({{selected.skillsType}})</span></button>
+      <button ion-button color="grey" class="btn3" outline *ngIf="selected.minExp != ''">Min Experience :<span>{{selected.minExp}} year</span></button>
+      <button ion-button color="grey" class="btn3" outline *ngIf="selected.maxExp != ''">Max Experience :<span>{{selected.maxExp}} year</span></button>
+      <button ion-button color="grey" class="btn3" outline *ngIf="selected.jobTitle != ''">JobTitle :<span>{{selected.jobTitle}}({{selected.jobTitleType}})</span></button>
+      <button ion-button color="grey" class="btn3" outline *ngIf="selected.empCompanyName != ''">Company Name :<span>{{selected.empCompanyName}}({{selected.empCompanyNameType}})</span></button>
+      <button ion-button color="grey" class="btn3" outline *ngIf="selected.division != ''">Division :<span>{{selected.division}}({{selected.divisionTag}})</span></button>
+      <button ion-button color="grey" class="btn3" outline *ngIf="selected.workAuthorisation != undefined">Work Authorization :<span>{{selected.workAuthorisation}}({{selected.workAuthorisationType}})</span></button>
+      <button ion-button color="grey" class="btn3" outline *ngIf="selected.recruiter != ''">Recruiter :<span>{{selected.recruiter}}({{selected.recruiterType}})</span></button>
+  </div>
+</ion-header>
+
+
+<ion-content>
+  
+  <ion-list>
+          
+
+          <div class="body"  *ngFor="let candidate of candidates" >
+             
+            <div class="body-left col">
+                  
+                <div ion-item >
+                    <h1 ><span class=""></span> {{candidate.candidateName }}</h1>
+                      
+                    <div class="inner-body" >
+                        <label class="inner-left">Email: <span >{{candidate.emailId}}</span></label> 
+                    </div>
+                     <div class="inner-body" >
+                        <label class="inner-left">Phone :  <span >{{candidate.cellPhoneNumber}}</span></label> 
+                    </div> 
+                    <div class="inner-body" >
+                          <label class="inner-left">Job Title :  <span >{{candidate.jobTitle}}</span></label> 
+                    </div>
+                    <div class="inner-body" >
+                      <label class="inner-left">Location :  <span >{{candidate.currentLocation}}</span></label> 
+                    </div>
+                    <div class="inner-body" >
+                      <label class="inner-left">Division :  <span >{{candidate.division}}</span></label> 
+                    </div>
+                    <div class="inner-body" *ngIf="relocateWithFamily == 'false'" >
+                      <label class="inner-left">Relocate  :  <span >{{candidate.willingToRelocate}}</span></label> 
+                    </div>
+                    <div class="inner-body" *ngIf="relocateWithFamily == 'true'">
+                      <label class="inner-left">Relocate :  <span >{{candidate.willingToRelocate}}(with family)</span></label> 
+                    </div>
+                </div> 
+               
+                  <div ion-item style="margin-top: -16pcandidate" >
+                 
+                     <h2 ><span class="" style="font-weight: 600;">Other info :</span> </h2>   
+                    <div class="inner-body" >
+                        <label class="inner-left" >Skills :  <span >{{candidate.skills}}</span></label> 
+                    </div>
+                    <div class="inner-body" >
+                        <label class="inner-left" >Total Ecandidateperience :<span >{{candidate.totalEcandidateperienceYear}}years</span></label> 
+                    </div>
+                    <div class="inner-body" >
+                        <label class="inner-left">Current Employer :<span>{{candidate.currentEmployer}}</span></label> 
+                    </div>
+                    <div class="inner-body" >
+                        <label class="inner-left">Immigration Status :  <span >{{candidate.immigrationStatus}} </span></label> 
+                    </div>
+                    <div class="inner-body" >
+                          <label class="inner-left">Last Requirement : <span  >{{candidate.reqName}}</span></label> 
+                    </div>
+                    <div class="inner-body"  >
+                      <label class="inner-left">Last Requirement Status : <span  >{{candidate.status}}</span></label> 
+                    </div>
+                  </div> 
+                   
+              
+              
+             
+            </div>
+                
+              <div class="actionMenu">   
+                  <button ion-item (click)="presentPopover($event,candidate)" >  
+                          <ion-icon ios="ios-menu" md="md-menu" class="popbtn"></ion-icon>
+                  </button>  
+              </div>
+            
+          </div>
+        
+         
+          <div class="row" *ngIf="candidate == '' || candidate == null"> 
+              <div class="col">
+                <div style="text-align: center; margin-top:100px;">
+                    <!-- <h3>No Candidates are added to this requirement</h3> -->
+                    <h3>No Records Found</h3>
+                </div>  
+              </div>
+            </div>
+            
+  </ion-list>
+  
+    
+</ion-content>

@@ -6,7 +6,17 @@
           <h1>All Candidates</h1>
           <button ion-button color="dark" outline (click)="createCandidate()">Create Candidate</button>
   </div>
-
+  <div>
+    <ion-item class="_row">
+      <ion-label floating>Result</ion-label>
+      <ion-select class="fieldBorder" [(ngModel)]="finalVerdictChange">
+          <ion-option value="" disabled>Select</ion-option>
+          <ion-option value="Approve">Approve</ion-option>
+          <ion-option value="Hold">Hold</ion-option>
+          <ion-option value="Rejected">Rejected</ion-option>
+      </ion-select>
+    </ion-item>    
+  </div>
   <ion-row center >
      
       <ion-col>

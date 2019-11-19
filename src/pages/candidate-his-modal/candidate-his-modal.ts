@@ -64,7 +64,7 @@ export class CandidateHisModalPage {
   }
 
   gotoEditdetails(ReqIds){
-    this.navCtrl.push(CandidateHistoryDetailsPage,{ReqId: ReqIds.positionId });
+    this.navCtrl.push(CandidateHistoryDetailsPage,{ReqId: ReqIds.positionId,clientId:ReqIds.clientId });
 
     console.log('ReqId',ReqIds.positionId);
   }

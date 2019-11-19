@@ -101,6 +101,9 @@ import { GeneralDbPage }  from '../pages/general-db/general-db';
 import { ResourceModalPage }  from '../pages/resource-modal/resource-modal';
 import { CsmPage }  from '../pages/csm/csm';
 import { ReScheduleModelPage }  from '../pages/re-schedule-model/re-schedule-model';
+import { CandidateSearchPage }  from '../pages/candidate-search/candidate-search';
+import { SearchViewPage }  from '../pages/search-view/search-view';
+import { CandidatesearchComponent }  from '../components/candidatesearch/candidatesearch';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatePickerModule } from 'ion-datepicker';
@@ -195,7 +198,10 @@ import { Diagnostic } from '@ionic-native/diagnostic';
     GeneralDbPage,
     ResourceModalPage,
     CsmPage,
-    ReScheduleModelPage
+    ReScheduleModelPage,
+    CandidateSearchPage,
+    SearchViewPage,
+    CandidatesearchComponent
   ],
 
   imports: [ 
@@ -253,6 +259,7 @@ import { Diagnostic } from '@ionic-native/diagnostic';
               { component: ViewAllRecruiterPage, segment: 'ViewAllRecruiters' },
               { component: ViewAllScreenerPage, segment: 'ViewAllScreener' },
               { component: FeedbackFormPage, segment: 'FeedbackForm' },
+              { component: CandidateSearchPage, segment: 'search' },
              
               
               
@@ -342,7 +349,10 @@ import { Diagnostic } from '@ionic-native/diagnostic';
     GeneralDbPage,
     ResourceModalPage,
     CsmPage,
-    ReScheduleModelPage
+    ReScheduleModelPage,
+    CandidateSearchPage,
+    SearchViewPage,
+    CandidatesearchComponent
 
   ],
   providers: [

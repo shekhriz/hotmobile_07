@@ -39,7 +39,7 @@ export class CandidateHistoryDetailsPage {
   payRateCurrency:string;
   payRatePeriod:string;
   billRate:string;
-  
+  clientId:string;
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public restProvider:RestProvider,
     public util: UtilsProvider,
@@ -51,18 +51,27 @@ export class CandidateHistoryDetailsPage {
     public appCtrl: App,) {
       this.token = this.util.getToken();
       this.ReqId = navParams.get('ReqId');
+      this.clientId = navParams.get('clientId');
       this.loginUser = this.util.getSessionUser();
       console.log(' this.ReqId', this.ReqId);
       this.editRequirements();
       this.randomClientId();
-     // this.clientNameForRequirement();
+     
       //console.log(' this.editRequirements', this.editRequirements);
+      this.clientDetailAndContact();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CandidateHistoryDetailsPage');
   }
-   
+  clientDetailAndContact(){
+    this.restProvider.clientDetailAndContact(this.token,this.clientId)
+    .then((res:any)=>{
+    },errrr=>{
+     
+    });
+  } 
+  
   addskillValue() {
     this.skillArray.push({
       'types':'',
@@ -154,7 +163,7 @@ deleteskillValue() {
         },errrr=>{
           loading.dismiss();
         });
-       this.util.showToast("Successfully Submitted.","SUCCESS");
+      // this.util.showToast("Successfully Submitted.","SUCCESS");
       },errrr=>{
         loading.dismiss();
         this.util.showToast("Something went wrong.","ERROR");
@@ -162,6 +171,7 @@ deleteskillValue() {
      
     });
   }
+ 
   goBack(){
    this.viewCtrl.dismiss();
  }
