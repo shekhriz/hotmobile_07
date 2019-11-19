@@ -9,7 +9,7 @@ import { UtilsProvider } from '../providers/utils/utils';
 import { RestProvider } from '../providers/rest/rest';
 //import { FCM } from '@ionic-native/fcm/ngx';
 //import { Router } from '@angular/router';
-//import { OneSignal } from '@ionic-native/onesignal';
+import { OneSignal } from '@ionic-native/onesignal';
 
 @Component({
   templateUrl: 'app.html'
@@ -24,8 +24,12 @@ export class MyApp {
     public utilProvider: UtilsProvider,
     public alertCtrl: AlertController,
     public restProvider: RestProvider,
+<<<<<<< HEAD
+    private oneSignal: OneSignal,
+=======
  //  private oneSignal: OneSignal,
    public util: UtilsProvider,
+>>>>>>> c180d970903cd0bfcbcbda4484fd3d5c882549d3
 
     ) {
     platform.ready().then(() => {
@@ -36,7 +40,11 @@ export class MyApp {
       this.user = this.utilProvider.getSessionUser();
       this.userToken = this.utilProvider.getToken();
       this.userTokenStartTime = this.utilProvider.getTokenTime();
+<<<<<<< HEAD
+      this.setupPush()
+=======
     //  this.setupPush();
+>>>>>>> c180d970903cd0bfcbcbda4484fd3d5c882549d3
       if(this.userToken != undefined && this.userToken != null && this.userTokenStartTime != null && this.user != null) {
         this.rootPage = HomePage;
         let diff = (new Date().getTime() - this.userTokenStartTime) / 1000;
@@ -66,17 +74,30 @@ export class MyApp {
       this.utilProvider.removeAllLocalStorage();
       this.rootPage = LoginPage;
     }
+<<<<<<< HEAD
+  
+=======
    
+>>>>>>> c180d970903cd0bfcbcbda4484fd3d5c882549d3
 
     });
   }
 
-  // setupPush() {
-  //   // I recommend to put these into your environment.ts
-  //   this.oneSignal.startInit('b7fd84f4-0a54-4550-9c4d-e12bac3a7cfe', '133871082435');
+  setupPush() {
+    // I recommend to put these into your environment.ts
+    this.oneSignal.startInit('b7fd84f4-0a54-4550-9c4d-e12bac3a7cfe', '133871082435');
  
-  //   this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.None);
+    this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.None);
  
+<<<<<<< HEAD
+    // Notifcation was received in general
+    this.oneSignal.handleNotificationReceived().subscribe(data => {
+      let msg = data.payload.body;
+      let title = data.payload.title;
+      let additionalData = data.payload.additionalData;
+      console.log(title, msg, additionalData.task);
+    });
+=======
   //   // Notifcation was received in general
   //   this.oneSignal.handleNotificationReceived().subscribe(data => {
   //     let msg = data.payload.body;
@@ -87,15 +108,16 @@ export class MyApp {
   //       console.log('push notification is set');
   //     }
   //   });
+>>>>>>> c180d970903cd0bfcbcbda4484fd3d5c882549d3
  
-  //   // Notification was really clicked/opened
-  //   this.oneSignal.handleNotificationOpened().subscribe(data => {
-  //     // Just a note that the data is a different place here!
-  //     let additionalData = data.notification.payload.additionalData;
+    // Notification was really clicked/opened
+    this.oneSignal.handleNotificationOpened().subscribe(data => {
+      // Just a note that the data is a different place here!
+      let additionalData = data.notification.payload.additionalData;
  
-  //     console.log('Notification opened', 'You already read this before', additionalData.task);
-  //   });
+      console.log('Notification opened', 'You already read this before', additionalData.task);
+    });
  
-  //   this.oneSignal.endInit();
-  // }
+    this.oneSignal.endInit();
+  }
 }
